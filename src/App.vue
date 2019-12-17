@@ -1,7 +1,9 @@
 <template>
-  <div class="container">
+  <div>
     <navigation-header></navigation-header>
-    <router-view></router-view>
+    <main>
+      <router-view></router-view>
+    </main>
   </div>
 </template>
 <script>
@@ -27,6 +29,41 @@
     background-image: -webkit-linear-gradient(65deg, #ffdcc4 50%, #fbffe8 50%);
     height: 100vh;
   }
+
+  .wrapper-center {
+    width: 100%;
+    margin: 10% auto;
+    font-family: sans-serif;
+
+    &.is-small {
+      max-width: 400px;
+    }
+    &.is-medium {
+      max-width: 800px;
+    }
+    &.is-large {
+      max-width: 1200px;
+    }
+  }
+  
+  .wrapper-fluid {
+    margin: 80px 0;
+    padding: 0 50px;
+    display: flex;
+  
+    .content {
+      width: calc(100% - 190px);
+      height: calc(100vh - 150px);
+      padding: 10px 30px;
+      overflow: auto;
+  
+      h1 {
+        margin-top: 0;
+      }  
+    }
+  }
+
+
 
   hr.separator {border-top-width: 10px; border-style: dotted;}
   .tc { text-align : center; }
