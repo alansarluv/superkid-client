@@ -1,0 +1,37 @@
+<template>
+  <div class="container">
+    <div class="row min100vh align-items-center justify-content-md-center">
+      <div class="col col-md-6 col-lg-4">
+        <form action="/signup" class="form-center is-register-form" method="POST">
+          <h3 class="mb15 text-center">Register</h3>
+          <input
+            class="form-control mb5 <%= validationErrors.find(e => e.param === 'email') ? 'is-invalid' : '' %>"
+            type="email"
+            name="email"
+            placeholder="Email address"
+            value="<%= oldInput.email %>"
+            required autofocus>
+          <input 
+            id="password"
+            class="form-control mb5 <%= validationErrors.find(e => e.param === 'password') ? 'is-invalid' : '' %>"
+            type="password"
+            name="password"
+            placeholder="Password"
+            value="<%= oldInput.password %>"
+            required>
+          <input 
+            id="confirmPassword"
+            class="form-control mb15 <%= validationErrors.find(e => e.param === 'password') ? 'is-invalid' : '' %>"
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            value="<%= oldInput.confirmPassword %>"
+            required>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button class="btn btn-info btn-block" type="submit">Register</button>
+          <router-link class="btn btn-link mt-3 goto-login" to="/login">Back to Login</router-link>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>

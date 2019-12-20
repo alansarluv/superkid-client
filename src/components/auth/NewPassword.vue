@@ -1,0 +1,22 @@
+<template>
+  <div class="container">
+    <div class="row min100vh align-items-center justify-content-md-center">
+      <div class="col col-md-6 col-lg-4">
+        <form action="/new-password" class="form-center mb15" method="POST">
+          <h1 class="mb15">New Password</h1>
+          <input
+            id="password"
+            class="form-control mb5"
+            type="password"
+            name="password"
+            placeholder="new password"
+            required autofocus>
+            <input type="hidden" name="userId" value="<%= userId %>">
+            <input type="hidden" name="passwordToken" value="<%= passwordToken %>">				
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button class="btn btn-info btn-block" type="submit">Update Password</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>

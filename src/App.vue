@@ -64,6 +64,17 @@
   }
 
 
+  .scrollable-box {
+    padding: 15px;
+    background-color: seashell;
+    max-height: calc(100vh - 200px);
+    overflow: auto;
+    box-shadow: 5px 8px 20px 0px rgba(33,33,33,.3);
+    -webkit-box-shadow: 5px 8px 20px 0px rgba(33,33,33,.3);
+    -moz-box-shadow: 5px 8px 20px 0px rgba(33,33,33,.3);
+  }
+
+  .card { height: 100%; }
 
   hr.separator {border-top-width: 10px; border-style: dotted;}
   .tc { text-align : center; }
