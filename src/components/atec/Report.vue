@@ -84,3 +84,16 @@
     </div>
   </div>
 </template>
+
+<script>
+  import axios from 'axios';
+
+  export default {
+    created() { 
+      axios
+        .get('http://localhost:3000/atec')
+        .then(res => console.log("test:", res))  // eslint-disable-line no-console
+        .catch(error => console.log(error)) // eslint-disable-line no-console
+    }
+  }
+</script>
