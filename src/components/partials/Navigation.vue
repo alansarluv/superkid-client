@@ -33,7 +33,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: white;
+      background-color: #FFF4EB;
       opacity: .8;
       z-index: -1;
     }

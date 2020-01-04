@@ -1,80 +1,77 @@
 <template>
-  <div class="container-fluid mt-100">
-    <div class="row">
+  <div class="container-fluid mt-125">
+    <div class="row justify-content-center">
       <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Mengisi ATEC</h5>
-            <p class="card-text">ATEC (Autism Treatment Evaluation Checklist) adalah kumpulan pertanyaan yang digunakan sebagai checklist evaluasi bulanan untuk melihat progress perkembangan ananda.</p>
-            <router-link to="/atec/form" class="btn btn-primary">Isi Atec</router-link>
-          </div>
-        </div>          
+        <router-link to="/atec/form" class="card-box-route">
+          <div class="card">
+            <div class="card-body text-center">
+              <h5 class="card-title">Mengisi ATEC</h5>
+              <p class="card-text">ATEC (Autism Treatment Evaluation Checklist) adalah kumpulan pertanyaan yang digunakan sebagai checklist evaluasi bulanan untuk melihat progress perkembangan ananda.</p>
+            </div>
+          </div>  
+        </router-link>        
       </div>
       <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Laporan ATEC</h5>
-            <p class="card-text">Jika sudah pernah mengisi ATEC, anda dapat melihat hasil laporan ATEC ananda disini, anda juga dapat membandingkan hasil laporan atec bulan ini dan bulan sebelum2nya disini.</p>
-            <router-link to="/atec/report" class="btn btn-primary">Lihat laporan Atec</router-link>
-          </div>
-        </div>          
-      </div>
-      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Chart / grafik ATEC</h5>
-            <p class="card-text">Anda dapat melihat grafik perkembangan ATEC disini.</p>
-            <router-link to="/atec/chart" class="btn btn-secondary disabled">Lihat grafik Atec</router-link>
-          </div>
-        </div>          
+        <router-link to="/atec/report" class="card-box-route">
+          <div class="card">
+            <div class="card-body text-center">
+              <h5 class="card-title">Laporan ATEC</h5>
+              <p class="card-text">Jika sudah pernah mengisi ATEC, anda dapat melihat hasil laporan ATEC ananda disini, anda juga dapat membandingkan hasil laporan atec bulan ini dan bulan sebelum2nya disini.</p>
+            </div>
+          </div>          
+        </router-link>
       </div>
     </div>
-    <div class="row">
+    <div class="row justify-content-center">
       <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Perkembangan mingguan</h5>
-            <p class="card-text">Isi perkembangan mingguan ananda disini agar progress mingguan ananda terdokumentasi dengan baik.</p>
-            <router-link to="/weekly-note/form" class="btn btn-primary">Isi perkembangan mingguan</router-link>
+        <router-link to="/weekly-note/form" class="card-box-route">
+          <div class="card">
+            <div class="card-body text-center">
+              <h5 class="card-title">Perkembangan mingguan</h5>
+              <p class="card-text">Isi perkembangan mingguan ananda disini agar progress mingguan ananda terdokumentasi dengan baik.</p>
+            </div>
           </div>
-        </div>
+        </router-link>
       </div>
       <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Laporan perkembangan mingguan</h5>
-            <p class="card-text">Lihat laporan perkembangan mingguan yang pernah di isi disini.</p>
-            <router-link to="/weekly-note/report" class="btn btn-primary">Lihat perkembangan mingguan</router-link>
-          </div>
-        </div>          
+        <router-link to="/weekly-note/report" class="card-box-route">
+          <div class="card">
+            <div class="card-body text-center">
+              <h5 class="card-title">Laporan perkembangan mingguan</h5>
+              <p class="card-text">Lihat laporan perkembangan mingguan yang pernah di isi disini.</p>
+            </div>
+          </div>          
+        </router-link>
       </div>
     </div>
-    <div class="row">
+    <div class="row justify-content-center">
       <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Review obat dan multivitamin</h5>
-            <p class="card-text">Yuk sharing / berbagi informasi mengenai suplement dan obat yang dikonsumsi ananda. Anda juga dapat melihat saran2 suplement vitamin dan obat yang biasanya diberikan oleh orang tua lain kepada anak mereka disini</p>
-            <router-link to="/drug-multivitamin" class="btn btn-primary">Lihat review obat dan multivitamin</router-link>
+        <router-link to="/drug-multivitamin" class="card-box-route">
+          <div class="card">
+            <div class="card-body text-center">
+              <h5 class="card-title">Review obat dan multivitamin</h5>
+              <p class="card-text">Yuk sharing / berbagi informasi mengenai suplement dan obat yang dikonsumsi ananda. Anda juga dapat melihat saran2 suplement vitamin dan obat yang biasanya diberikan oleh orang tua lain kepada anak mereka disini</p>
+            </div>
           </div>
-        </div>
+        </router-link>
       </div>
       <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Referensi dokter</h5>
-            <p class="card-text">Yuk berbagi informasi dokter dokter langganan anda atau dokter yang recomended menurut anda untuk mengatasi anak ASD. Anda dapat melihat saran2 atau dokter yg kompeten menangani anak ASD (sesuai dengan hasil ulasan / review) disini</p>
-            <router-link to="/doctor" class="btn btn-secondary disabled">Lihat review Dokter untuk anak ASD</router-link>
+        <router-link to="/doctor" class="card-box-route">
+          <div class="card">
+            <div class="card-body text-center">
+              <h5 class="card-title">Referensi dokter</h5>
+              <p class="card-text">Yuk berbagi informasi dokter dokter langganan anda atau dokter yang recomended menurut anda untuk mengatasi anak ASD. Anda dapat melihat saran2 atau dokter yg kompeten menangani anak ASD (sesuai dengan hasil ulasan / review) disini</p>
+            </div>
           </div>
-        </div>
+        </router-link>
       </div>
       <!-- review suplemen -->
       <!-- review obat -->
       <!-- review cemilan -->
       <!-- review terapi -->
     </div>    
-    <div class="row">
-      <div class="col-12 mb-4">
+    <div class="row justify-content-center">
+      <div class="col-10 my-5">
         <div class="scrollable-box">
           <h2>Sekilas ATEC (Autism Treatment Evaluation Checklist)</h2>
           <p>Hambatan utama dalam penelitian autisme adalah kurangnya sarana yang valid untuk mengukur efektivitas berbagai perawatan. Selama bertahun-tahun, para peneliti telah menerbitkan ratusan penelitian yang mencoba untuk mengevaluasi berbagai intervensi biomedis dan psiko-pendidikan yang dimaksudkan untuk memberi manfaat bagi anak-anak autis. Banyak dari penelitian ini menghasilkan hasil yang tidak meyakinkan atau, lebih buruk, menyesatkan, karena tidak ada tes atau skala berguna yang dirancang untuk mengukur efektivitas pengobatan. Karena tidak memiliki skala seperti itu, para peneliti terpaksa menggunakan skala seperti Childhood Autism Rating Scale (CARS), Gilliam Autism Rating Scale (GARS), atau Autism Behavior Checklist (ABC), yang semuanya dirancang untuk mendiagnosis autisme - untuk memberi tahu apakah seorang anak autis - dan tidak untuk mengukur efektivitas pengobatan.</p>

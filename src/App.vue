@@ -25,8 +25,7 @@
   }
 
   .bg-gradien {
-    background-color: #e4e9fd;
-    background-image: -webkit-linear-gradient(65deg, #ffdcc4 50%, #fbffe8 50%);
+    background-color: #ffe6d4;
     height: 100vh;
   }
 
@@ -66,12 +65,33 @@
 
   .scrollable-box {
     padding: 15px;
-    background-color: seashell;
+    background-color: #FFFDFB;
+    border-radius: 4px;
     max-height: calc(100vh - 200px);
     overflow: auto;
-    box-shadow: 5px 8px 20px 0px rgba(33,33,33,.3);
-    -webkit-box-shadow: 5px 8px 20px 0px rgba(33,33,33,.3);
-    -moz-box-shadow: 5px 8px 20px 0px rgba(33,33,33,.3);
+    box-shadow: 0px 7px 20px 0px rgba(33, 33, 33, 0.3);
+    -webkit-box-shadow: 0px 7px 20px 0px rgba(33, 33, 33, 0.3);
+    -moz-box-shadow: 0px 7px 20px 0px rgba(33, 33, 33, 0.3);
+  }
+
+  .card-box-route {
+    color: inherit;
+    &:hover {
+      color: inherit;
+      text-decoration: none;
+    }
+    .card {
+      -webkit-transition: all .3s;
+      -moz-transition: all .3s;
+      transition: all .3s;
+      background-color: #B98968;
+      color: white;
+      &:hover {
+        -webkit-box-shadow: 0px 0px 14px -2px rgba(0,0,0,0.8);
+        -moz-box-shadow: 0px 0px 14px -2px rgba(0,0,0,0.8);
+        box-shadow: 0px 0px 14px -2px rgba(0,0,0,0.8);      
+      }
+    }
   }
 
   .card { height: 100%; }
@@ -82,6 +102,7 @@
   .mt15 { margin-top: 15px; }
   .mt30 { margin-top: 30px; }
   .mt-100 { margin-top: 100px; }
+  .mt-125 { margin-top: 125px; }
   .my-100 { margin-top: 100px; margin-bottom: 100px; }
   .my15 { margin-top: 15px; margin-bottom: 15px; }
   .m0 { margin: 0; }
