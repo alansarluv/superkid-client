@@ -48,10 +48,24 @@
         </div>
         <div class="col-lg-4 col-md-6 col-sm-12">
           <div class="scrollable-box">
-            <p> Question here</p>
+            <p class="header-question active">Form 1 - Kemampuan Bicara/Berbahasa ( 0 / 14) <i class="fa fa-check-square-o" aria-hidden="true"></i></p>
+            <p class="header-question">Form 2 - Kemampuan Bersosialisasi ( 0 / 20)</p>
+            <p class="header-question">Form 3 - Kesadaran sensorik / kognitif ( 0 / 18)</p>
+            <p class="header-question">Form 4 - Kesehatan umum, fisik dan perilaku ( 0 / 25)</p>
           </div>
         </div>
       </div>
     </form>
   </div>
 </template>
+<style lang="scss">
+  .header-question {
+    color: darkgray;
+
+    &.active {
+      cursor: pointer;
+      color: mediumblue;
+    }
+
+  }
+</style>
