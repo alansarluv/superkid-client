@@ -52,12 +52,54 @@
             <p class="header-question">Form 2 - Kemampuan Bersosialisasi ( 0 / 20)</p>
             <p class="header-question">Form 3 - Kesadaran sensorik / kognitif ( 0 / 18)</p>
             <p class="header-question">Form 4 - Kesehatan umum, fisik dan perilaku ( 0 / 25)</p>
+            <hr class="mb-1" />
+            <button type="button" class="btn btn-link float-right">Kembali ke soal sebelumnya</button>
+            <div class="single-question mt-5">
+              <p>
+                <span class="mr-2">{{numberList}}</span>
+                <span>{{theQuestion}}</span>
+                <span class="ml-1">?</span>
+              </p>
+              <div class="row">
+                <label class="col-sm-12 col-md-4">
+                  <div class="custom-button">
+                    <input type="radio" name="bicara1" class="form-control" value="tb" required>
+                    {{option1}}
+                  </div>
+                </label>
+                <label class="col-sm-12 col-md-4">
+                  <div class="custom-button">
+                    <input type="radio" name="bicara1" class="form-control" value="ab">
+                    {{option2}}
+                  </div>
+                </label>
+                <label class="col-sm-12 col-md-4">
+                  <div class="custom-button">
+                    <input type="radio" name="bicara1" class="form-control" value="sb">
+                    {{option3}}
+                  </div>
+                </label>
+              </div>              
+            </div>
           </div>
         </div>
       </div>
     </form>
   </div>
 </template>
+<script>
+  export default {
+    data() {
+      return {
+        numberList: '1.1',
+        theQuestion: 'Mengetahui namanya sendiri',
+        option1: 'Tidak benar',
+        option2: 'Agak benar',
+        option3: 'Sangat benar',
+      }
+    }
+  }
+</script>
 <style lang="scss">
   .header-question {
     color: darkgray;
@@ -66,6 +108,17 @@
       cursor: pointer;
       color: mediumblue;
     }
-
+  }
+  .single-question {
+    .custom-button {
+      background-color: #776e6e;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      input {
+        display: none;
+      }
+    }
   }
 </style>
