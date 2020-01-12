@@ -3,7 +3,6 @@
     <form action="/atec/form-report" method="POST">
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <input type="hidden" name="kidName" value="<%= kids[0].name %>">
-
       <div class="row justify-content-center mb-3">
         <div class="col-lg-4 col-md-6 col-sm-12">
           <div class="card mb-4">
@@ -52,10 +51,13 @@
             <p class="header-question">Form 2 - Kemampuan Bersosialisasi ( 0 / 20)</p>
             <p class="header-question">Form 3 - Kesadaran sensorik / kognitif ( 0 / 18)</p>
             <p class="header-question">Form 4 - Kesehatan umum, fisik dan perilaku ( 0 / 25)</p>
-            <hr class="mb-1" />
-            <button type="button" class="btn btn-link float-right">Kembali ke soal sebelumnya</button>
-            <div class="single-question mt-5">
-              <question-list v-for="(question, idx) in form1Question" :key="idx" :question='question' :currentQ='currentQ'></question-list>
+            <hr class="mb-3" />
+            <div class="single-question mt-3">
+              <question-list 
+                v-for="(question, idx) in formQuestion" 
+                :key="idx" 
+                :question='question'>
+              </question-list>
             </div>
           </div>
         </div>
@@ -68,9 +70,10 @@
   export default {
     data() {
       return {
-        form1Question: [
+        formQuestion: [
           {
-            numberList: '1.1',
+            formList: 1,
+            numberList: 1,
             theQuestion: 'Mengetahui namanya sendiri',
             option1: 'Tidak benar',
             option2: 'Agak benar',
@@ -78,7 +81,8 @@
             name: 'bicara1'
           },
           {
-            numberList: '1.2',
+            formList: 1,
+            numberList: 2,
             theQuestion: 'Merespon pada "tidak" atau "stop"',
             option1: 'Tidak benar',
             option2: 'Agak benar',
@@ -86,7 +90,8 @@
             name: 'bicara2'
           },
           {
-            numberList: '1.3',
+            formList: 1,
+            numberList: 3,
             theQuestion: 'Dapat mengikuti perintah"',
             option1: 'Tidak benar',
             option2: 'Agak benar',
@@ -94,7 +99,8 @@
             name: 'bicara3'
           },
           {
-            numberList: '1.4',
+            formList: 1,
+            numberList: 4,
             theQuestion: 'Dapat menggunakan 1 kata (Tidak!, makan, air, dll)',
             option1: 'Tidak benar',
             option2: 'Agak benar',
@@ -102,7 +108,8 @@
             name: 'bicara4'
           },
           {
-            numberList: '1.5',
+            formList: 1,
+            numberList: 5,
             theQuestion: 'Dapat menggunakan 2 kata sekaligus bersamaan (Tidak mau!, mau makan, minta itu, dll)',
             option1: 'Tidak benar',
             option2: 'Agak benar',
@@ -110,7 +117,8 @@
             name: 'bicara5'
           },
           {
-            numberList: '1.6',
+            formList: 1,
+            numberList: 6,
             theQuestion: 'Dapat menggunakan 3 kata sekaligus (Mau minum susu, dll)',
             option1: 'Tidak benar',
             option2: 'Agak benar',
@@ -118,7 +126,8 @@
             name: 'bicara6'
           },
           {
-            numberList: '1.7',
+            formList: 1,
+            numberList: 7,
             theQuestion: 'Mengetahui 10 kata atau lebih',
             option1: 'Tidak benar',
             option2: 'Agak benar',
@@ -126,7 +135,8 @@
             name: 'bicara7'
           },
           {
-            numberList: '1.8',
+            formList: 1,
+            numberList: 8,
             theQuestion: 'Dapat membuat kalimat yang berisi 4 kata atau lebih',
             option1: 'Tidak benar',
             option2: 'Agak benar',
@@ -134,7 +144,8 @@
             name: 'bicara8'
           },
           {
-            numberList: '1.9',
+            formList: 1,
+            numberList: 9,
             theQuestion: 'Mampu menjelaskan apa yang dia inginkan',
             option1: 'Tidak benar',
             option2: 'Agak benar',
@@ -142,7 +153,8 @@
             name: 'bicara9'
           },
           {
-            numberList: '1.10',
+            formList: 1,
+            numberList: 10,
             theQuestion: 'Mampu menanyakan pertanyaan yang bermakna',
             option1: 'Tidak benar',
             option2: 'Agak benar',
@@ -150,7 +162,8 @@
             name: 'bicara10'
           },
           {
-            numberList: '1.11',
+            formList: 1,
+            numberList: 11,
             theQuestion: 'Isi pembicaraan cenderung relevan atau bermakna',
             option1: 'Tidak benar',
             option2: 'Agak benar',
@@ -158,7 +171,8 @@
             name: 'bicara11'
           },
           {
-            numberList: '1.12',
+            formList: 1,
+            numberList: 12,
             theQuestion: 'Sering menggunakan kalimat kalimat yang berurutan',
             option1: 'Tidak benar',
             option2: 'Agak benar',
@@ -166,7 +180,8 @@
             name: 'bicara12'
           },
           {
-            numberList: '1.13',
+            formList: 1,
+            numberList: 13,
             theQuestion: 'Bisa mengikuti pembicaraan dengan cukup baik',
             option1: 'Tidak benar',
             option2: 'Agak benar',
@@ -174,15 +189,14 @@
             name: 'bicara13'
           },
           {
-            numberList: '1.14',
+            numberList: 14,
             theQuestion: 'Memiliki kemampuan bicara / berbahasa yang sesuai dengan seusianya',
             option1: 'Tidak benar',
             option2: 'Agak benar',
             option3: 'Sangat benar',
             name: 'bicara14'
           }
-        ],
-        currentQ: '1.3'
+        ]
       }
     },
     components: {

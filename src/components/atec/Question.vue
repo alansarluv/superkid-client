@@ -1,26 +1,42 @@
 <template>
-  <div v-show="showQuestion" class="wrapper-question">
+  <div class="wrapper-question">
     <p>
-      <span class="mr-2">{{question.numberList}}</span>
+      <span class="mr-2">1.{{question.numberList}}</span>
       <span>{{question.theQuestion}}</span>
       <span class="ml-1">?</span>
     </p>
     <div class="row">
       <label class="col-sm-12 col-md-4">
-        <div class="custom-button">
-          <input type="radio" :name="question.name" class="form-control" value="tb" required>
+        <div class="custom-button" :class="{'active': (this.selectedRadio === 'tb')}">
+          <input 
+            type="radio" 
+            :name="question.name" 
+            @change="onChangeRadio($event)" 
+            class="form-control" 
+            value="tb" 
+            required>
           {{question.option1}}
         </div>
       </label>
       <label class="col-sm-12 col-md-4">
-        <div class="custom-button">
-          <input type="radio" :name="question.name" class="form-control" value="ab">
+        <div class="custom-button" :class="{'active': (this.selectedRadio === 'ab')}">
+          <input 
+            type="radio" 
+            :name="question.name" 
+            @change="onChangeRadio($event)" 
+            class="form-control" 
+            value="ab">
           {{question.option2}}
         </div>
       </label>
       <label class="col-sm-12 col-md-4">
-        <div class="custom-button">
-          <input type="radio" :name="question.name" class="form-control" value="sb">
+        <div class="custom-button" :class="{'active': (this.selectedRadio === 'sb')}">
+          <input 
+            type="radio" 
+            :name="question.name" 
+            @change="onChangeRadio($event)" 
+            class="form-control" 
+            value="sb">
           {{question.option3}}
         </div>
       </label>
@@ -29,22 +45,18 @@
 </template>
 <script>
   export default {
-    props: ['question', 'currentQ'],
-    computed: {
-      showQuestion () {
-        if (this.question.numberList === this.currentQ) {
-          return true;
-        } else {
-          return false;
-        }
+    props: ['question'],
+    data() {
+      return {
+        selectedRadio: ''
+      }
+    },
+    methods: {
+      onChangeRadio(event) {
+        const val = event.target.value;
+        this.selectedRadio = val;
       }
     }
-    /* listen to radio changes
-      berikan class active jika ada radio yang selected
-      lalu emit ke parent untuk ubah currentQ agar lanjut ke soal berikutnya
-      tambahkan listener pada next / continue
-    */
-
   }
 </script>
 <style lang="scss" scoped>
@@ -59,6 +71,9 @@
     cursor: pointer;
     input {
       display: none;
+    }
+    &.active {
+      background-color: #5b8bc5;
     }
   }
 </style>
