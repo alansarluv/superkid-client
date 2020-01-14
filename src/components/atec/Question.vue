@@ -45,7 +45,7 @@
 </template>
 <script>
   export default {
-    props: ['question'],
+    props: ['question', 'answeredQ'],
     data() {
       return {
         selectedRadio: ''
@@ -55,6 +55,7 @@
       onChangeRadio(event) {
         const val = event.target.value;
         this.selectedRadio = val;
+        this.$emit('selectedRadio', val);
       }
     }
   }

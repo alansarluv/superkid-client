@@ -1,62 +1,63 @@
 <template>
-  <div class="container-fluid mt-125">
+  <div class="container-fluid mt-100">
     <form action="/atec/form-report" method="POST">
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <input type="hidden" name="kidName" value="<%= kids[0].name %>">
       <div class="row justify-content-center mb-3">
         <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="card mb-4">
+          <div class="card">
             <div class="card-body">
               <p>Nama : Dummy name</p>
               <p>Jenis kelamin : Dummy Age</p>
               <p>Birth day : birthdayString</p>
               <input type="hidden" class="available-report-date" value="<%= listReportMonthYear %>">
+              <h3 class="mb-3">Pilih Bulan dan Tahun laporan ATEC</h3>
+              <div class="row">
+                <div class="col-md-12 col-lg-6 mb-3">
+                  <select name="atecMonth" class="form-control jc-auto-select jc-check-available-monthyear" data-type-auto="month">
+                    <option value="00">Januari</option>
+                    <option value="01">Februari</option>
+                    <option value="02">Maret</option>
+                    <option value="03">April</option>
+                    <option value="04">Mei</option>
+                    <option value="05">Juni</option>
+                    <option value="06">Juli</option>
+                    <option value="07">Agustus</option>
+                    <option value="08">September</option>
+                    <option value="09">Oktober</option>
+                    <option value="10">November</option>
+                    <option value="11">Desember</option>
+                  </select>
+                </div>
+                <div class="col-md-12 col-lg-6 mb-3">
+                  <select name="atecYear" class="form-control jc-auto-select jc-check-available-monthyear" data-type-auto="year">
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                    <option value="2019">2019</option>
+                    <option value="2018">2018</option>
+                    <option value="2017">2017</option>
+                    <option value="2016">2016</option>
+                  </select>
+                </div>
+              </div>
+              <p class="header-question active">Form 1 - Kemampuan Bicara/Berbahasa ( {{answeredQ}} / {{formQuestion.length}}) <i class="fa fa-check-square-o" aria-hidden="true"></i></p>
+              <p class="header-question">Form 2 - Kemampuan Bersosialisasi ( 0 / 20)</p>
+              <p class="header-question">Form 3 - Kesadaran sensorik / kognitif ( 0 / 18)</p>
+              <p class="header-question">Form 4 - Kesehatan umum, fisik dan perilaku ( 0 / 25)</p>
             </div>
           </div>
-          <h3 class="mb-3">Piih Bulan dan Tahun laporan ATEC</h3>
-          <div class="row">
-            <div class="col-md-12 col-lg-6 mb-3">
-              <select name="atecMonth" class="form-control jc-auto-select jc-check-available-monthyear" data-type-auto="month">
-                <option value="00">Januari</option>
-                <option value="01">Februari</option>
-                <option value="02">Maret</option>
-                <option value="03">April</option>
-                <option value="04">Mei</option>
-                <option value="05">Juni</option>
-                <option value="06">Juli</option>
-                <option value="07">Agustus</option>
-                <option value="08">September</option>
-                <option value="09">Oktober</option>
-                <option value="10">November</option>
-                <option value="11">Desember</option>
-              </select>
-            </div>
-            <div class="col-md-12 col-lg-6 mb-3">
-              <select name="atecYear" class="form-control jc-auto-select jc-check-available-monthyear" data-type-auto="year">
-                <option value="2021">2021</option>
-                <option value="2020">2020</option>
-                <option value="2019">2019</option>
-                <option value="2018">2018</option>
-                <option value="2017">2017</option>
-                <option value="2016">2016</option>
-              </select>
-            </div>
-          </div>          
         </div>
       </div>
       <div class="row justify-content-center">
         <div class="col-lg-4 col-md-6 col-sm-12">
           <div class="scrollable-box">
-            <p class="header-question active">Form 1 - Kemampuan Bicara/Berbahasa ( 0 / 14) <i class="fa fa-check-square-o" aria-hidden="true"></i></p>
-            <p class="header-question">Form 2 - Kemampuan Bersosialisasi ( 0 / 20)</p>
-            <p class="header-question">Form 3 - Kesadaran sensorik / kognitif ( 0 / 18)</p>
-            <p class="header-question">Form 4 - Kesehatan umum, fisik dan perilaku ( 0 / 25)</p>
-            <hr class="mb-3" />
-            <div class="single-question mt-3">
+            <div class="single-question question-form-1 mt-2">
               <question-list 
                 v-for="(question, idx) in formQuestion" 
                 :key="idx" 
-                :question='question'>
+                :question='question'
+                :answeredQ='answeredQ'
+                @selectedRadio='valSelectedRadio'>
               </question-list>
             </div>
           </div>
@@ -196,11 +197,18 @@
             option3: 'Sangat benar',
             name: 'bicara14'
           }
-        ]
+        ],
+        answeredQ: 0
       }
     },
     components: {
       questionList: Question
+    },
+    methods: {
+      valSelectedRadio(val) {
+        console.log(val); // eslint-disable-line no-console
+        this.answeredQ = document.querySelectorAll(".question-form-1 input[type='radio']:checked").length;
+      }
     }
   }
 </script>
