@@ -1,7 +1,7 @@
 <template>
-  <div class="wrapper-question">
+  <div class="wrapper-question" v-show="isShow">
     <p>
-      <span class="mr-2">1.{{question.numberList}}</span>
+      <span class="mr-2">{{question.formList}}.{{question.numberList}}</span>
       <span>{{question.theQuestion}}</span>
       <span class="ml-1">?</span>
     </p>
@@ -45,7 +45,7 @@
 </template>
 <script>
   export default {
-    props: ['question', 'answeredQ'],
+    props: ['question', 'formActive'],
     data() {
       return {
         selectedRadio: ''
@@ -56,6 +56,11 @@
         const val = event.target.value;
         this.selectedRadio = val;
         this.$emit('selectedRadio', val);
+      }
+    },
+    computed: {
+      isShow: function() {
+        return (this.question.formList === this.formActive) ? true : false;
       }
     }
   }
