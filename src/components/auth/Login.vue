@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row min100vh align-items-center justify-content-md-center">
       <div class="col col-md-6 col-lg-4">
-        <form action="/login" class="form-center mb15" method="POST">
+        <form @submit.prevent="onSubmit" class="form-center mb15">
           <h1 class="mb15">Please sign in</h1>
           <input
             id="email-login"
@@ -10,7 +10,7 @@
             type="email"
             name="email"
             placeholder="Email address"
-            value=""
+            v-model="email"
             required autofocus>
           <input
             id="pass-login"
@@ -18,7 +18,7 @@
             type="password"
             name="password"
             placeholder="Password"
-            value=""
+            v-model="password"
             required>
           <div class="text-center">
             <input type="hidden" name="_csrf" value="">
@@ -31,3 +31,22 @@
     </div>
   </div>
 </template>
+<script>
+  export default {
+    data (){
+      return {
+        email: '',
+        password: ''
+      }
+    },
+    methods: {
+      onSubmit () {
+        const formData = {
+          email: this.email,
+          password: this.password
+        }
+        this.$store.dispatch('login', formData);
+      }
+    }
+  }
+</script>
