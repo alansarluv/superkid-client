@@ -10,7 +10,10 @@ export default new Vuex.Store({
     userId: null
   },
   mutations: {
-    
+    authUser (state, userData) {
+      state.idToken = userData.token
+      state.userId = userData.userId
+    }
   },
   actions: {
     login ({commit}, authData) {  // eslint-disable-line no-unused-vars
@@ -19,7 +22,13 @@ export default new Vuex.Store({
           email: authData.email,
           password: authData.password
         })
-        .then(res => console.log("test:", res))  // eslint-disable-line no-console
+        .then(res => {
+          console.log("test:", res) // eslint-disable-line no-console
+          commit('authUser', {
+            token: res.data.token,
+            userId: res.data.user._id
+          })
+        })
         .catch(error => console.log(error)) // eslint-disable-line no-console
     }
   },
