@@ -6,19 +6,24 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    idToken: null,
-    userId: null
+    idToken: localStorage.getItem('access_token') || null,
+    userId: null,
+    user: JSON.parse(localStorage.getItem('user')) || null
   },
   mutations: {
     authUser (state, userData) {
       state.idToken = userData.token
       state.userId = userData.userId
+      state.user = userData.user
+    },
+    storeUser (state, user) {
+      state.user = user
     }
   },
   actions: {
     login ({commit}, authData) {  // eslint-disable-line no-unused-vars
       axios 
-        .post('http://superkid.id:3000/login', {
+        .post('/login', {
           email: authData.email,
           password: authData.password
         })
@@ -26,13 +31,22 @@ export default new Vuex.Store({
           console.log("test:", res) // eslint-disable-line no-console
           commit('authUser', {
             token: res.data.token,
-            userId: res.data.user._id
+            userId: res.data.user._id,
+            user: res.data.user
           })
+          localStorage.setItem('access_token', res.data.token)
+          localStorage.setItem('user', JSON.stringify(res.data.user))
         })
         .catch(error => console.log(error)) // eslint-disable-line no-console
     }
   },
   getters: {
-
+    user (state) {
+      return state.user
+    },
+    userEmail (state) {
+      const userName = state.user.email.split('@');
+      return userName[0];
+    }
   }
 })

@@ -10,11 +10,20 @@
         <router-link to="/login">Login</router-link>
       </li>
       <li class="d-none d-sm-inline-block">
-        <span class="welcome-title">Welcome </span>
+        <span class="welcome-title">Welcome {{ email }} </span>
       </li>
     </ul>
   </div>
 </template>
+<script>
+  export default {
+    computed: {
+      email () {
+        return !this.$store.getters.userEmail ? false : this.$store.getters.userEmail
+      }
+    }
+  }
+</script>
 <style lang="scss">
   .navbar-header {
     width: 100%;
