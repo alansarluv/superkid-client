@@ -36,6 +36,9 @@ export default new Vuex.Store({
           })
           localStorage.setItem('access_token', res.data.token)
           localStorage.setItem('user', JSON.stringify(res.data.user))
+          if (res.data.token !== null) {
+            window.location = '/atec';
+          }
         })
         .catch(error => console.log(error)) // eslint-disable-line no-console
     }
@@ -45,8 +48,15 @@ export default new Vuex.Store({
       return state.user
     },
     userEmail (state) {
-      const userName = state.user.email.split('@');
-      return userName[0];
+      if (state.user !== null) {
+        const userName = state.user.email.split('@');
+        return userName[0];
+      } else {
+        return "";
+      }
+    },
+    isAuth (state) {
+      return state.user !== null ? true : false
     }
   }
 })

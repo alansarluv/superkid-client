@@ -6,10 +6,13 @@
       </router-link>
     </div>
     <ul class="navbar-list-menu">
-      <li>
+      <li v-show="!isAuth">
         <router-link to="/login">Login</router-link>
       </li>
-      <li class="d-none d-sm-inline-block">
+      <li v-show="isAuth">
+        <a href="#" >Logout</a>
+      </li>
+      <li v-show="isAuth" class="d-none d-sm-inline-block">
         <span class="welcome-title">Welcome {{ email }} </span>
       </li>
     </ul>
@@ -19,7 +22,10 @@
   export default {
     computed: {
       email () {
-        return !this.$store.getters.userEmail ? false : this.$store.getters.userEmail
+        return this.$store.getters.userEmail
+      },
+      isAuth () {
+        return this.$store.getters.isAuth
       }
     }
   }
