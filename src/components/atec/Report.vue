@@ -90,10 +90,21 @@
 
   export default {
     created() { 
+      const token = this.$store.getters.token;
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/x-www-form-urlencoded',
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        params: {
+          userId: '5e2422cdb491d611b65e4d1f'
+        }
+      }      
       axios
-        .get('http://localhost:3000/atec')
+        .get('/atec/report', config)
         .then(res => console.log("test:", res))  // eslint-disable-line no-console
-        .catch(error => console.log(error)) // eslint-disable-line no-console
+        .catch(error => console.log("error: ", error)) // eslint-disable-line no-console
     }
   }
 </script>

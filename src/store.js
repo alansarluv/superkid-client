@@ -57,6 +57,9 @@ export default new Vuex.Store({
     },
     isAuth (state) {
       return state.user !== null ? true : false
+    },
+    token (state) {
+      return state.idToken
     }
   }
 })
