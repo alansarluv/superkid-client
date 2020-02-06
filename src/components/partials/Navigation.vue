@@ -6,13 +6,13 @@
       </router-link>
     </div>
     <ul class="navbar-list-menu">
-      <li v-show="!isAuth">
+      <li v-if="!isAuth">
         <router-link to="/login">Login</router-link>
       </li>
-      <li v-show="isAuth">
-        <a href="#" >Logout</a>
+      <li v-if="isAuth">
+        <a @click="onLogout()" >Logout</a>
       </li>
-      <li v-show="isAuth" class="d-none d-sm-inline-block">
+      <li v-if="isAuth">
         <span class="welcome-title">Welcome {{ email }} </span>
       </li>
     </ul>
@@ -27,6 +27,13 @@
       isAuth () {
         return this.$store.getters.isAuth
       }
+    },
+    methods: {
+      onLogout() {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('user');
+        window.location = '/login';
+      }      
     }
   }
 </script>
