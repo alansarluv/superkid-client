@@ -8,7 +8,8 @@ export default new Vuex.Store({
   state: {
     idToken: localStorage.getItem('access_token') || null,
     userId: null,
-    user: JSON.parse(localStorage.getItem('user')) || null
+    user: JSON.parse(localStorage.getItem('user')) || null,
+    monthNames : ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
   },
   mutations: {
     authUser (state, userData) {
@@ -60,6 +61,9 @@ export default new Vuex.Store({
     },
     token (state) {
       return state.idToken
+    },
+    monthNames (state) {
+      return state.monthNames;
     }
   }
 })
