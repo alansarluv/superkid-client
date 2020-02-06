@@ -1,6 +1,39 @@
 <template>
   <div class="container-fluid mt-100">
-    <form action="/atec/form-report" method="POST">
+    <div v-if="!isKids" class="row">
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <form action="/atec/form-child" method="POST">
+              <div class="form-group">
+                <input type="text" class="form-control" id="child-name" name="name" placeholder="Tulis nama anak" required>
+              </div>
+              <div class="form-group">
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="genderpria" name="gender" value="laki" class="custom-control-input" required>
+                  <label class="custom-control-label" for="genderpria">Laki laki</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="genderwanita" name="gender" value="perempuan" class="custom-control-input" required>
+                  <label class="custom-control-label" for="genderwanita">Perempuan</label>
+                </div>
+              </div>
+              <div class="form-group">
+                <input type="date" class="form-control" name="birthday" data-link="calculate-age" required>
+              </div>
+              <div class="form-group">
+                <p>Umur : <span class="jc-auto-age" data-target="calculate-age">-</span> tahun</p>
+              </div>
+              <div class="form-group">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" class="btn btn-primary btn-block">Submit</button>
+              </div>
+            </form>              
+          </div>
+        </div>          
+      </div>
+    </div>
+    <form action="/atec/form-report" v-if="isKids" method="POST">
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <input type="hidden" name="kidName" value="<%= kids[0].name %>">
       <div class="row justify-content-center mb-3">
@@ -833,13 +866,17 @@
         answeredQ3: 0,
         answeredQ4: 0,
         formActive: 1,
-        submitBtn: false
+        submitBtn: false,
+        isKids: true
       }
     },
     computed: {
       activeQuestion: function() {
         const res = this.formQuestion.filter(el => el.formList === this.formActive);
         return res;
+      },
+      user() {
+        return this.$store.getters.user
       }
     },
     components: {
@@ -873,6 +910,11 @@
           this.formActive = 0;
           this.submitBtn = true;
         }
+      }
+    },
+    created() {
+      if (!this.user.kids.length) {
+        this.isKids = false;
       }
     }
   }
