@@ -103,6 +103,7 @@
     },
     created() { 
       const token = this.$store.getters.token;
+      const user = this.$store.getters.user;
       const config = {
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -110,7 +111,7 @@
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         params: {
-          userId: '5e2422cdb491d611b65e4d1f'
+          userId: user._id
         }
       }      
       axios

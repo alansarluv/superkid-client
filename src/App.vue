@@ -95,6 +95,11 @@
   }
 
   .card { height: 100%; }
+  .btn-disabled {
+    opacity: .5;
+    cursor: not-allowed;
+    pointer-events: none;    
+  }
 
   hr.separator {border-top-width: 10px; border-style: dotted;}
   .tc { text-align : center; }

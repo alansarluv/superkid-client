@@ -22,14 +22,26 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    login ({commit}, authData) {  // eslint-disable-line no-unused-vars
+    signup ({commit}, authData) {  // eslint-disable-line no-unused-vars
+      axios
+        .post('/register', {
+          email: authData.email,
+          password: authData.password
+        })
+        .then(res => {
+          if (res.status) {
+            window.location = '/login';
+          }
+        })
+        .catch(error => console.log(error)) // eslint-disable-line no-console
+    },
+    login ({commit}, authData) {
       axios 
         .post('/login', {
           email: authData.email,
           password: authData.password
         })
         .then(res => {
-          console.log("test:", res) // eslint-disable-line no-console
           commit('authUser', {
             token: res.data.token,
             userId: res.data.user._id,

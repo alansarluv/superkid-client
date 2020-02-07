@@ -2,14 +2,14 @@
   <div class="container">
     <div class="row min100vh align-items-center justify-content-md-center">
       <div class="col col-md-6 col-lg-4">
-        <form action="/signup" class="form-center is-register-form" method="POST">
+        <form @submit.prevent="onSubmit" class="form-center is-register-form">
           <h3 class="mb15 text-center">Register</h3>
           <input
             class="form-control mb5 <%= validationErrors.find(e => e.param === 'email') ? 'is-invalid' : '' %>"
             type="email"
             name="email"
             placeholder="Email address"
-            value="<%= oldInput.email %>"
+            v-model="email"
             required autofocus>
           <input 
             id="password"
@@ -17,7 +17,7 @@
             type="password"
             name="password"
             placeholder="Password"
-            value="<%= oldInput.password %>"
+            v-model="password"
             required>
           <input 
             id="confirmPassword"
@@ -25,13 +25,35 @@
             type="password"
             name="confirmPassword"
             placeholder="Confirm Password"
-            value="<%= oldInput.confirmPassword %>"
+            v-model="confirmPassword"
             required>
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <button class="btn btn-info btn-block" type="submit">Register</button>
+          <button class="btn btn-info btn-block" :class="{'btn-disabled': (password !== confirmPassword || password.length === 0)}" type="submit">Register</button>
           <router-link class="btn btn-link mt-3 goto-login" to="/login">Back to Login</router-link>
         </form>
       </div>
     </div>
   </div>
 </template>
+<script>
+  export default {
+    data (){
+      return {
+        email: '',
+        password: '',
+        confirmPassword: ''
+      }
+    },
+    methods: {
+      onSubmit () {
+        if (this.password.length > 0 && this.password === this.confirmPassword) {
+          const formData = {
+            email: this.email,
+            password: this.password
+          }
+          this.$store.dispatch('signup', formData);
+        }
+      }
+    }
+  }
+</script>
