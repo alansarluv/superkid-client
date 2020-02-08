@@ -1,25 +1,25 @@
 <template>
   <div class="container-fluid mt-100">
-    <div v-if="!isKids" class="row">
+    <div v-if="!kidLists.length" class="row">
       <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
         <div class="card">
           <div class="card-body">
-            <form action="/atec/form-child" method="POST">
+            <form @submit.prevent="onSubmitKids">
               <div class="form-group">
-                <input type="text" class="form-control" id="child-name" name="name" placeholder="Tulis nama anak" required>
+                <input type="text" class="form-control" id="child-name" v-model="kids.name" placeholder="Tulis nama anak" required>
               </div>
               <div class="form-group">
                 <div class="custom-control custom-radio custom-control-inline">
-                  <input type="radio" id="genderpria" name="gender" value="laki" class="custom-control-input" required>
+                  <input type="radio" id="genderpria" v-model="kids.gender" value="pria" class="custom-control-input" required>
                   <label class="custom-control-label" for="genderpria">Laki laki</label>
                 </div>
                 <div class="custom-control custom-radio custom-control-inline">
-                  <input type="radio" id="genderwanita" name="gender" value="perempuan" class="custom-control-input" required>
+                  <input type="radio" id="genderwanita" v-model="kids.gender" value="wanita" class="custom-control-input" required>
                   <label class="custom-control-label" for="genderwanita">Perempuan</label>
                 </div>
               </div>
               <div class="form-group">
-                <input type="date" class="form-control" name="birthday" data-link="calculate-age" required>
+                <input type="date" class="form-control" v-model="kids.birthday" required>
               </div>
               <div class="form-group">
                 <p>Umur : <span class="jc-auto-age" data-target="calculate-age">-</span> tahun</p>
@@ -33,7 +33,7 @@
         </div>          
       </div>
     </div>
-    <form action="/atec/form-report" v-if="isKids" method="POST">
+    <form action="/atec/form-report" v-if="kidLists.length" method="POST">
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <input type="hidden" name="kidName" value="<%= kids[0].name %>">
       <div class="row justify-content-center mb-3">
@@ -137,6 +137,7 @@
 </template>
 <script>
   import Question from './Question'
+  import axios from 'axios';
   export default {
     data() {
       return {
@@ -867,7 +868,12 @@
         answeredQ4: 0,
         formActive: 1,
         submitBtn: false,
-        isKids: true
+        kidLists: this.$store.getters.userKids || [],
+        kids: {
+          name: '',
+          gender: [],
+          birthday: Date
+        }
       }
     },
     computed: {
@@ -902,6 +908,35 @@
           this.formActive = 1;
           this.answeredQ1 = this.answeredQ;
         }
+      },
+      onSubmitKids () {
+        const token = this.$store.getters.token;
+        const configData = {
+          data: {
+            id_user: this.user._id,
+            name: this.kids.name,
+            gender: this.kids.gender,
+            birthday: this.kids.birthday
+          }
+        }
+        const configHeader = {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+        axios
+          .post('/add-kid', configData.data, configHeader)
+          .then(res => {
+            if (res.data.status) {
+              this.kidLists = res.data.data.kids;
+              let existingUser = localStorage.getItem('user');
+              existingUser = existingUser ? JSON.parse(existingUser) : {};
+              existingUser['kids'] = res.data.data.kids;
+              localStorage.setItem('user', JSON.stringify(existingUser));
+            }
+          })
+          .catch(error => console.log(error)) // eslint-disable-line no-console
       }
     },
     watch: {
@@ -910,11 +945,6 @@
           this.formActive = 0;
           this.submitBtn = true;
         }
-      }
-    },
-    created() {
-      if (!this.user.kids.length) {
-        this.isKids = false;
       }
     }
   }

@@ -60,6 +60,13 @@ export default new Vuex.Store({
     user (state) {
       return state.user
     },
+    userKids (state) {
+      if (state.user !== null) {        
+        return state.user.kids;
+      } else {
+        return [];
+      }
+    },
     userEmail (state) {
       if (state.user !== null) {
         const userName = state.user.email.split('@');

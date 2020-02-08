@@ -9,12 +9,17 @@
       <li v-if="!isAuth">
         <router-link to="/login">Login</router-link>
       </li>
-      <li v-if="isAuth">
-        <a @click="onLogout()" >Logout</a>
-      </li>
-      <li v-if="isAuth">
-        <span class="welcome-title">Welcome {{ email }} </span>
-      </li>
+      <template v-if="isAuth">
+        <li>
+          <router-link to="/atec">Atec</router-link>
+        </li>
+        <li>
+          <span class="welcome-title">Welcome {{ email }} </span>
+        </li>
+        <li>
+          <a @click="onLogout()" >Logout</a>
+        </li>
+      </template>
     </ul>
   </div>
 </template>
