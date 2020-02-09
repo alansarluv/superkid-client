@@ -40,6 +40,16 @@
         margin-bottom: 20px;
         a {
           color: #676262;
+          transition: all .3s;
+          -webkit-transition: all .3s;
+          -moz-transition: all .3s;
+          &.router-link-active,
+          &:hover {
+            font-weight: bold;
+            padding-bottom: 3px;
+            border-bottom: 2px solid #676262;   
+            text-decoration: none;         
+          }
         }
       }
     }

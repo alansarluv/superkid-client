@@ -41,44 +41,55 @@
         <form action="/atec/form-report" v-if="kidLists.length" method="POST">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <input type="hidden" name="kidName" value="<%= kids[0].name %>">
-          <div class="row justify-content-center mb-3">
-            <div class="col-lg-8 col-md-8 col-sm-12">
+          <div class="row justify-content-center sticky-100 mb-3">
+            <div class="col-lg-6 col-md-8 col-sm-12">
               <div class="card">
                 <div class="card-body">
-                  <select name="kids">
-                    <option v-for="kid in kidLists" :key="kid._id" :value="kid._id">{{kid.name}}</option>
-                  </select>
-                  <p class="text-right">Dummy name (Male - 6 Years old)</p>
-                  <input type="hidden" class="available-report-date" value="<%= listReportMonthYear %>">
-                  <h3 class="mb-3">Pilih Bulan dan Tahun laporan ATEC</h3>
                   <div class="row">
-                    <div class="col-md-12 col-lg-6 mb-3">
-                      <select name="atecMonth" class="form-control jc-auto-select jc-check-available-monthyear" data-type-auto="month">
-                        <option value="00">Januari</option>
-                        <option value="01">Februari</option>
-                        <option value="02">Maret</option>
-                        <option value="03">April</option>
-                        <option value="04">Mei</option>
-                        <option value="05">Juni</option>
-                        <option value="06">Juli</option>
-                        <option value="07">Agustus</option>
-                        <option value="08">September</option>
-                        <option value="09">Oktober</option>
-                        <option value="10">November</option>
-                        <option value="11">Desember</option>
+                    <div class="col-md-12">
+                      <h5 class="mb-2">Nama anak :</h5>
+                      <select name="kids" class="form-control">
+                        <option v-for="kid in kidLists" :key="kid._id" :value="kid._id">{{kid.name}} - {{kid.gender}} ({{getAge(kid.birthday)}} Tahun)</option>
                       </select>
-                    </div>
-                    <div class="col-md-12 col-lg-6 mb-3">
-                      <select name="atecYear" class="form-control jc-auto-select jc-check-available-monthyear" data-type-auto="year">
-                        <option value="2021">2021</option>
-                        <option value="2020">2020</option>
-                        <option value="2019">2019</option>
-                        <option value="2018">2018</option>
-                        <option value="2017">2017</option>
-                        <option value="2016">2016</option>
-                      </select>
+                      <h5 class="mb-2 mt-4">Pilih Bulan dan Tahun laporan ATEC</h5>
+                      <div class="row">
+                        <div class="col-md-12 col-lg-6">
+                          <select name="atecMonth" class="form-control jc-auto-select jc-check-available-monthyear" data-type-auto="month">
+                            <option value="00">Januari</option>
+                            <option value="01">Februari</option>
+                            <option value="02">Maret</option>
+                            <option value="03">April</option>
+                            <option value="04">Mei</option>
+                            <option value="05">Juni</option>
+                            <option value="06">Juli</option>
+                            <option value="07">Agustus</option>
+                            <option value="08">September</option>
+                            <option value="09">Oktober</option>
+                            <option value="10">November</option>
+                            <option value="11">Desember</option>
+                          </select>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                          <select name="atecYear" class="form-control jc-auto-select jc-check-available-monthyear" data-type-auto="year">
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                            <option value="2018">2018</option>
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                          </select>
+                        </div>
+                      </div>                    
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center sticky-100 mb-3">
+            <div class="col-lg-6 col-md-8 col-sm-12">
+              <div class="card">
+                <div class="card-body">
                   <p 
                     class="header-question"
                     :class="{
@@ -120,12 +131,13 @@
                   >
                     Form 4 - Kesehatan umum, fisik dan perilaku ( {{answeredQ4}} / 25)
                   </p>
-                  <button v-show="submitBtn" type="submit" class="form-control btn- btn-info">  S  U  B  M  I  T  </button>
+                  <button v-show="submitBtn" type="submit" class="form-control btn- btn-info">  S  U  B  M  I  T  </button>           
                 </div>
               </div>
             </div>
+
           </div>
-          <div class="row justify-content-center">
+          <div class="row justify-content-center sticky-100">
             <div class="col-lg-8 col-md-8 col-sm-12">
               <div class="scrollable-box">
                 <div class="single-question question-form-1 mt-2">
@@ -897,8 +909,7 @@
         return this.$store.getters.user
       },
       kidAge() {
-        const birthDate = new Date(this.kids.birthday);
-        const currentAge = this.getAge(birthDate)
+        const currentAge = this.getAge(this.kids.birthday)
         return currentAge;
       }
     },
@@ -958,6 +969,7 @@
       },
       getAge (birthDate) {
         const today = new Date();
+        birthDate = new Date(birthDate);
         let currentAge = today.getFullYear() - birthDate.getFullYear();
         const month = today.getMonth() - birthDate.getMonth();
         if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
@@ -979,6 +991,11 @@
 </script>
 <style lang="scss" scoped>
   .card { height: auto; }
+  .sticky-100 { position: sticky; top: 100px;}
+  .scrollable-box {
+    max-height: none;
+    margin-bottom: 100px;
+  }
   .header-question {
     cursor: pointer;
     color: green;
