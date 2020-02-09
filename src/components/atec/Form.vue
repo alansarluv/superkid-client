@@ -1,143 +1,155 @@
 <template>
-  <div class="container-fluid mt-100">
-    <div v-if="!kidLists.length" class="row">
-      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <form @submit.prevent="onSubmitKids">
-              <div class="form-group">
-                <input type="text" class="form-control" id="child-name" v-model="kids.name" placeholder="Tulis nama anak" required>
+  <div class="container-fluid mt-5">
+    <div class="row">
+      <div class="col-md-2">
+        <atec-sidebar></atec-sidebar>
+      </div>
+      <div class="col-md-10">
+        <div v-if="!kidLists.length" class="row justify-content-center">
+          <div class="col-lg-6 col-md-8 col-sm-12 mb-4">
+            <div class="card">
+              <div class="card-body">
+                <form @submit.prevent="onSubmitKids">
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="child-name" v-model="kids.name" placeholder="Tulis nama anak" required>
+                  </div>
+                  <div class="form-group">
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="genderpria" v-model="kids.gender" value="pria" class="custom-control-input" required>
+                      <label class="custom-control-label" for="genderpria">Laki laki</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline">
+                      <input type="radio" id="genderwanita" v-model="kids.gender" value="wanita" class="custom-control-input" required>
+                      <label class="custom-control-label" for="genderwanita">Perempuan</label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <input type="date" class="form-control" v-model="kids.birthday" required>
+                  </div>
+                  <div class="form-group">
+                    <p>Umur : <span>{{kidAge}}</span> tahun</p>
+                  </div>
+                  <div class="form-group">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                  </div>
+                </form>              
               </div>
-              <div class="form-group">
-                <div class="custom-control custom-radio custom-control-inline">
-                  <input type="radio" id="genderpria" v-model="kids.gender" value="pria" class="custom-control-input" required>
-                  <label class="custom-control-label" for="genderpria">Laki laki</label>
-                </div>
-                <div class="custom-control custom-radio custom-control-inline">
-                  <input type="radio" id="genderwanita" v-model="kids.gender" value="wanita" class="custom-control-input" required>
-                  <label class="custom-control-label" for="genderwanita">Perempuan</label>
-                </div>
-              </div>
-              <div class="form-group">
-                <input type="date" class="form-control" v-model="kids.birthday" required>
-              </div>
-              <div class="form-group">
-                <p>Umur : <span class="jc-auto-age" data-target="calculate-age">-</span> tahun</p>
-              </div>
-              <div class="form-group">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <button type="submit" class="btn btn-primary btn-block">Submit</button>
-              </div>
-            </form>              
+            </div>          
           </div>
-        </div>          
+        </div>
+        <form action="/atec/form-report" v-if="kidLists.length" method="POST">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <input type="hidden" name="kidName" value="<%= kids[0].name %>">
+          <div class="row justify-content-center mb-3">
+            <div class="col-lg-8 col-md-8 col-sm-12">
+              <div class="card">
+                <div class="card-body">
+                  <select name="kids">
+                    <option v-for="kid in kidLists" :key="kid._id" :value="kid._id">{{kid.name}}</option>
+                  </select>
+                  <p class="text-right">Dummy name (Male - 6 Years old)</p>
+                  <input type="hidden" class="available-report-date" value="<%= listReportMonthYear %>">
+                  <h3 class="mb-3">Pilih Bulan dan Tahun laporan ATEC</h3>
+                  <div class="row">
+                    <div class="col-md-12 col-lg-6 mb-3">
+                      <select name="atecMonth" class="form-control jc-auto-select jc-check-available-monthyear" data-type-auto="month">
+                        <option value="00">Januari</option>
+                        <option value="01">Februari</option>
+                        <option value="02">Maret</option>
+                        <option value="03">April</option>
+                        <option value="04">Mei</option>
+                        <option value="05">Juni</option>
+                        <option value="06">Juli</option>
+                        <option value="07">Agustus</option>
+                        <option value="08">September</option>
+                        <option value="09">Oktober</option>
+                        <option value="10">November</option>
+                        <option value="11">Desember</option>
+                      </select>
+                    </div>
+                    <div class="col-md-12 col-lg-6 mb-3">
+                      <select name="atecYear" class="form-control jc-auto-select jc-check-available-monthyear" data-type-auto="year">
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                        <option value="2019">2019</option>
+                        <option value="2018">2018</option>
+                        <option value="2017">2017</option>
+                        <option value="2016">2016</option>
+                      </select>
+                    </div>
+                  </div>
+                  <p 
+                    class="header-question"
+                    :class="{
+                      active: (formActive === 1)
+                    }"
+                    @click="formActive = 1"
+                  >
+                    <!-- class active only if formActive = 1 -->
+                    Form 1 - Kemampuan Bicara/Berbahasa ( {{answeredQ1}} / 14) 
+                    <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                  </p>
+                  <p 
+                    class="header-question"
+                    :class="{
+                      active: (formActive === 2),
+                      disabled: (answeredQ2 !== 20)
+                    }"
+                    @click="formActive = 2"
+                  >
+                    Form 2 - Kemampuan Bersosialisasi ( {{answeredQ2}} / 20)
+                  </p>
+                  <p 
+                    class="header-question"
+                    :class="{
+                      active: (formActive === 3),
+                      disabled: (answeredQ3 !== 18)
+                    }"
+                    @click="formActive = 3"
+                  >
+                    Form 3 - Kesadaran sensorik / kognitif ( {{answeredQ3}} / 18)
+                  </p>
+                  <p 
+                    class="header-question"
+                    :class="{
+                      active: (formActive === 4),
+                      disabled: (answeredQ4 !== 25 )
+                    }"
+                    @click="formActive = 4"
+                  >
+                    Form 4 - Kesehatan umum, fisik dan perilaku ( {{answeredQ4}} / 25)
+                  </p>
+                  <button v-show="submitBtn" type="submit" class="form-control btn- btn-info">  S  U  B  M  I  T  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-8 col-sm-12">
+              <div class="scrollable-box">
+                <div class="single-question question-form-1 mt-2">
+                  <question-list 
+                    v-for="(question, idx) in formQuestion" 
+                    :key="idx" 
+                    :question='question'
+                    :formActive='formActive'
+                    @selectedRadio='valSelectedRadio'>
+                  </question-list>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
-    <form action="/atec/form-report" v-if="kidLists.length" method="POST">
-      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-      <input type="hidden" name="kidName" value="<%= kids[0].name %>">
-      <div class="row justify-content-center mb-3">
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="card">
-            <div class="card-body">
-              <p class="text-right">Dummy name (Male - 6 Years old)</p>
-              <input type="hidden" class="available-report-date" value="<%= listReportMonthYear %>">
-              <h3 class="mb-3">Pilih Bulan dan Tahun laporan ATEC</h3>
-              <div class="row">
-                <div class="col-md-12 col-lg-6 mb-3">
-                  <select name="atecMonth" class="form-control jc-auto-select jc-check-available-monthyear" data-type-auto="month">
-                    <option value="00">Januari</option>
-                    <option value="01">Februari</option>
-                    <option value="02">Maret</option>
-                    <option value="03">April</option>
-                    <option value="04">Mei</option>
-                    <option value="05">Juni</option>
-                    <option value="06">Juli</option>
-                    <option value="07">Agustus</option>
-                    <option value="08">September</option>
-                    <option value="09">Oktober</option>
-                    <option value="10">November</option>
-                    <option value="11">Desember</option>
-                  </select>
-                </div>
-                <div class="col-md-12 col-lg-6 mb-3">
-                  <select name="atecYear" class="form-control jc-auto-select jc-check-available-monthyear" data-type-auto="year">
-                    <option value="2021">2021</option>
-                    <option value="2020">2020</option>
-                    <option value="2019">2019</option>
-                    <option value="2018">2018</option>
-                    <option value="2017">2017</option>
-                    <option value="2016">2016</option>
-                  </select>
-                </div>
-              </div>
-              <p 
-                class="header-question"
-                :class="{
-                  active: (formActive === 1)
-                }"
-                @click="formActive = 1"
-              >
-                <!-- class active only if formActive = 1 -->
-                Form 1 - Kemampuan Bicara/Berbahasa ( {{answeredQ1}} / 14) 
-                <i class="fa fa-check-square-o" aria-hidden="true"></i>
-              </p>
-              <p 
-                class="header-question"
-                :class="{
-                  active: (formActive === 2),
-                  disabled: (answeredQ2 !== 20)
-                }"
-                @click="formActive = 2"
-              >
-                Form 2 - Kemampuan Bersosialisasi ( {{answeredQ2}} / 20)
-              </p>
-              <p 
-                class="header-question"
-                :class="{
-                  active: (formActive === 3),
-                  disabled: (answeredQ3 !== 18)
-                }"
-                @click="formActive = 3"
-              >
-                Form 3 - Kesadaran sensorik / kognitif ( {{answeredQ3}} / 18)
-              </p>
-              <p 
-                class="header-question"
-                :class="{
-                  active: (formActive === 4),
-                  disabled: (answeredQ4 !== 25 )
-                }"
-                @click="formActive = 4"
-              >
-                Form 4 - Kesehatan umum, fisik dan perilaku ( {{answeredQ4}} / 25)
-              </p>
-              <button v-show="submitBtn" type="submit" class="form-control btn- btn-info">  S  U  B  M  I  T  </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row justify-content-center">
-        <div class="col-lg-4 col-md-6 col-sm-12">
-          <div class="scrollable-box">
-            <div class="single-question question-form-1 mt-2">
-              <question-list 
-                v-for="(question, idx) in formQuestion" 
-                :key="idx" 
-                :question='question'
-                :formActive='formActive'
-                @selectedRadio='valSelectedRadio'>
-              </question-list>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
   </div>
 </template>
 <script>
   import Question from './Question'
   import axios from 'axios';
+  import Sidebar from '../partials/Sidebar';
+
   export default {
     data() {
       return {
@@ -883,10 +895,16 @@
       },
       user() {
         return this.$store.getters.user
+      },
+      kidAge() {
+        const birthDate = new Date(this.kids.birthday);
+        const currentAge = this.getAge(birthDate)
+        return currentAge;
       }
     },
     components: {
-      questionList: Question
+      questionList: Question,
+      atecSidebar: Sidebar
     },
     methods: {
       valSelectedRadio(val) {
@@ -937,6 +955,16 @@
             }
           })
           .catch(error => console.log(error)) // eslint-disable-line no-console
+      },
+      getAge (birthDate) {
+        const today = new Date();
+        let currentAge = today.getFullYear() - birthDate.getFullYear();
+        const month = today.getMonth() - birthDate.getMonth();
+        if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+          currentAge--;
+        }
+        currentAge = currentAge > 0 ? currentAge : 0;
+        return currentAge;
       }
     },
     watch: {

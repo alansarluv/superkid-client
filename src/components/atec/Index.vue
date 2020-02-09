@@ -1,6 +1,27 @@
 <template>
-  <div class="container-fluid mt-125">
-    <div class="row justify-content-center">
+  <div class="container-fluid mt-5">
+    <div class="row">
+      <div class="col-md-2">
+        <atec-sidebar></atec-sidebar>
+      </div>
+      <div class="col-md-10">
+        <div class="">
+          <h2>Sekilas ATEC (Autism Treatment Evaluation Checklist)</h2>
+          <p>Hambatan utama dalam penelitian autisme adalah kurangnya sarana yang valid untuk mengukur efektivitas berbagai perawatan. Selama bertahun-tahun, para peneliti telah menerbitkan ratusan penelitian yang mencoba untuk mengevaluasi berbagai intervensi biomedis dan psiko-pendidikan yang dimaksudkan untuk memberi manfaat bagi anak-anak autis. Banyak dari penelitian ini menghasilkan hasil yang tidak meyakinkan atau, lebih buruk, menyesatkan, karena tidak ada tes atau skala berguna yang dirancang untuk mengukur efektivitas pengobatan. Karena tidak memiliki skala seperti itu, para peneliti terpaksa menggunakan skala seperti Childhood Autism Rating Scale (CARS), Gilliam Autism Rating Scale (GARS), atau Autism Behavior Checklist (ABC), yang semuanya dirancang untuk mendiagnosis autisme - untuk memberi tahu apakah seorang anak autis - dan tidak untuk mengukur efektivitas pengobatan.</p>
+          <p>Bernard Rimland dan Stephen M. Edelson dari Autism Research Institute mengembangkan Daftar Periksa Evaluasi Pengobatan Autisme (ATEC) untuk memenuhi kebutuhan ini.</p>
+          <p>ATEC adalah formulir satu halaman yang dirancang untuk diisi oleh orang tua, guru, atau pengasuh. Formulir Ini terdiri dari 4 subyek:</p>
+          <ol>
+            <li>Komunikasi Pidato / Bahasa (14 item).</li>
+            <li>Kemasyarakatan (20 item).</li>
+            <li>Kesadaran Sensorik / Kognitif (18 item).</li>
+            <li>Kesehatan / Fisik / Perilaku (25 item).</li>
+          </ol>
+          <p>Dengan melakukan penanganan terapi yang tepat, disertai dengan suplemen, biomed, serta diet yang sesuai. Diharapkan para orang tua atau terapis dapat meninjau perkembangan anak dari waktu ke waktu dengan menggunakan ATEC (umumnya setiap awal / akhir bulan). Apakah skor nya tiap bulan ada peningkatan, penurunan atau stagnan, sehingga dapat mengatur strategi terbaik agar memberi hasil yang lebih baik lagi untuk perkembangan ananda.</p>
+          <p><router-link to="https://www.autism.org/autism-treatment-evaluation-checklist/"> sumber </router-link></p>
+        </div>        
+      </div>
+    </div>
+    <!-- <div class="row justify-content-center">
       <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
         <router-link to="/atec/form" class="card-box-route">
           <div class="card">
@@ -65,29 +86,21 @@
           </div>
         </router-link>
       </div>
-      <!-- review suplemen -->
-      <!-- review obat -->
-      <!-- review cemilan -->
-      <!-- review terapi -->
-    </div>    
-    <div class="row justify-content-center">
+    </div>     -->
+    <!-- <div class="row justify-content-center">
       <div class="col-10 my-5">
-        <div class="scrollable-box">
-          <h2>Sekilas ATEC (Autism Treatment Evaluation Checklist)</h2>
-          <p>Hambatan utama dalam penelitian autisme adalah kurangnya sarana yang valid untuk mengukur efektivitas berbagai perawatan. Selama bertahun-tahun, para peneliti telah menerbitkan ratusan penelitian yang mencoba untuk mengevaluasi berbagai intervensi biomedis dan psiko-pendidikan yang dimaksudkan untuk memberi manfaat bagi anak-anak autis. Banyak dari penelitian ini menghasilkan hasil yang tidak meyakinkan atau, lebih buruk, menyesatkan, karena tidak ada tes atau skala berguna yang dirancang untuk mengukur efektivitas pengobatan. Karena tidak memiliki skala seperti itu, para peneliti terpaksa menggunakan skala seperti Childhood Autism Rating Scale (CARS), Gilliam Autism Rating Scale (GARS), atau Autism Behavior Checklist (ABC), yang semuanya dirancang untuk mendiagnosis autisme - untuk memberi tahu apakah seorang anak autis - dan tidak untuk mengukur efektivitas pengobatan.</p>
-          <p>Bernard Rimland dan Stephen M. Edelson dari Autism Research Institute mengembangkan Daftar Periksa Evaluasi Pengobatan Autisme (ATEC) untuk memenuhi kebutuhan ini.</p>
-          <p>ATEC adalah formulir satu halaman yang dirancang untuk diisi oleh orang tua, guru, atau pengasuh. Formulir Ini terdiri dari 4 subyek:</p>
-          <ol>
-            <li>Komunikasi Pidato / Bahasa (14 item).</li>
-            <li>Kemasyarakatan (20 item).</li>
-            <li>Kesadaran Sensorik / Kognitif (18 item).</li>
-            <li>Kesehatan / Fisik / Perilaku (25 item).</li>
-          </ol>
-          <p>Dengan melakukan penanganan terapi yang tepat, disertai dengan suplemen, biomed, serta diet yang sesuai. Diharapkan para orang tua atau terapis dapat meninjau perkembangan anak dari waktu ke waktu dengan menggunakan ATEC (umumnya setiap awal / akhir bulan). Apakah skor nya tiap bulan ada peningkatan, penurunan atau stagnan, sehingga dapat mengatur strategi terbaik agar memberi hasil yang lebih baik lagi untuk perkembangan ananda.</p>
-          <p><router-link to="https://www.autism.org/autism-treatment-evaluation-checklist/"> sumber </router-link></p>
-        </div>
+
       </div>
-    </div>
+    </div> -->
   </div>
 
 </template>
+<script>
+  import Sidebar from '../partials/Sidebar';
+
+  export default {
+    components: {
+      atecSidebar: Sidebar
+    }
+  }
+</script>
