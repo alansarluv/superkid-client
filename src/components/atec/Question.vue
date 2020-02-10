@@ -1,45 +1,62 @@
 <template>
   <div class="wrapper-question" v-show="isShow">
-    <p>
-      <span class="mr-2">{{question.formList}}.{{question.numberList}}</span>
-      <span>{{question.theQuestion}}</span>
-      <span class="ml-1">?</span>
-    </p>
-    <div class="row">
-      <label class="col-sm-12 col-md-4">
-        <div class="custom-button" :class="{'active': (this.selectedRadio === 'tb')}">
+    <div class="row justify-content-center">
+      <div 
+        class="col-sm-12"
+        :class="[ question.option.length > 3 ? 'col-md-12' : '', 'col-md-9' ]">
+        <p>
+          <span class="mr-2">{{question.formList}}.{{question.numberList}}</span>
+          <span>{{question.theQuestion}}</span>
+          <span class="ml-1">?</span>
+        </p>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <label class="col-sm-12 col-md-3">
+        <div class="custom-button" :class="{'active': (this.selectedRadio === question.val[0] )}">
           <input 
             type="radio" 
             :name="question.name" 
             @change="onChangeRadio($event)" 
             class="form-control" 
-            value="tb" 
+            :value="question.val[0]" 
             required>
-          {{question.option1}}
+          {{question.option[0]}}
         </div>
       </label>
-      <label class="col-sm-12 col-md-4">
-        <div class="custom-button" :class="{'active': (this.selectedRadio === 'ab')}">
+      <label class="col-sm-12 col-md-3">
+        <div class="custom-button" :class="{'active': (this.selectedRadio === question.val[1] )}">
           <input 
             type="radio" 
             :name="question.name" 
             @change="onChangeRadio($event)" 
             class="form-control" 
-            value="ab">
-          {{question.option2}}
+            :value="question.val[1]">
+          {{question.option[1]}}
         </div>
       </label>
-      <label class="col-sm-12 col-md-4">
-        <div class="custom-button" :class="{'active': (this.selectedRadio === 'sb')}">
+      <label class="col-sm-12 col-md-3">
+        <div class="custom-button" :class="{'active': (this.selectedRadio === question.val[2] )}">
           <input 
             type="radio" 
             :name="question.name" 
             @change="onChangeRadio($event)" 
             class="form-control" 
-            value="sb">
-          {{question.option3}}
+            :value="question.val[2]">
+          {{question.option[2]}}
         </div>
       </label>
+      <label v-if="question.option.length > 3" class="col-sm-12 col-md-3">
+        <div class="custom-button" :class="{'active': (this.selectedRadio === question.val[3] )}">
+          <input 
+            type="radio" 
+            :name="question.name" 
+            @change="onChangeRadio($event)" 
+            class="form-control" 
+            :value="question.val[3]">
+          {{question.option[3]}}
+        </div>
+      </label>      
     </div> 
   </div>
 </template>

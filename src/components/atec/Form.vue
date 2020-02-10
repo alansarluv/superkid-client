@@ -105,7 +105,7 @@
                     class="header-question"
                     :class="{
                       active: (formActive === 2),
-                      disabled: (answeredQ2 !== 20)
+                      disabled: (answeredQ1 < 14)
                     }"
                     @click="formActive = 2"
                   >
@@ -115,7 +115,7 @@
                     class="header-question"
                     :class="{
                       active: (formActive === 3),
-                      disabled: (answeredQ3 !== 18)
+                      disabled: (answeredQ2 < 20)
                     }"
                     @click="formActive = 3"
                   >
@@ -125,7 +125,7 @@
                     class="header-question"
                     :class="{
                       active: (formActive === 4),
-                      disabled: (answeredQ4 !== 25 )
+                      disabled: (answeredQ3 < 18 )
                     }"
                     @click="formActive = 4"
                   >
@@ -161,7 +161,6 @@
   import Question from './Question'
   import axios from 'axios';
   import Sidebar from '../partials/Sidebar';
-
   export default {
     data() {
       return {
@@ -170,718 +169,616 @@
             formList: 1,
             numberList: 1,
             theQuestion: 'Mengetahui namanya sendiri',
-            option1: 'Tidak benar',
-            option2: 'Agak benar',
-            option3: 'Sangat benar',
+            option: ['Tidak benar', 'Agak benar', 'Sangat benar'],
+            val: ['tb', 'ab', 'sb'],
             name: 'bicara1'
           },
           {
             formList: 1,
             numberList: 2,
             theQuestion: 'Merespon pada "tidak" atau "stop"',
-            option1: 'Tidak benar',
-            option2: 'Agak benar',
-            option3: 'Sangat benar',
+            option: ['Tidak benar', 'Agak benar', 'Sangat benar'],
+            val: ['tb', 'ab', 'sb'],
             name: 'bicara2'
           },
           {
             formList: 1,
             numberList: 3,
             theQuestion: 'Dapat mengikuti perintah"',
-            option1: 'Tidak benar',
-            option2: 'Agak benar',
-            option3: 'Sangat benar',
+            option: ['Tidak benar', 'Agak benar', 'Sangat benar'],
+            val: ['tb', 'ab', 'sb'],
             name: 'bicara3'
           },
           {
             formList: 1,
             numberList: 4,
             theQuestion: 'Dapat menggunakan 1 kata (Tidak!, makan, air, dll)',
-            option1: 'Tidak benar',
-            option2: 'Agak benar',
-            option3: 'Sangat benar',
+            option: ['Tidak benar', 'Agak benar', 'Sangat benar'],
+            val: ['tb', 'ab', 'sb'],
             name: 'bicara4'
           },
           {
             formList: 1,
             numberList: 5,
             theQuestion: 'Dapat menggunakan 2 kata sekaligus bersamaan (Tidak mau!, mau makan, minta itu, dll)',
-            option1: 'Tidak benar',
-            option2: 'Agak benar',
-            option3: 'Sangat benar',
+            option: ['Tidak benar', 'Agak benar', 'Sangat benar'],
+            val: ['tb', 'ab', 'sb'],
             name: 'bicara5'
           },
           {
             formList: 1,
             numberList: 6,
             theQuestion: 'Dapat menggunakan 3 kata sekaligus (Mau minum susu, dll)',
-            option1: 'Tidak benar',
-            option2: 'Agak benar',
-            option3: 'Sangat benar',
+            option: ['Tidak benar', 'Agak benar', 'Sangat benar'],
+            val: ['tb', 'ab', 'sb'],
             name: 'bicara6'
           },
           {
             formList: 1,
             numberList: 7,
             theQuestion: 'Mengetahui 10 kata atau lebih',
-            option1: 'Tidak benar',
-            option2: 'Agak benar',
-            option3: 'Sangat benar',
+            option: ['Tidak benar', 'Agak benar', 'Sangat benar'],
+            val: ['tb', 'ab', 'sb'],
             name: 'bicara7'
           },
           {
             formList: 1,
             numberList: 8,
             theQuestion: 'Dapat membuat kalimat yang berisi 4 kata atau lebih',
-            option1: 'Tidak benar',
-            option2: 'Agak benar',
-            option3: 'Sangat benar',
+            option: ['Tidak benar', 'Agak benar', 'Sangat benar'],
+            val: ['tb', 'ab', 'sb'],
             name: 'bicara8'
           },
           {
             formList: 1,
             numberList: 9,
             theQuestion: 'Mampu menjelaskan apa yang dia inginkan',
-            option1: 'Tidak benar',
-            option2: 'Agak benar',
-            option3: 'Sangat benar',
+            option: ['Tidak benar', 'Agak benar', 'Sangat benar'],
+            val: ['tb', 'ab', 'sb'],
             name: 'bicara9'
           },
           {
             formList: 1,
             numberList: 10,
             theQuestion: 'Mampu menanyakan pertanyaan yang bermakna',
-            option1: 'Tidak benar',
-            option2: 'Agak benar',
-            option3: 'Sangat benar',
+            option: ['Tidak benar', 'Agak benar', 'Sangat benar'],
+            val: ['tb', 'ab', 'sb'],
             name: 'bicara10'
           },
           {
             formList: 1,
             numberList: 11,
             theQuestion: 'Isi pembicaraan cenderung relevan atau bermakna',
-            option1: 'Tidak benar',
-            option2: 'Agak benar',
-            option3: 'Sangat benar',
+            option: ['Tidak benar', 'Agak benar', 'Sangat benar'],
+            val: ['tb', 'ab', 'sb'],
             name: 'bicara11'
           },
           {
             formList: 1,
             numberList: 12,
             theQuestion: 'Sering menggunakan kalimat kalimat yang berurutan',
-            option1: 'Tidak benar',
-            option2: 'Agak benar',
-            option3: 'Sangat benar',
+            option: ['Tidak benar', 'Agak benar', 'Sangat benar'],
+            val: ['tb', 'ab', 'sb'],
             name: 'bicara12'
           },
           {
             formList: 1,
             numberList: 13,
             theQuestion: 'Bisa mengikuti pembicaraan dengan cukup baik',
-            option1: 'Tidak benar',
-            option2: 'Agak benar',
-            option3: 'Sangat benar',
+            option: ['Tidak benar', 'Agak benar', 'Sangat benar'],
+            val: ['tb', 'ab', 'sb'],
             name: 'bicara13'
           },
           {
             formList: 1,
             numberList: 14,
             theQuestion: 'Memiliki kemampuan bicara / berbahasa yang sesuai dengan seusianya',
-            option1: 'Tidak benar',
-            option2: 'Agak benar',
-            option3: 'Sangat benar',
+            option: ['Tidak benar', 'Agak benar', 'Sangat benar'],
+            val: ['tb', 'ab', 'sb'],
             name: 'bicara14'
           },
           {
             formList: 2,
             numberList: 1,
             theQuestion: 'Terlihat seperti berada dalam tempurung (anda tdk dapat menjangkaunya)',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial1'
           },
           {
             formList: 2,
             numberList: 2,
             theQuestion: 'Mengabaikan orang lain',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial2'
           },
           {
             formList: 2,
             numberList: 3,
             theQuestion: 'Ketika dipanggil, hanya sedikit atau malah tidak memperhatikan',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial3'
           },
           {
             formList: 2,
             numberList: 4,
             theQuestion: 'Tidak kooperatif dan menolak',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial4'
           },
           {
             formList: 2,
             numberList: 5,
             theQuestion: 'Tidak ada kontak mata',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial5'
           },
           {
             formList: 2,
             numberList: 6,
             theQuestion: 'Lebih suka menyendiri',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial6'
           },
           {
             formList: 2,
             numberList: 7,
             theQuestion: 'Tidak menunjukan rasa kasih sayang',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial7'
           },
           {
             formList: 2,
             numberList: 8,
             theQuestion: 'Tidak mampu menyapa orang tua',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial8'
           },
           {
             formList: 2,
             numberList: 9,
             theQuestion: 'Menghindari kontak dengan orang lain',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial9'
           },
           {
             formList: 2,
             numberList: 10,
             theQuestion: 'Tidak mampu menirukan orang lain',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial10'
           },
           {
             formList: 2,
             numberList: 11,
             theQuestion: 'Tidak suka dipegang atau dipeluk',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial11'
           },
           {
             formList: 2,
             numberList: 12,
             theQuestion: 'Tidak mau berbagi atau menunjukan',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial12'
           },
           {
             formList: 2,
             numberList: 13,
             theQuestion: 'Tidak bisa melambaikan tangan (da... dah...)',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial13'
           },
           {
             formList: 2,
             numberList: 14,
             theQuestion: 'Sering tidak setuju / menolak',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial14'
           },
           {
             formList: 2,
             numberList: 15,
             theQuestion: 'Tantrum, marah marah',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial15'
           },
           {
             formList: 2,
             numberList: 16,
             theQuestion: 'Tidak mempunyai teman',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial16'
           },
           {
             formList: 2,
             numberList: 17,
             theQuestion: 'Jarang tersenyum',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial17'
           },
           {
             formList: 2,
             numberList: 18,
             theQuestion: 'Tidak peka terhadap perasaan orang lain',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial18'
           },
           {
             formList: 2,
             numberList: 19,
             theQuestion: 'Acuh tak acuh ketika disukai orang lain',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial19'
           },
           {
             formList: 2,
             numberList: 20,
             theQuestion: 'Acuh tak acuh ketika ditinggal pergi oleh orang tuanya',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sosial20'
           },
           {
             formList: 3,
             numberList: 1,
             theQuestion: 'Merespon saat dipanggil namanya',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik1'
           },
           {
             formList: 3,
             numberList: 2,
             theQuestion: 'Merespon saat dipuji',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik2'
           },
           {
             formList: 3,
             numberList: 3,
             theQuestion: 'Melihat pada orang dan binatang',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik3'
           },
           {
             formList: 3,
             numberList: 4,
             theQuestion: 'Melihat pada gambar (dan TV)',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik4'
           },
           {
             formList: 3,
             numberList: 5,
             theQuestion: 'Menggambar, mewarnai, dan melakukan kesenian',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik5'
           },
           {
             formList: 3,
             numberList: 6,
             theQuestion: 'Bermain dengan mainannya secara sesuai',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik6'
           },
           {
             formList: 3,
             numberList: 7,
             theQuestion: 'Menggunakan ekspresi wajah yang sesuai',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik7'
           },
           {
             formList: 3,
             numberList: 8,
             theQuestion: 'Memahami cerita yang ditayangkan di TV',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik8'
           },
           {
             formList: 3,
             numberList: 9,
             theQuestion: 'Memahami penjelasan',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik9'
           },
           {
             formList: 3,
             numberList: 10,
             theQuestion: 'Sadar akan lingkungannya',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik10'
           },
           {
             formList: 3,
             numberList: 11,
             theQuestion: 'Sadar akan bahaya',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik11'
           },
           {
             formList: 3,
             numberList: 12,
             theQuestion: 'Mampu berimajinasi',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik12'
           },
           {
             formList: 3,
             numberList: 13,
             theQuestion: 'Memulai aktivitas',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik13'
           },
           {
             formList: 3,
             numberList: 14,
             theQuestion: 'Mampu berpakaian sendiri',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik14'
           },
           {
             formList: 3,
             numberList: 15,
             theQuestion: 'Memiliki rasa penasaran dan ketertarikan',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik15'
           },
           {
             formList: 3,
             numberList: 16,
             theQuestion: 'Suka tantangan, senang mengeksplorasi',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik16'
           },
           {
             formList: 3,
             numberList: 17,
             theQuestion: 'Tampak selaras, tidak tampak kosong',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik17'
           },
           {
             formList: 3,
             numberList: 18,
             theQuestion: 'Mampu mengikuti pandangan ke arah semua orang memandang',
-            option1: 'Tidak cocok',
-            option2: 'Agak cocok',
-            option3: 'Sangat cocok',
+            option: ['Tidak cocok', 'Agak cocok', 'Sangat cocok'],
+            val: ['tc', 'ac', 'sc'],
             name: 'sensorik18'
           },
           {
             formList: 4,
             numberList: 1,
             theQuestion: 'Mengompol saat tidur',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum1'
           },
           {
             formList: 4,
             numberList: 2,
             theQuestion: 'Mengompol di celana / popok',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum2'
           },
           {
             formList: 4,
             numberList: 3,
             theQuestion: 'Buang air besar di celana / popok',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum3'
           },
           {
             formList: 4,
             numberList: 4,
             theQuestion: 'Diare',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum4'
           },
           {
             formList: 4,
             numberList: 5,
             theQuestion: 'Konstipasi / sembelit',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum5'
           },
           {
             formList: 4,
             numberList: 6,
             theQuestion: 'Gangguan tidur',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum6'
           },
           {
             formList: 4,
             numberList: 7,
             theQuestion: 'Makan terlalu banyak / terlalu sedikit',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum7'
           },
           {
             formList: 4,
             numberList: 8,
             theQuestion: 'Pilihan makanan yang diinginkan sangat terbatas',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum8'
           },
           {
             formList: 4,
             numberList: 9,
             theQuestion: 'Hiperaktif',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum9'
           },
           {
             formList: 4,
             numberList: 10,
             theQuestion: 'Letargi, lemah lesu',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum10'
           },
           {
             formList: 4,
             numberList: 11,
             theQuestion: 'Memukul atau melukai diri sendiri',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum11'
           },
           {
             formList: 4,
             numberList: 12,
             theQuestion: 'Memukul atau melukai orang lain',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum12'
           },
           {
             formList: 4,
             numberList: 13,
             theQuestion: 'Destruktif',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum13'
           },
           {
             formList: 4,
             numberList: 14,
             theQuestion: 'Sensitif terhadap suara',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum14'
           },
           {
             formList: 4,
             numberList: 15,
             theQuestion: 'Cemas / penuh ketakutan',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum15'
           },
           {
             formList: 4,
             numberList: 16,
             theQuestion: 'Tidak senang / mudah rewel / menangis',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum16'
           },
           {
             formList: 4,
             numberList: 17,
             theQuestion: 'Kejang',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum17'
           },
           {
             formList: 4,
             numberList: 18,
             theQuestion: 'Bicara secara obsesif',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum18'
           },
           {
             formList: 4,
             numberList: 19,
             theQuestion: 'Kaku terhadap rutinitas',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum19'
           },
           {
             formList: 4,
             numberList: 20,
             theQuestion: 'Berteriak / menjerit-jerit',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum20'
           },
           {
             formList: 4,
             numberList: 21,
             theQuestion: 'Menuntut hal atau cara yang sama berulang-ulang',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum21'
           },
           {
             formList: 4,
             numberList: 22,
             theQuestion: 'Sering gelisah / agitasi',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum22'
           },
           {
             formList: 4,
             numberList: 23,
             theQuestion: 'Tidak peka terhadap nyeri',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum23'
           },
           {
             formList: 4,
             numberList: 24,
             theQuestion: 'Terfokus atau sulit dialihkan dari objek atau topik tertentu',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum24'
           },
           {
             formList: 4,
             numberList: 25,
             theQuestion: 'Gerakan repetitive (stimming, flapping, atau menggoyang-goyangkan bagian badan)',
-            option1: 'Tidak bermasalah',
-            option2: 'sedikit bermasalah',
-            option3: 'cukup bermasalah',
-            option4: 'Sangat bermasalah',
+            option: ['Tidak bermasalah', 'Sedikit bermasalah', 'Cukup bermasalah', 'Sangat bermasalah'],
+            val: ['tb', 'sb', 'cb', 'vb'],
             name: 'umum25'
           },
         ],
@@ -919,7 +816,7 @@
     },
     methods: {
       valSelectedRadio(val) {
-        console.log(val); // eslint-disable-line no-console
+        console.log("val : ", val); // eslint-disable-line no-console
         this.answeredQ = document.querySelectorAll(".question-form-1 input[type='radio']:checked").length;
         if (this.answeredQ >= 52) {
           this.formActive = 4;
@@ -937,6 +834,12 @@
           this.formActive = 1;
           this.answeredQ1 = this.answeredQ;
         }
+        if ( this.answeredQ === 14 || this.answeredQ === 34 || this.answeredQ === 52) {
+          this.scrollTo(0, 250);
+        }
+      },
+      scrollTo(x, y) {
+        window.scrollTo(x, y);
       },
       onSubmitKids () {
         const token = this.$store.getters.token;
@@ -1002,6 +905,7 @@
     &.disabled {
       color: darkgray;
       cursor: not-allowed;
+      pointer-events: none;
     }
     &.active {
       cursor: pointer;
