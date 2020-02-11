@@ -71,8 +71,9 @@
     methods: {
       onChangeRadio(event) {
         const val = event.target.value;
+        const name = event.target.name;
         this.selectedRadio = val;
-        this.$emit('selectedRadio', val);
+        this.$emit('selectedRadio', val, name);
       }
     },
     computed: {

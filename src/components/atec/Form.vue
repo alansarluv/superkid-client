@@ -30,7 +30,6 @@
                     <p>Umur : <span>{{kidAge}}</span> tahun</p>
                   </div>
                   <div class="form-group">
-                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <button type="submit" class="btn btn-primary btn-block">Submit</button>
                   </div>
                 </form>              
@@ -38,23 +37,24 @@
             </div>          
           </div>
         </div>
-        <form action="/atec/form-report" v-if="kidLists.length" method="POST">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-          <input type="hidden" name="kidName" value="<%= kids[0].name %>">
+        <form @submit.prevent="onSubmitAtec" v-if="kidLists.length">
           <div class="row justify-content-center sticky-100 mb-3">
             <div class="col-lg-6 col-md-8 col-sm-12">
               <div class="card">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-12">
-                      <h5 class="mb-2">Nama anak :</h5>
-                      <select name="kids" class="form-control">
-                        <option v-for="kid in kidLists" :key="kid._id" :value="kid._id">{{kid.name}} - {{kid.gender}} ({{getAge(kid.birthday)}} Tahun)</option>
+                      <h5 class="mb-2">Nama anak : </h5>
+                      <select v-model="atec.selectedKid" class="form-control">
+                        <option disabled value="">Pilih satu</option>
+                        <option v-for="kid in kidLists" :key="kid._id" :value="kid.name">{{kid.name}} - {{kid.gender}} ({{getAge(kid.birthday)}} Tahun)</option>
                       </select>
-                      <h5 class="mb-2 mt-4">Pilih Bulan dan Tahun laporan ATEC</h5>
+                      <input type="hidden" name="kidName" value="<%= kids[0].name %>">
+                      <h5 class="mb-2 mt-4">Pilih Bulan dan Tahun laporan ATEC {{atec.month}} - {{atec.year}}</h5>
                       <div class="row">
                         <div class="col-md-12 col-lg-6">
-                          <select name="atecMonth" class="form-control jc-auto-select jc-check-available-monthyear" data-type-auto="month">
+                          <select v-model="atec.month" class="form-control">
+                            <option disabled value="">Pilih satu</option>
                             <option value="00">Januari</option>
                             <option value="01">Februari</option>
                             <option value="02">Maret</option>
@@ -70,7 +70,8 @@
                           </select>
                         </div>
                         <div class="col-md-12 col-lg-6">
-                          <select name="atecYear" class="form-control jc-auto-select jc-check-available-monthyear" data-type-auto="year">
+                          <select v-model="atec.year" class="form-control">
+                            <option disabled value="">Pilih satu</option>
                             <option value="2021">2021</option>
                             <option value="2020">2020</option>
                             <option value="2019">2019</option>
@@ -98,38 +99,38 @@
                     @click="formActive = 1"
                   >
                     <!-- class active only if formActive = 1 -->
-                    Form 1 - Kemampuan Bicara/Berbahasa ( {{answeredQ1}} / 14) 
+                    Form 1 - Kemampuan Bicara/Berbahasa ( {{atec.bicaraTotalLength}} / 14) 
                     <i class="fa fa-check-square-o" aria-hidden="true"></i>
                   </p>
                   <p 
                     class="header-question"
                     :class="{
                       active: (formActive === 2),
-                      disabled: (answeredQ1 < 14)
+                      disabled: (atec.bicaraTotalLength < 14)
                     }"
                     @click="formActive = 2"
                   >
-                    Form 2 - Kemampuan Bersosialisasi ( {{answeredQ2}} / 20)
+                    Form 2 - Kemampuan Bersosialisasi ( {{atec.sosialTotalLength}} / 20)
                   </p>
                   <p 
                     class="header-question"
                     :class="{
                       active: (formActive === 3),
-                      disabled: (answeredQ2 < 20)
+                      disabled: (atec.sosialTotalLength < 20)
                     }"
                     @click="formActive = 3"
                   >
-                    Form 3 - Kesadaran sensorik / kognitif ( {{answeredQ3}} / 18)
+                    Form 3 - Kesadaran sensorik / kognitif ( {{atec.sensorikTotalLength}} / 18)
                   </p>
                   <p 
                     class="header-question"
                     :class="{
                       active: (formActive === 4),
-                      disabled: (answeredQ3 < 18 )
+                      disabled: (atec.sensorikTotalLength < 18 )
                     }"
                     @click="formActive = 4"
                   >
-                    Form 4 - Kesehatan umum, fisik dan perilaku ( {{answeredQ4}} / 25)
+                    Form 4 - Kesehatan umum, fisik dan perilaku ( {{atec.umumTotalLength}} / 25)
                   </p>
                   <button v-show="submitBtn" type="submit" class="form-control btn- btn-info">  S  U  B  M  I  T  </button>           
                 </div>
@@ -782,11 +783,6 @@
             name: 'umum25'
           },
         ],
-        answeredQ: 0,
-        answeredQ1: 0,
-        answeredQ2: 0,
-        answeredQ3: 0,
-        answeredQ4: 0,
         formActive: 1,
         submitBtn: false,
         kidLists: this.$store.getters.userKids || [],
@@ -794,7 +790,98 @@
           name: '',
           gender: [],
           birthday: Date
-        }
+        },
+        atec: {
+          selectedKid: '',
+          month: '',
+          year: '',
+          bicaraTotal: [],
+          sosialTotal: [],
+          sensorikTotal: [],
+          umumTotal: [],
+          bicaraTotalLength: 0,
+          sosialTotalLength: 0,
+          sensorikTotalLength: 0,
+          umumTotalLength: 0,
+          bicara1 : '',
+          bicara2 : '',
+          bicara3 : '',
+          bicara4 : '',
+          bicara5 : '',
+          bicara6 : '',
+          bicara7 : '',
+          bicara8 : '',
+          bicara9 : '',
+          bicara10 : '',
+          bicara11 : '',
+          bicara12 : '',
+          bicara13 : '',
+          bicara14 : '',
+          sosial1 : '',
+          sosial2 : '',
+          sosial3 : '',
+          sosial4 : '',
+          sosial5 : '',
+          sosial6 : '',
+          sosial7 : '',
+          sosial8 : '',
+          sosial9 : '',
+          sosial10 : '',
+          sosial11 : '',
+          sosial12 : '',
+          sosial13 : '',
+          sosial14 : '',
+          sosial15 : '',
+          sosial16 : '',
+          sosial17 : '',
+          sosial18 : '',
+          sosial19 : '',
+          sosial20 : '',
+          sensorik1 : '',
+          sensorik2 : '',
+          sensorik3 : '',
+          sensorik4 : '',
+          sensorik5 : '',
+          sensorik6 : '',
+          sensorik7 : '',
+          sensorik8 : '',
+          sensorik9 : '',
+          sensorik10 : '',
+          sensorik11 : '',
+          sensorik12 : '',
+          sensorik13 : '',
+          sensorik14 : '',
+          sensorik15 : '',
+          sensorik16 : '',
+          sensorik17 : '',
+          sensorik18 : '',
+          umum1 : '',
+          umum2 : '',
+          umum3 : '',
+          umum4 : '',
+          umum5 : '',
+          umum6 : '',
+          umum7 : '',
+          umum8 : '',
+          umum9 : '',
+          umum10 : '',
+          umum11 : '',
+          umum12 : '',
+          umum13 : '',
+          umum14 : '',
+          umum15 : '',
+          umum16 : '',
+          umum17 : '',
+          umum18 : '',
+          umum19 : '',
+          umum20 : '',
+          umum21 : '',
+          umum22 : '',
+          umum23 : '',
+          umum24 : '',
+          umum25 : ''          
+        },
+        token: this.$store.getters.token
       }
     },
     computed: {
@@ -815,28 +902,44 @@
       atecSidebar: Sidebar
     },
     methods: {
-      valSelectedRadio(val) {
-        console.log("val : ", val); // eslint-disable-line no-console
-        this.answeredQ = document.querySelectorAll(".question-form-1 input[type='radio']:checked").length;
-        if (this.answeredQ >= 52) {
-          this.formActive = 4;
-          this.answeredQ4 = this.answeredQ - 52;
-          this.answeredQ3 = 18;
-        } else if (this.answeredQ >= 34) {
-          this.formActive = 3;
-          this.answeredQ3 = this.answeredQ - 34;
-          this.answeredQ2 = 20;
-        } else if (this.answeredQ >= 14) {
-          this.formActive = 2;
-          this.answeredQ2 = this.answeredQ - 14;
-          this.answeredQ1 = 14;
-        } else {
-          this.formActive = 1;
-          this.answeredQ1 = this.answeredQ;
+      valSelectedRadio(val, name) {
+        name = name.match(/(\d+|[^\d]+)/g);
+        const type = name[0];
+        const pos = name[1];
+        console.log("val : ", val, name, type, pos); // eslint-disable-line no-console
+        if (type === 'bicara') {
+          this.atec.bicaraTotal[pos-1] = val;
+          this.atec.bicaraTotalLength = this.atec.bicaraTotal.reduce((acc,cv)=>(cv)?acc+1:acc,0);
+          if (this.atec.bicaraTotalLength === 14) {
+            this.formActive = 2;
+            this.scrollTo(0, 250);
+          }
+        } else if (type === 'sosial') {
+          this.atec.sosialTotal[pos-1] = val;
+          this.atec.sosialTotalLength = this.atec.sosialTotal.reduce((acc,cv)=>(cv)?acc+1:acc,0);
+          if (this.atec.sosialTotalLength === 20) {
+            this.formActive = 3;
+            this.scrollTo(0, 250);
+          }
+        } else if (type === 'sensorik') {
+          this.atec.sensorikTotal[pos-1] = val;
+          this.atec.sensorikTotalLength = this.atec.sensorikTotal.reduce((acc,cv)=>(cv)?acc+1:acc,0);
+          if (this.atec.sensorikTotalLength === 18) {
+            this.formActive = 4;
+            this.scrollTo(0, 250);
+          }
+        } else if (type === 'umum') {
+          this.atec.umumTotal[pos-1] = val;
+          this.atec.umumTotalLength = this.atec.umumTotal.reduce((acc,cv)=>(cv)?acc+1:acc,0);
+          if (this.atec.umumTotalLength === 25) {
+            this.formActive = 0;
+            this.submitBtn = true;
+            this.scrollTo(0, 250);
+          }
         }
-        if ( this.answeredQ === 14 || this.answeredQ === 34 || this.answeredQ === 52) {
-          this.scrollTo(0, 250);
-        }
+
+        console.log("meh : ", this.atec.bicaraTotalLength); // eslint-disable-line no-console
+        this.atec[name] = val;
       },
       scrollTo(x, y) {
         window.scrollTo(x, y);
@@ -870,6 +973,111 @@
           })
           .catch(error => console.log(error)) // eslint-disable-line no-console
       },
+      onSubmitAtec () {
+        const configData = {
+          data: {
+            userId: this.user._id,
+            kidName: this.atec.selectedKid,
+            atecYear: this.atec.year,
+            atecMonth: this.atec.month,
+            bicaraTotal: this.atec.bicaraTotal,
+            sosialTotal: this.atec.sosialTotal,
+            sensorikTotal: this.atec.sensorikTotal,
+            umumTotal: this.atec.umumTotal,
+            bicara1 : this.atec.bicara1,
+            bicara2 : this.atec.bicara2,
+            bicara3 : this.atec.bicara3,
+            bicara4 : this.atec.bicara4,
+            bicara5 : this.atec.bicara5,
+            bicara6 : this.atec.bicara6,
+            bicara7 : this.atec.bicara7,
+            bicara8 : this.atec.bicara8,
+            bicara9 : this.atec.bicara9,
+            bicara10 : this.atec.bicara10,
+            bicara11 : this.atec.bicara11,
+            bicara12 : this.atec.bicara12,
+            bicara13 : this.atec.bicara13,
+            bicara14 : this.atec.bicara14,
+            sosial1 : this.atec.sosial1,
+            sosial2 : this.atec.sosial2,
+            sosial3 : this.atec.sosial3,
+            sosial4 : this.atec.sosial4,
+            sosial5 : this.atec.sosial5,
+            sosial6 : this.atec.sosial6,
+            sosial7 : this.atec.sosial7,
+            sosial8 : this.atec.sosial8,
+            sosial9 : this.atec.sosial9,
+            sosial10 : this.atec.sosial10,
+            sosial11 : this.atec.sosial11,
+            sosial12 : this.atec.sosial12,
+            sosial13 : this.atec.sosial13,
+            sosial14 : this.atec.sosial14,
+            sosial15 : this.atec.sosial15,
+            sosial16 : this.atec.sosial16,
+            sosial17 : this.atec.sosial17,
+            sosial18 : this.atec.sosial18,
+            sosial19 : this.atec.sosial19,
+            sosial20 : this.atec.sosial20,
+            sensorik1 : this.atec.sensorik1,
+            sensorik2 : this.atec.sensorik2,
+            sensorik3 : this.atec.sensorik3,
+            sensorik4 : this.atec.sensorik4,
+            sensorik5 : this.atec.sensorik5,
+            sensorik6 : this.atec.sensorik6,
+            sensorik7 : this.atec.sensorik7,
+            sensorik8 : this.atec.sensorik8,
+            sensorik9 : this.atec.sensorik9,
+            sensorik10 : this.atec.sensorik10,
+            sensorik11 : this.atec.sensorik11,
+            sensorik12 : this.atec.sensorik12,
+            sensorik13 : this.atec.sensorik13,
+            sensorik14 : this.atec.sensorik14,
+            sensorik15 : this.atec.sensorik15,
+            sensorik16 : this.atec.sensorik16,
+            sensorik17 : this.atec.sensorik17,
+            sensorik18 : this.atec.sensorik18,
+            umum1 : this.atec.umum1,
+            umum2 : this.atec.umum2,
+            umum3 : this.atec.umum3,
+            umum4 : this.atec.umum4,
+            umum5 : this.atec.umum5,
+            umum6 : this.atec.umum6,
+            umum7 : this.atec.umum7,
+            umum8 : this.atec.umum8,
+            umum9 : this.atec.umum9,
+            umum10 : this.atec.umum10,
+            umum11 : this.atec.umum11,
+            umum12 : this.atec.umum12,
+            umum13 : this.atec.umum13,
+            umum14 : this.atec.umum14,
+            umum15 : this.atec.umum15,
+            umum16 : this.atec.umum16,
+            umum17 : this.atec.umum17,
+            umum18 : this.atec.umum18,
+            umum19 : this.atec.umum19,
+            umum20 : this.atec.umum20,
+            umum21 : this.atec.umum21,
+            umum22 : this.atec.umum22,
+            umum23 : this.atec.umum23,
+            umum24 : this.atec.umum24,
+            umum25 : this.atec.umum25
+          }
+        }
+        const configHeader = {
+          headers: {
+            'Authorization': `Bearer ${this.token}`,
+            'Content-Type': 'application/json'
+          }
+        }
+        console.log(configData.data, configHeader)  // eslint-disable-line no-console
+        axios
+          .post('/atec/create', configData.data, configHeader)
+          .then(res => {
+            console.log(res); // eslint-disable-line no-console
+          })
+          .catch(error => console.log(error)) // eslint-disable-line no-console
+
+      },
       getAge (birthDate) {
         const today = new Date();
         birthDate = new Date(birthDate);
@@ -880,14 +1088,6 @@
         }
         currentAge = currentAge > 0 ? currentAge : 0;
         return currentAge;
-      }
-    },
-    watch: {
-      answeredQ: function(val) {
-        if (val >= this.formQuestion.length) {
-          this.formActive = 0;
-          this.submitBtn = true;
-        }
       }
     }
   }
