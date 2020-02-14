@@ -91,6 +91,7 @@
             <div class="col-lg-6 col-md-8 col-sm-12">
               <div class="card">
                 <div class="card-body">
+                  <a @click="selectAllFirst()">check all</a>
                   <p 
                     class="header-question"
                     :class="{
@@ -162,6 +163,7 @@
   import Question from './Question'
   import axios from 'axios';
   import Sidebar from '../partials/Sidebar';
+
   export default {
     data() {
       return {
@@ -913,6 +915,17 @@
           if (this.atec.bicaraTotalLength === 14) {
             this.formActive = 2;
             this.scrollTo(0, 250);
+            this.atec.totalBicara = this.atec.bicaraTotal.map(x => {
+              if (x === 'ab'){
+                x = 1;
+              } else if (x === 'tb'){
+                x = 2;
+              } else {
+                x = 0;
+              }
+              return x;
+            })
+            this.atec.totalBicara = this.totalValArray(this.atec.totalBicara);
           }
         } else if (type === 'sosial') {
           this.atec.sosialTotal[pos-1] = val;
@@ -920,6 +933,17 @@
           if (this.atec.sosialTotalLength === 20) {
             this.formActive = 3;
             this.scrollTo(0, 250);
+            this.atec.totalSosial = this.atec.sosialTotal.map(x => {
+              if (x === 'ac'){
+                x = 1;
+              } else if (x === 'sc'){
+                x = 2;
+              } else {
+                x = 0;
+              }
+              return x;
+            })
+            this.atec.totalSosial = this.totalValArray(this.atec.totalSosial);    
           }
         } else if (type === 'sensorik') {
           this.atec.sensorikTotal[pos-1] = val;
@@ -927,6 +951,17 @@
           if (this.atec.sensorikTotalLength === 18) {
             this.formActive = 4;
             this.scrollTo(0, 250);
+            this.atec.totalSensorik = this.atec.sensorikTotal.map(x => {
+              if (x === 'ac'){
+                x = 1;
+              } else if (x === 'tc'){
+                x = 2;
+              } else {
+                x = 0;
+              }
+              return x;
+            })
+            this.atec.totalSensorik = this.totalValArray(this.atec.totalSensorik); 
           }
         } else if (type === 'umum') {
           this.atec.umumTotal[pos-1] = val;
@@ -935,14 +970,33 @@
             this.formActive = 0;
             this.submitBtn = true;
             this.scrollTo(0, 250);
+            this.atec.totalUmum = this.atec.umumTotal.map(x => {
+              if (x === 'sb'){
+                x = 1;
+              } else if (x === 'cb'){
+                x = 2;
+              } else if (x === 'vb'){
+                x = 3;
+              } else {
+                x = 0;
+              }
+              return x;
+            })
+            this.atec.totalUmum = this.totalValArray(this.atec.totalUmum); 
           }
         }
-
-        console.log("meh : ", this.atec.bicaraTotalLength); // eslint-disable-line no-console
-        this.atec[name] = val;
       },
       scrollTo(x, y) {
         window.scrollTo(x, y);
+      },
+      totalValArray(arr){
+        return arr.reduce((a, b) => a + b, 0);
+      },
+      selectAllFirst() {
+        const allQuestion = document.querySelectorAll(".scrollable-box .single-question .wrapper-question");
+        for (let el of allQuestion) {
+            el.querySelector("input[type='radio']").click();
+        }
       },
       onSubmitKids () {
         const token = this.$store.getters.token;
@@ -980,10 +1034,10 @@
             kidName: this.atec.selectedKid,
             atecYear: this.atec.year,
             atecMonth: this.atec.month,
-            bicaraTotal: this.atec.bicaraTotal,
-            sosialTotal: this.atec.sosialTotal,
-            sensorikTotal: this.atec.sensorikTotal,
-            umumTotal: this.atec.umumTotal,
+            bicaraTotal: this.atec.totalBicara,
+            sosialTotal: this.atec.totalSosial,
+            sensorikTotal: this.atec.totalSensorik,
+            umumTotal: this.atec.totalUmum,
             bicara1 : this.atec.bicara1,
             bicara2 : this.atec.bicara2,
             bicara3 : this.atec.bicara3,
