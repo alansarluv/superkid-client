@@ -44,29 +44,40 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-md-12">
-                      <h5 class="mb-2">Nama anak : </h5>
-                      <select v-model="atec.selectedKid" class="form-control">
+                      <h5 class="mb-2">
+                        Nama anak : 
+                        <span v-if="kidLists.length === 1">
+                          {{kidLists[0].name}} - {{kidLists[0].gender}} ({{getAge(kidLists[0].birthday)}} Tahun)
+                        </span>
+                      </h5>
+                      <select v-if="kidLists.length > 1" v-model="atec.selectedKid" class="form-control">
                         <option disabled value="">Pilih satu</option>
-                        <option v-for="kid in kidLists" :key="kid._id" :value="kid.name">{{kid.name}} - {{kid.gender}} ({{getAge(kid.birthday)}} Tahun)</option>
+                        <option 
+                          v-for="kid in kidLists" 
+                          :key="kid._id" 
+                          :value="kid.name"
+                        >
+                          {{kid.name}} - {{kid.gender}} ({{getAge(kid.birthday)}} Tahun)
+                        </option>
                       </select>
                       <input type="hidden" name="kidName" value="<%= kids[0].name %>">
-                      <h5 class="mb-2 mt-4">Pilih Bulan dan Tahun laporan ATEC {{atec.month}} - {{atec.year}}</h5>
+                      <h5 class="mb-2 mt-4">Pilih Bulan dan Tahun laporan ATEC</h5>
                       <div class="row">
                         <div class="col-md-12 col-lg-6">
                           <select v-model="atec.month" class="form-control">
                             <option disabled value="">Pilih satu</option>
-                            <option value="00">Januari</option>
-                            <option value="01">Februari</option>
-                            <option value="02">Maret</option>
-                            <option value="03">April</option>
-                            <option value="04">Mei</option>
-                            <option value="05">Juni</option>
-                            <option value="06">Juli</option>
-                            <option value="07">Agustus</option>
-                            <option value="08">September</option>
-                            <option value="09">Oktober</option>
-                            <option value="10">November</option>
-                            <option value="11">Desember</option>
+                            <option value="01">Januari</option>
+                            <option value="02">Februari</option>
+                            <option value="03">Maret</option>
+                            <option value="04">April</option>
+                            <option value="05">Mei</option>
+                            <option value="06">Juni</option>
+                            <option value="07">Juli</option>
+                            <option value="08">Agustus</option>
+                            <option value="09">September</option>
+                            <option value="10">Oktober</option>
+                            <option value="11">November</option>
+                            <option value="12">Desember</option>
                           </select>
                         </div>
                         <div class="col-md-12 col-lg-6">
@@ -905,10 +916,10 @@
     },
     methods: {
       valSelectedRadio(val, name) {
+        this.atec[name] = val;
         name = name.match(/(\d+|[^\d]+)/g);
         const type = name[0];
         const pos = name[1];
-        console.log("val : ", val, name, type, pos); // eslint-disable-line no-console
         if (type === 'bicara') {
           this.atec.bicaraTotal[pos-1] = val;
           this.atec.bicaraTotalLength = this.atec.bicaraTotal.reduce((acc,cv)=>(cv)?acc+1:acc,0);
@@ -1123,11 +1134,10 @@
             'Content-Type': 'application/json'
           }
         }
-        console.log(configData.data, configHeader)  // eslint-disable-line no-console
         axios
           .post('/atec/create', configData.data, configHeader)
           .then(res => {
-            console.log(res); // eslint-disable-line no-console
+            console.log('res :' ,res); // eslint-disable-line no-console
           })
           .catch(error => console.log(error)) // eslint-disable-line no-console
 
@@ -1142,6 +1152,20 @@
         }
         currentAge = currentAge > 0 ? currentAge : 0;
         return currentAge;
+      }
+    },
+    created() {
+      const today = new Date();
+      this.atec.year = today.getFullYear();
+      let getMonth = today.getMonth() + 1;
+      getMonth = getMonth.toString();
+      if (getMonth.length < 2) {
+        getMonth = "0"+getMonth;
+      }
+      this.atec.month = getMonth;
+
+      if (this.kidLists.length === 1) {
+        this.atec.selectedKid = this.kidLists[0].name;
       }
     }
   }

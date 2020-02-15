@@ -72,9 +72,9 @@
                   </p>
                 </div>  
                 <div class="col-12 col-md-2">
-                  <p class="action-button my-0 mr-md-5 float-right">
-                    <a class="btn btn-primary btn-sm" href="/atec/report/id">Detail</a>
-                    <button class="btn btn-danger btn-sm jc-delete-atecrow" type="button" data-csrf="<%= csrfToken %>" :data-id="list._id">Hapus</button>
+                  <p class="action-button my-0 mr-md-5 text-left">
+                    <a class="btn btn-primary btn-sm" href="/atec/detail/id">Detail</a>
+                    <button class="btn btn-danger btn-sm ml-3" type="button" :data-id="list._id">Hapus</button>
                   </p>
                 </div>  
               </div>
@@ -83,9 +83,6 @@
         </div>
       </div>
     </div>
-
-
-
   </div>
 </template>
 
@@ -99,7 +96,8 @@
     },
     data() {
       return {
-        reportData : []
+        reportData : [],
+        kidLists: this.$store.getters.userKids || []
       }
     },
     methods: {
