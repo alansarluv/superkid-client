@@ -6,6 +6,8 @@ import NewPassword from './components/auth/NewPassword.vue';
 import AtecIndex from './components/atec/Index.vue';
 import AtecForm from './components/atec/Form.vue';
 import AtecReport from './components/atec/Report.vue';
+import AtecFlash from './components/atec/Flash.vue';
+import AtecDetail from './components/atec/Detail.vue';
 import store from './store'
 
 export const routes = [
@@ -24,6 +26,7 @@ export const routes = [
   { 
     path: '/atec/form', 
     component: AtecForm ,
+    props: true,
     beforeEnter (to, from, next) {
       if (store.state.idToken) {
         next()
@@ -35,6 +38,32 @@ export const routes = [
   { 
     path: '/atec/report', 
     component: AtecReport, 
+    beforeEnter (to, from, next) {
+      if (store.state.idToken) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  { 
+    path: '/atec/flash', 
+    name: 'atec-flash',
+    component: AtecFlash, 
+    props: true,
+    beforeEnter (to, from, next) {
+      if (store.state.idToken) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  { 
+    path: '/atec/report/detail', 
+    name: 'atec-detail',
+    component: AtecDetail, 
+    props: true,
     beforeEnter (to, from, next) {
       if (store.state.idToken) {
         next()

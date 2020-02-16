@@ -1138,6 +1138,13 @@
           .post('/atec/create', configData.data, configHeader)
           .then(res => {
             console.log('res :' ,res); // eslint-disable-line no-console
+            const data = res.data.data;
+            if (res.status === 200 && data._id) {
+              this.$router.push({ 
+                name: 'atec-flash',
+                params: { response: data }
+              });
+            }
           })
           .catch(error => console.log(error)) // eslint-disable-line no-console
 

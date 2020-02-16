@@ -7,6 +7,11 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     idToken: localStorage.getItem('access_token') || null,
+    configHeader: {
+      'Authorization': `Bearer ${localStorage.getItem('access_token') || null}`,
+      'Accept': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
     userId: null,
     user: JSON.parse(localStorage.getItem('user')) || null,
     monthNames : ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"]
@@ -83,6 +88,9 @@ export default new Vuex.Store({
     },
     monthNames (state) {
       return state.monthNames;
+    },
+    configHeader (state) {
+      return state.configHeader;
     }
   }
 })
