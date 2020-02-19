@@ -16,52 +16,36 @@
               <div class="col-lg-3 col-md-6 col-sm-12">
                 <h5>Kemampuan bicara = {{detail.bicaraTotal}}</h5>
                 <ul>
-                  <li>
-                    <span> Mengetahui namanya sendiri : </span>
-                    <span>{{detail.bicara1}}</span>
-                  </li>
-                  <li>
-                    <span>Merespon pada "tidak" atau "stop" : </span>
-                    <span>{{detail.bicara2}}</span>
+                  <li v-for="index in 14" :key="index">
+                    <span>{{listQuestions[index-1]['theQuestion']}}</span>
+                    <span>{{valueDetail('bicara', index)}}</span>
                   </li>
                 </ul>
               </div>
               <div class="col-lg-3 col-md-6 col-sm-12">
                 <h5>Kemampuan sosial = {{detail.sosialTotal}}</h5>
                 <ul>
-                  <li>
-                    <span>Terlihat seperti berada dalam tempurung (anda tdk dapat menjangkaunya) : </span>
-                    <span>{{detail.sosial1}}</span>
-                  </li>
-                  <li>
-                    <span>Mengabaikan orang lain : </span>
-                    <span>{{detail.sosial2}}</span>
+                  <li v-for="index in 20" :key="index">
+                    <span>{{listQuestions[index+13]['theQuestion']}}</span>
+                    <span>{{valueDetail('sosial', index)}}</span>
                   </li>
                 </ul>
               </div>
               <div class="col-lg-3 col-md-6 col-sm-12">
                 <h5>Kemampuan sensorik = {{detail.sensorikTotal}}</h5>
                 <ul>
-                  <li>
-                    <span>Merespon saat dipanggil namanya : </span>
-                    <span>{{detail.sensorik1}}</span>
-                  </li>
-                  <li>
-                    <span>Merespon saat dipuji : </span>
-                    <span>{{detail.sensorik2}}</span>
+                  <li v-for="index in 18" :key="index">
+                    <span>{{listQuestions[index+33]['theQuestion']}}</span>
+                    <span>{{valueDetail('sensorik', index)}}</span>
                   </li>
                 </ul>
               </div>
               <div class="col-lg-3 col-md-6 col-sm-12">
                 <h5>Kemampuan umum = {{detail.umumTotal}}</h5>
                 <ul>
-                  <li>
-                    <span>Mengompol saat tidur : </span>
-                    <span>{{detail.umum1}}</span>
-                  </li>
-                  <li>
-                    <span>Mengompol di celana / popok : </span>
-                    <span>{{detail.umum2}}</span>
+                  <li v-for="index in 25" :key="index">
+                    <span>{{listQuestions[index+51]['theQuestion']}}</span>
+                    <span>{{valueDetail('umum', index)}}</span>
                   </li>
                 </ul>
               </div>
@@ -82,6 +66,11 @@
 
   export default {
     props: ['detail'],
+    data() {
+      return {
+        listQuestions: this.$store.getters.getQuestion || [],
+      }
+    },
     components: {
       atecSidebar: Sidebar
     },
@@ -91,6 +80,60 @@
         const monthNum = parseInt(val.substring(4));
         const monthNames = this.$store.getters.monthNames;
         return year + " - " + monthNames[monthNum-1];
+      },
+      valueDetail( section, idx){
+        const param = section+idx;
+        const valRes = this.detail[param];
+        let text, valNum = '';
+        if (section === 'bicara') {
+          if (valRes === 'sb'){
+            text = 'sangat benar';
+            valNum = '0'
+          } else if (valRes === 'ab'){
+            text = 'agak benar';
+            valNum = '1'
+          } else {
+            text = 'tidak benar';
+            valNum = '2'
+          }
+        } else if (section === 'sosial') {
+          if (valRes === 'sc'){
+            text = 'sangat cocok';
+            valNum = '2'
+          } else if (valRes === 'ac'){
+            text = 'agak cocok';
+            valNum = '1'
+          } else {
+            text = 'tidak cocok';
+            valNum = '0'
+          }
+        } else if (section === 'sensorik') {
+          if (valRes === 'sc'){
+            text = 'sangat cocok';
+            valNum = '0'
+          } else if (valRes === 'ac'){
+            text = 'agak cocok';
+            valNum = '1'
+          } else {
+            text = 'tidak cocok';
+            valNum = '2'
+          }          
+        } else if (section === 'umum') {
+          if (valRes === 'sb'){
+            text = 'sedikit bermasalah';
+            valNum = '1'
+          } else if (valRes === 'cb'){
+            text = 'cukup bermasalah';
+            valNum = '2'
+          } else if (valRes === 'vb'){
+            text = 'sangat bermasalah';
+            valNum = '3'
+          } else {
+            text = 'tidak bermasalah';
+            valNum = '0'
+          }          
+        }
+        return `${text} (${valNum})`;
       }
     }
     

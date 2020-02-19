@@ -116,7 +116,7 @@
         axios
           .get('/atec/detail/'+id, config)
           .then(res => {
-            console.log("kiw:", res) // eslint-disable-line no-console
+            console.log("detail:", res) // eslint-disable-line no-console
             data = res.data.data;
             if (res.status === 200 && data._id) {
               this.$router.push({ 
