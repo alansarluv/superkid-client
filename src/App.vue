@@ -24,11 +24,6 @@
     min-height: calc(100vh - 170px);
   }
 
-  .bg-gradien {
-    background-color: #ffe6d4;
-    height: 100vh;
-  }
-
   .wrapper-center {
     width: 100%;
     margin: 10% auto;
@@ -61,7 +56,6 @@
       }  
     }
   }
-
 
   .scrollable-box {
     padding: 15px;

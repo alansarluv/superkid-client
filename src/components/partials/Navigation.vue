@@ -60,8 +60,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: #FFF4EB;
-      opacity: .8;
+      background-color: #ffc40c;
+      opacity: 1;
       z-index: -1;
     }
 
