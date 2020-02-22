@@ -51,7 +51,7 @@
       </div>
     </div>
     <div class="container-50 section-3 bg-white">
-      <div class="row">
+      <div class="row mx-0">
         <div class="col-md-6 px-0">
           <div class="box-section31">
             <blockquote class="blockquote text-center">
@@ -80,7 +80,7 @@
       </div>
     </div>
     <div class="footer d-flex justify-content-center align-items-center">
-      <p>Follow us on [IG]</p>
+      <p>create with love by <a href="https://www.linkedin.com/in/ruslansarluf/">alan sarluv</a> &amp; <a href="https://www.linkedin.com/in/angger-dayu-47b8b065/">angger dayu</a></p>
     </div>
   </div>
 

@@ -93,11 +93,21 @@
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    &:hover {
+      background-color: #ffc40c;
+      color: #212121;
+    }
     input {
       display: none;
     }
     &.active {
       background-color: #5b8bc5;
+      &:hover {
+        color: #fff;
+      }
     }
   }
 </style>

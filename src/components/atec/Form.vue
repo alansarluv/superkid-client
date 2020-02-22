@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid mt-5">
+  <div class="container-fluid container-100vh pt-5">
     <div class="row">
       <div class="col-md-2">
         <atec-sidebar></atec-sidebar>

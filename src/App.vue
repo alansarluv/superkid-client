@@ -31,7 +31,30 @@
       box-shadow: 0 3px 8px -5px #555;
       -webkit-box-shadow: 0 3px 8px -5px #555;
       -moz-box-shadow: 0 3px 8px -5px #555;
-      
+    }
+    .container-content {
+      display: flex;
+      padding: 0;      
+      min-height: calc(100vh - 120px);
+      max-height: calc(100vh - 120px);
+      background-color: #efefef;
+      margin: 20px;
+      width: auto;
+      max-width: unset;
+      box-shadow: 0 3px 8px -5px #555;
+      -webkit-box-shadow: 0 3px 8px -5px #555;
+      -moz-box-shadow: 0 3px 8px -5px #555;
+      .sidebar {
+        padding: 20px 25px;
+        min-width: 280px;
+        max-width: 280px;
+        width: 280px;
+        border-right: 1px solid #d4d4d4;        
+      }
+      .right-content {
+        padding: 20px 25px;
+        width: 100%;
+      }
     }
   }
 
