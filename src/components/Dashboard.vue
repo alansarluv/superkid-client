@@ -12,25 +12,26 @@
       </p>
       <router-link to="/login" class="mt-5 btn btn-outline-warning btn-md px-5">Login</router-link>
     </div>
-    <div class="container-100 section-2">
-      <h2 class="text-center mt-5">Header Text</h2>
-      <p class="text-center mb-5">Lorem ipsum, dolor sit amet consectetur adipisicing</p>
-      <div class="section-box">
+    <div class="container-100 section-2 pb-5">
+      <div class="section-box pb-5">
+        <h2 class="text-center mt-5">Evaluasi dan analisa perkembangan ananda</h2>
+        <p class="text-center mb-5">Mulailah mengevaluasi perkembangan ananda secara rutin setiap akhir bulan, gunakan tools yang kami siapkan untuk mempermudah anda dalam mempelajari perkembangan ananda tercinta</p>
         <div class="row bg-white">
           <div class="col-md-4">
             <div class="p-5">
-              <p>Lorem Ips</p>
-              <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Asperiores, eius.</p>
-              <button type="button" class="btn btn-outline-dark btn-md px-5">Lorem</button>
+              <p>Form ATEC</p>
+              <p>
+                Online tools gratis yang dirancang oleh Autism Research Institute.
+              </p>
+              <button type="button" class="btn btn-outline-dark btn-md px-3">Coba ATEC</button>
             </div>
           </div>
-          <div class="col-md-8 pr-0">
-            <div class="box-section21 p-5">
-              <h4 class="mt-5">Lorem ipsum dolor</h4>
+          <div class="col-md-8 pr-0 bg-section21">
+            <div class="box-section21 p-2 px-3">
+              <h4>Autism Treatment Evaluation Checklist</h4>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-                Sunt qui necessitatibus est harum repudiandae vitae eius dignissimos!
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur laboriosam consequatur officiis..
+                Atec adalah formulir satu halaman yang dirancang untuk diisi oleh orang tua, guru, atau pengasuh. 
+                Atec terdiri dari 4 subyek: (Komunikasi / Bahasa, Sosialisasi, Sensorik / Kognitif, dan Perilaku umum).
               </p>
             </div>
           </div>
@@ -38,13 +39,13 @@
         <div class="row mt-4">
           <div class="col-md-6 pl-0 box-section22">
             <img src="https://picsum.photos/500/250" alt="">
-            <h4 class="mt-4 mb-3">Text sub header</h4>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, magnam tempora. Expedita?</p>
+            <h4 class="mt-4 mb-3">Chart &amp; Compare</h4>
+            <p>Gunakan fitur chart agar dengan mudah anda dapat menganalisa grafik kemampuan ananda dari waktu ke waktu. Serta fitur compare untuk membandingkan laporan atec bulan ini dengan bulan sebelumnya.</p>
           </div>
           <div class="col-md-6 pr-0 box-section22">
             <img src="https://picsum.photos/500/250" alt="">
-            <h4 class="mt-4 mb-3">Text sub header</h4>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, magnam tempora. Expedita?</p>
+            <h4 class="mt-4 mb-3">Weekly notes</h4>
+            <p>Catat kemajuan / kemunduran ananda di weekly notes ( yang akan di rangkum setiap minggu ) agar dapat mempermudah anda untuk melihat progress ananda secara lebih rinci</p>
           </div>
         </div>
       </div>
@@ -54,8 +55,8 @@
         <div class="col-md-6 px-0">
           <div class="box-section31">
             <blockquote class="blockquote text-center">
-              <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-              <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+              <p class="mb-0">It doesn't matter how slowly a child learns, as long as we are encouring them not to stop.</p>
+              <footer class="blockquote-footer">Robert john meehan <cite title="Source Title">American educator, Poet and Author</cite></footer>
             </blockquote>              
           </div>
         </div>
@@ -65,6 +66,21 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="container-50 section-4 bg-white">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box-section41">
+            <blockquote class="blockquote text-center">
+              <p class="mb-0">Autism doesn't come with a manual. It comes with a parents that never give up</p>
+              <footer class="blockquote-footer">Cheers for all parents</footer>
+            </blockquote>              
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer d-flex justify-content-center align-items-center">
+      <p>Follow us on [IG]</p>
     </div>
   </div>
 
@@ -85,31 +101,49 @@
     position: relative;
     background-color: #efefef;    
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0 auto;
     padding-right: 15px;
     padding-left: 15px;  
 
     &.section-2 {
       padding-top: 50px;
-    }
-    .section-box {
-      position: relative;
-      left: 50%;
-      transform: translateX(-50%);
-      -webkit-transform: translateX(-50%);
-      -moz-transform: translateX(-50%);
-      width: 50%;
-      max-width: 830px;
-      border-radius: 3px;
-    }
-    .box-section21 {
-      background-image: url('https://picsum.photos/1000/400');
-    }
-    .box-section22 {
-      overflow: hidden;
-      img {
-        border-bottom: 8px solid #ffc40c;
+      .section-box {
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+        -webkit-transform: translateX(-50%);
+        -moz-transform: translateX(-50%);
+        width: 50%;
+        max-width: 830px;
+        border-radius: 3px;
+        .bg-section21 {
+          background-image: url('https://picsum.photos/1000/400');
+          position: relative;
+          &::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: black;
+            opacity: .5;
+          }
+        }
+        .box-section21 {
+          color: white;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+        }
+        .box-section22 {
+          overflow: hidden;
+          img {
+            border-bottom: 8px solid #ffc40c;
+          }
+        }
       }
     }
   }
@@ -136,6 +170,23 @@
         height: 50vh;
       }
     }
+    &.section-4 {
+      .box-section41 {
+        background-color: #fff;
+        width: 100%;
+        height: 50vh;
+        .blockquote {
+          position: relative;
+          top: 50%;
+          left: 50%;
+          font-size: 22px;
+          padding: 0 100px;
+          transform: translate(-50%, -50%);          
+          -webkit-transform: translate(-50%, -50%);          
+          -moz-transform: translate(-50%, -50%);          
+        }
+      }
+    }
   }
 
   .welcome-box {
@@ -158,5 +209,11 @@
       font-family: serif;
       font-size: 18px;      
     }
+  }
+
+  .footer {
+    width: 100%;
+    height: 100px;
+    background-color: #efefef;
   }
 </style>
