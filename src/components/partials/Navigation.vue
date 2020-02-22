@@ -47,10 +47,13 @@
     width: 100%;
     height: 80px;
     overflow: hidden;
-    position: sticky;
+    position: relative;
     top: 0;
     left: 0;
     box-sizing: border-box;
+    box-shadow: 0 3px 8px -5px #555;
+    -webkit-box-shadow: 0 3px 8px -5px #555;
+    -moz-box-shadow: 0 3px 8px -5px #555;
     z-index: 2;
 
     &::after {
@@ -107,8 +110,10 @@
             padding: 12px 16px;
             display: inline-block;
             text-decoration: none;
-            color: #676262;
+            color: #212121;
+            cursor: pointer;
             font-family: sans-serif;
+            font-weight: normal;
             position: relative;
             top: 50%;
             border-bottom: 0px solid #e89963;
@@ -120,7 +125,7 @@
             -webkit-transition: all .3s;
 
             &:hover {
-              border-bottom: 3px solid #e89963;
+              font-weight: bold;
             }
           }
 
@@ -128,7 +133,7 @@
             padding: 12px 16px;
             display: inline-block;
             text-decoration: none;
-            color: #676262;
+            color: #212121;
             font-family: sans-serif;
             position: relative;
             top: 50%;

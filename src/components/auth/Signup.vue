@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="container container-100vh">
     <div class="row min100vh align-items-center justify-content-md-center">
-      <div class="col col-md-6 col-lg-4">
+      <div class="col col-md-6 col-lg-3">
         <form @submit.prevent="onSubmit" class="form-center is-register-form">
           <h3 class="mb15 text-center">Register</h3>
           <input
@@ -57,3 +57,20 @@
     }
   }
 </script>
+<style lang="scss" scoped>
+  .min100vh {
+    min-height: calc(100vh - 120px);
+  }
+  .btn.btn-info {
+    background-color: #ffc40c;
+    border-color: #ffc40c;
+    color: #212121;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    &:hover {
+      background-color: #212121;
+      color: #ffbc41;
+    }
+  }  
+</style>
