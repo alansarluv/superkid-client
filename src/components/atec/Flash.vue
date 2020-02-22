@@ -13,8 +13,8 @@
                 <p>Kemampuan umum = {{response.umumTotal}}</p>
                 <p>Kemampuan total = {{response.bicaraTotal + response.sosialTotal + response.sensorikTotal + response.umumTotal }}</p>
                 <div class="mt-5 mb-3 text-center">
-                  <router-link to="/atec" class="btn btn-secondary">Kembali ke dashboard atec</router-link>
-                  <router-link to="/atec/report" class="btn btn-primary ml-5">Lihat laporan Atec</router-link>
+                  <router-link to="/atec" class="btn btn-secondary px-3">Kembali ke dashboard atec</router-link>
+                  <router-link to="/atec/report" class="btn btn-primary px-3 ml-5">Lihat laporan Atec</router-link>
                 </div>
               </div>
             </div>
@@ -37,3 +37,18 @@
     }
   }
 </script>
+<style lang="scss" scoped>
+  .btn.btn-primary {
+    background-color: #ffc40c;
+    border-color: #ffc40c;
+    color: #212121;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    &:hover {
+      background-color: #212121;
+      color: #ffbc41;
+    }
+  }
+
+</style>

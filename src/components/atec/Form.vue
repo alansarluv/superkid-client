@@ -1,172 +1,168 @@
 <template>
-  <div class="container-fluid container-100vh pt-5">
-    <div class="row">
-      <div class="col-md-2">
-        <atec-sidebar></atec-sidebar>
+  <div class="container-fluid container-content">
+    <atec-sidebar></atec-sidebar>
+    <div class="right-content">
+      <div v-if="!kidLists.length" class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-12 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <form @submit.prevent="onSubmitKids">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="child-name" v-model="kids.name" placeholder="Tulis nama anak" required>
+                </div>
+                <div class="form-group">
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="genderpria" v-model="kids.gender" value="pria" class="custom-control-input" required>
+                    <label class="custom-control-label" for="genderpria">Laki laki</label>
+                  </div>
+                  <div class="custom-control custom-radio custom-control-inline">
+                    <input type="radio" id="genderwanita" v-model="kids.gender" value="wanita" class="custom-control-input" required>
+                    <label class="custom-control-label" for="genderwanita">Perempuan</label>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input type="date" class="form-control" v-model="kids.birthday" required>
+                </div>
+                <div class="form-group">
+                  <p>Umur : <span>{{kidAge}}</span> tahun</p>
+                </div>
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                </div>
+              </form>              
+            </div>
+          </div>          
+        </div>
       </div>
-      <div class="col-md-10">
-        <div v-if="!kidLists.length" class="row justify-content-center">
-          <div class="col-lg-6 col-md-8 col-sm-12 mb-4">
+      <form @submit.prevent="onSubmitAtec" v-if="kidLists.length">
+        <div class="row justify-content-center sticky-100 mb-3">
+          <div class="col-lg-6 col-md-8 col-sm-12">
             <div class="card">
               <div class="card-body">
-                <form @submit.prevent="onSubmitKids">
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="child-name" v-model="kids.name" placeholder="Tulis nama anak" required>
+                <div class="row">
+                  <div class="col-md-12">
+                    <h5 class="mb-2">
+                      Nama anak : 
+                      <span v-if="kidLists.length === 1">
+                        {{kidLists[0].name}} - {{kidLists[0].gender}} ({{getAge(kidLists[0].birthday)}} Tahun)
+                      </span>
+                    </h5>
+                    <select v-if="kidLists.length > 1" v-model="atec.selectedKid" class="form-control">
+                      <option disabled value="">Pilih satu</option>
+                      <option 
+                        v-for="kid in kidLists" 
+                        :key="kid._id" 
+                        :value="kid.name"
+                      >
+                        {{kid.name}} - {{kid.gender}} ({{getAge(kid.birthday)}} Tahun)
+                      </option>
+                    </select>
+                    <input type="hidden" name="kidName" value="<%= kids[0].name %>">
+                    <h5 class="mb-2 mt-4">Pilih Bulan dan Tahun laporan ATEC</h5>
+                    <div class="row">
+                      <div class="col-md-12 col-lg-6">
+                        <select v-model="atec.month" class="form-control">
+                          <option disabled value="">Pilih satu</option>
+                          <option value="01">Januari</option>
+                          <option value="02">Februari</option>
+                          <option value="03">Maret</option>
+                          <option value="04">April</option>
+                          <option value="05">Mei</option>
+                          <option value="06">Juni</option>
+                          <option value="07">Juli</option>
+                          <option value="08">Agustus</option>
+                          <option value="09">September</option>
+                          <option value="10">Oktober</option>
+                          <option value="11">November</option>
+                          <option value="12">Desember</option>
+                        </select>
+                      </div>
+                      <div class="col-md-12 col-lg-6">
+                        <select v-model="atec.year" class="form-control">
+                          <option disabled value="">Pilih satu</option>
+                          <option value="2021">2021</option>
+                          <option value="2020">2020</option>
+                          <option value="2019">2019</option>
+                          <option value="2018">2018</option>
+                          <option value="2017">2017</option>
+                          <option value="2016">2016</option>
+                        </select>
+                      </div>
+                    </div>                    
                   </div>
-                  <div class="form-group">
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" id="genderpria" v-model="kids.gender" value="pria" class="custom-control-input" required>
-                      <label class="custom-control-label" for="genderpria">Laki laki</label>
-                    </div>
-                    <div class="custom-control custom-radio custom-control-inline">
-                      <input type="radio" id="genderwanita" v-model="kids.gender" value="wanita" class="custom-control-input" required>
-                      <label class="custom-control-label" for="genderwanita">Perempuan</label>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <input type="date" class="form-control" v-model="kids.birthday" required>
-                  </div>
-                  <div class="form-group">
-                    <p>Umur : <span>{{kidAge}}</span> tahun</p>
-                  </div>
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                  </div>
-                </form>              
+                </div>
               </div>
-            </div>          
+            </div>
           </div>
         </div>
-        <form @submit.prevent="onSubmitAtec" v-if="kidLists.length">
-          <div class="row justify-content-center sticky-100 mb-3">
-            <div class="col-lg-6 col-md-8 col-sm-12">
-              <div class="card">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <h5 class="mb-2">
-                        Nama anak : 
-                        <span v-if="kidLists.length === 1">
-                          {{kidLists[0].name}} - {{kidLists[0].gender}} ({{getAge(kidLists[0].birthday)}} Tahun)
-                        </span>
-                      </h5>
-                      <select v-if="kidLists.length > 1" v-model="atec.selectedKid" class="form-control">
-                        <option disabled value="">Pilih satu</option>
-                        <option 
-                          v-for="kid in kidLists" 
-                          :key="kid._id" 
-                          :value="kid.name"
-                        >
-                          {{kid.name}} - {{kid.gender}} ({{getAge(kid.birthday)}} Tahun)
-                        </option>
-                      </select>
-                      <input type="hidden" name="kidName" value="<%= kids[0].name %>">
-                      <h5 class="mb-2 mt-4">Pilih Bulan dan Tahun laporan ATEC</h5>
-                      <div class="row">
-                        <div class="col-md-12 col-lg-6">
-                          <select v-model="atec.month" class="form-control">
-                            <option disabled value="">Pilih satu</option>
-                            <option value="01">Januari</option>
-                            <option value="02">Februari</option>
-                            <option value="03">Maret</option>
-                            <option value="04">April</option>
-                            <option value="05">Mei</option>
-                            <option value="06">Juni</option>
-                            <option value="07">Juli</option>
-                            <option value="08">Agustus</option>
-                            <option value="09">September</option>
-                            <option value="10">Oktober</option>
-                            <option value="11">November</option>
-                            <option value="12">Desember</option>
-                          </select>
-                        </div>
-                        <div class="col-md-12 col-lg-6">
-                          <select v-model="atec.year" class="form-control">
-                            <option disabled value="">Pilih satu</option>
-                            <option value="2021">2021</option>
-                            <option value="2020">2020</option>
-                            <option value="2019">2019</option>
-                            <option value="2018">2018</option>
-                            <option value="2017">2017</option>
-                            <option value="2016">2016</option>
-                          </select>
-                        </div>
-                      </div>                    
-                    </div>
-                  </div>
-                </div>
+        <div class="row justify-content-center sticky-100 mb-3">
+          <div class="col-lg-6 col-md-8 col-sm-12">
+            <div class="card">
+              <div class="card-body">
+                <a @click="selectAllFirst()">check all</a>
+                <p 
+                  class="header-question"
+                  :class="{
+                    active: (formActive === 1)
+                  }"
+                  @click="formActive = 1"
+                >
+                  <!-- class active only if formActive = 1 -->
+                  Form 1 - Kemampuan Bicara/Berbahasa ( {{atec.bicaraTotalLength}} / 14) 
+                  <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                </p>
+                <p 
+                  class="header-question"
+                  :class="{
+                    active: (formActive === 2),
+                    disabled: (atec.bicaraTotalLength < 14)
+                  }"
+                  @click="formActive = 2"
+                >
+                  Form 2 - Kemampuan Bersosialisasi ( {{atec.sosialTotalLength}} / 20)
+                </p>
+                <p 
+                  class="header-question"
+                  :class="{
+                    active: (formActive === 3),
+                    disabled: (atec.sosialTotalLength < 20)
+                  }"
+                  @click="formActive = 3"
+                >
+                  Form 3 - Kesadaran sensorik / kognitif ( {{atec.sensorikTotalLength}} / 18)
+                </p>
+                <p 
+                  class="header-question"
+                  :class="{
+                    active: (formActive === 4),
+                    disabled: (atec.sensorikTotalLength < 18 )
+                  }"
+                  @click="formActive = 4"
+                >
+                  Form 4 - Kesehatan umum, fisik dan perilaku ( {{atec.umumTotalLength}} / 25)
+                </p>
+                <button v-show="submitBtn" type="submit" class="form-control btn btn-info">  S  U  B  M  I  T  </button>           
               </div>
             </div>
           </div>
-          <div class="row justify-content-center sticky-100 mb-3">
-            <div class="col-lg-6 col-md-8 col-sm-12">
-              <div class="card">
-                <div class="card-body">
-                  <a @click="selectAllFirst()">check all</a>
-                  <p 
-                    class="header-question"
-                    :class="{
-                      active: (formActive === 1)
-                    }"
-                    @click="formActive = 1"
-                  >
-                    <!-- class active only if formActive = 1 -->
-                    Form 1 - Kemampuan Bicara/Berbahasa ( {{atec.bicaraTotalLength}} / 14) 
-                    <i class="fa fa-check-square-o" aria-hidden="true"></i>
-                  </p>
-                  <p 
-                    class="header-question"
-                    :class="{
-                      active: (formActive === 2),
-                      disabled: (atec.bicaraTotalLength < 14)
-                    }"
-                    @click="formActive = 2"
-                  >
-                    Form 2 - Kemampuan Bersosialisasi ( {{atec.sosialTotalLength}} / 20)
-                  </p>
-                  <p 
-                    class="header-question"
-                    :class="{
-                      active: (formActive === 3),
-                      disabled: (atec.sosialTotalLength < 20)
-                    }"
-                    @click="formActive = 3"
-                  >
-                    Form 3 - Kesadaran sensorik / kognitif ( {{atec.sensorikTotalLength}} / 18)
-                  </p>
-                  <p 
-                    class="header-question"
-                    :class="{
-                      active: (formActive === 4),
-                      disabled: (atec.sensorikTotalLength < 18 )
-                    }"
-                    @click="formActive = 4"
-                  >
-                    Form 4 - Kesehatan umum, fisik dan perilaku ( {{atec.umumTotalLength}} / 25)
-                  </p>
-                  <button v-show="submitBtn" type="submit" class="form-control btn- btn-info">  S  U  B  M  I  T  </button>           
-                </div>
-              </div>
-            </div>
 
-          </div>
-          <div class="row justify-content-center sticky-100">
-            <div class="col-lg-8 col-md-8 col-sm-12">
-              <div class="scrollable-box">
-                <div class="single-question question-form-1 mt-2">
-                  <question-list 
-                    v-for="(question, idx) in formQuestion" 
-                    :key="idx" 
-                    :question='question'
-                    :formActive='formActive'
-                    @selectedRadio='valSelectedRadio'>
-                  </question-list>
-                </div>
+        </div>
+        <div class="row justify-content-center sticky-100">
+          <div class="col-lg-8 col-md-8 col-sm-12">
+            <div class="scrollable-box">
+              <div class="single-question question-form-1 mt-2">
+                <question-list 
+                  v-for="(question, idx) in formQuestion" 
+                  :key="idx" 
+                  :question='question'
+                  :formActive='formActive'
+                  @selectedRadio='valSelectedRadio'>
+                </question-list>
               </div>
             </div>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -562,11 +558,24 @@
 </script>
 <style lang="scss" scoped>
   .card { height: auto; }
-  .sticky-100 { position: sticky; top: 100px;}
+  .sticky-100 { position: sticky; top: 0;}
   .scrollable-box {
     max-height: none;
     margin-bottom: 100px;
   }
+  .btn.btn-info {
+    background-color: #ffc40c;
+    border-color: #ffc40c;
+    color: #212121;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    &:hover {
+      background-color: #212121;
+      color: #ffbc41;
+    }
+  }
+
   .header-question {
     cursor: pointer;
     color: green;

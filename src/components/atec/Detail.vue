@@ -1,61 +1,57 @@
 <template>
-  <div class="container-fluid mt-5">
-    <div class="row">
-      <div class="col-md-2">
-        <atec-sidebar></atec-sidebar>
-      </div>
-      <div class="col-md-10">
-        <div class="card bg-seashell">
-          <template v-if="detail">
-            <h3 class="mb-2">
-              Detail Atec for {{detail.kidName}},
-              <span>( {{yearMonth(detail.monthYear)}} )</span>
-            </h3>
-            <h4 class="mt-3 mb-5">Kemampuan total = {{detail.bicaraTotal + detail.sosialTotal + detail.sensorikTotal + detail.umumTotal }}</h4>
-            <div class="row detail-form">
-              <div class="col-lg-3 col-md-6 col-sm-12">
-                <h5>Kemampuan bicara = {{detail.bicaraTotal}}</h5>
-                <ul>
-                  <li v-for="index in 14" :key="index">
-                    <span>{{listQuestions[index-1]['theQuestion']}}</span>
-                    <span>{{valueDetail('bicara', index)}}</span>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-lg-3 col-md-6 col-sm-12">
-                <h5>Kemampuan sosial = {{detail.sosialTotal}}</h5>
-                <ul>
-                  <li v-for="index in 20" :key="index">
-                    <span>{{listQuestions[index+13]['theQuestion']}}</span>
-                    <span>{{valueDetail('sosial', index)}}</span>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-lg-3 col-md-6 col-sm-12">
-                <h5>Kemampuan sensorik = {{detail.sensorikTotal}}</h5>
-                <ul>
-                  <li v-for="index in 18" :key="index">
-                    <span>{{listQuestions[index+33]['theQuestion']}}</span>
-                    <span>{{valueDetail('sensorik', index)}}</span>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-lg-3 col-md-6 col-sm-12">
-                <h5>Kemampuan umum = {{detail.umumTotal}}</h5>
-                <ul>
-                  <li v-for="index in 25" :key="index">
-                    <span>{{listQuestions[index+51]['theQuestion']}}</span>
-                    <span>{{valueDetail('umum', index)}}</span>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-lg-12 col-md-12 col-sm-12 text-center mt-5">
-                <router-link to="/atec/report" class="btn btn-secondary">Back to atec report</router-link>
-              </div>
+  <div class="container-fluid container-content">
+    <atec-sidebar></atec-sidebar>
+    <div class="right-content">
+      <div class="card bg-seashell">
+        <template v-if="detail">
+          <h3 class="mb-2">
+            Detail Atec for {{detail.kidName}},
+            <span>( {{yearMonth(detail.monthYear)}} )</span>
+          </h3>
+          <h4 class="mt-3 mb-5">Kemampuan total = {{detail.bicaraTotal + detail.sosialTotal + detail.sensorikTotal + detail.umumTotal }}</h4>
+          <div class="row detail-form">
+            <div class="col-lg-3 col-md-6 col-sm-12">
+              <h5>Kemampuan bicara = {{detail.bicaraTotal}}</h5>
+              <ul>
+                <li v-for="index in 14" :key="index">
+                  <span>{{listQuestions[index-1]['theQuestion']}}</span>
+                  <span>{{valueDetail('bicara', index)}}</span>
+                </li>
+              </ul>
             </div>
-          </template>
-          <h2 v-if="!detail" class="text-center mt-5">No data</h2>
-        </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+              <h5>Kemampuan sosial = {{detail.sosialTotal}}</h5>
+              <ul>
+                <li v-for="index in 20" :key="index">
+                  <span>{{listQuestions[index+13]['theQuestion']}}</span>
+                  <span>{{valueDetail('sosial', index)}}</span>
+                </li>
+              </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+              <h5>Kemampuan sensorik = {{detail.sensorikTotal}}</h5>
+              <ul>
+                <li v-for="index in 18" :key="index">
+                  <span>{{listQuestions[index+33]['theQuestion']}}</span>
+                  <span>{{valueDetail('sensorik', index)}}</span>
+                </li>
+              </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+              <h5>Kemampuan umum = {{detail.umumTotal}}</h5>
+              <ul>
+                <li v-for="index in 25" :key="index">
+                  <span>{{listQuestions[index+51]['theQuestion']}}</span>
+                  <span>{{valueDetail('umum', index)}}</span>
+                </li>
+              </ul>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 text-center mt-5">
+              <router-link to="/atec/report" class="btn btn-secondary">Back to atec report</router-link>
+            </div>
+          </div>
+        </template>
+        <h2 v-if="!detail" class="text-center mt-5">No data</h2>
       </div>
     </div>
   </div>
@@ -141,6 +137,7 @@
 </script>
 <style lang="scss" scoped>
   .card{
+    height: auto;
     &.bg-seashell {
       background-color: seashell;
       padding: 15px 20px;

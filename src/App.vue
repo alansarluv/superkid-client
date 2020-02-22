@@ -54,6 +54,7 @@
       .right-content {
         padding: 20px 25px;
         width: 100%;
+        overflow: auto;
       }
     }
   }
@@ -93,13 +94,10 @@
 
   .scrollable-box {
     padding: 15px;
-    background-color: #FFFDFB;
+    background-color: #efefef;
     border-radius: 4px;
     max-height: calc(100vh - 200px);
     overflow: auto;
-    box-shadow: 0px 7px 20px 0px rgba(33, 33, 33, 0.3);
-    -webkit-box-shadow: 0px 7px 20px 0px rgba(33, 33, 33, 0.3);
-    -moz-box-shadow: 0px 7px 20px 0px rgba(33, 33, 33, 0.3);
   }
 
   .card-box-route {
