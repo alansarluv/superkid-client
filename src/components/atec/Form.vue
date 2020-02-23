@@ -109,7 +109,7 @@
                 >
                   <!-- class active only if formActive = 1 -->
                   Form 1 - Kemampuan Bicara/Berbahasa ( {{atec.bicaraTotalLength}} / 14) 
-                  <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                  <i v-if="atec.bicaraTotalLength === 14" class="fas fa-check"></i>
                 </p>
                 <p 
                   class="header-question"
@@ -120,6 +120,7 @@
                   @click="formActive = 2"
                 >
                   Form 2 - Kemampuan Bersosialisasi ( {{atec.sosialTotalLength}} / 20)
+                  <i v-if="atec.sosialTotalLength === 20" class="fas fa-check"></i>
                 </p>
                 <p 
                   class="header-question"
@@ -130,6 +131,7 @@
                   @click="formActive = 3"
                 >
                   Form 3 - Kesadaran sensorik / kognitif ( {{atec.sensorikTotalLength}} / 18)
+                  <i v-if="atec.sensorikTotalLength === 18" class="fas fa-check"></i>
                 </p>
                 <p 
                   class="header-question"
@@ -140,6 +142,7 @@
                   @click="formActive = 4"
                 >
                   Form 4 - Kesehatan umum, fisik dan perilaku ( {{atec.umumTotalLength}} / 25)
+                  <i v-if="atec.umumTotalLength === 25" class="fas fa-check"></i>
                 </p>
                 <button v-show="submitBtn" type="submit" class="form-control btn btn-info">  S  U  B  M  I  T  </button>           
               </div>

@@ -2,22 +2,40 @@
   <div class="sidebar">
     <ul>
       <li>
-        <router-link to="/atec/form" class="">Mengisi atec</router-link>
+        <router-link to="/atec/form" class="">
+          <i class="far fa-list-alt"></i>
+          <span class="ml-2">Mengisi atec</span>
+        </router-link>
       </li>
       <li>
-        <router-link to="/atec/report" class="">Laporan atec</router-link>
+        <router-link to="/atec/report" class="">
+          <i class="fas fa-tasks"></i>
+          <span class="ml-2">Laporan atec</span>
+        </router-link>
       </li>
       <li>
-        <router-link to="/weekly-note/form" class="">Perkembangan mingguan</router-link>
+        <router-link to="/weekly-note/form" class="">
+          <i class="fas fa-calendar-week"></i>
+          <span class="ml-2">Perkembangan mingguan</span>
+        </router-link>
       </li>
       <li>
-        <router-link to="/weekly-note/report" class="">Laporan mingguan</router-link>
+        <router-link to="/weekly-note/report" class="">
+          <i class="fas fa-calendar-check"></i>
+          <span class="ml-2">Laporan mingguan</span>
+        </router-link>
       </li>
       <li>
-        <router-link to="/drug-multivitamin" class="">Review multivitamin</router-link>
+        <router-link to="/drug-multivitamin" class="">
+          <i class="fas fa-pills"></i>
+          <span class="ml-2">Review multivitamin</span>
+        </router-link>
       </li>
       <li>
-        <router-link to="/doctor" class="">Referensi dokter</router-link>
+        <router-link to="/doctor" class="">
+          <i class="fas fa-user-md"></i>
+          <span class="ml-2">Referensi dokter</span>
+        </router-link>
       </li>
       <!-- review suplemen -->
       <!-- review obat -->

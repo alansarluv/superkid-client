@@ -7,6 +7,9 @@
           <h3 class="mb-2">
             Detail Atec for {{detail.kidName}},
             <span>( {{yearMonth(detail.monthYear)}} )</span>
+            <span class="float-right">
+              <router-link to="/atec/report" class="btn btn-secondary">Back to atec report</router-link>
+            </span>
           </h3>
           <h4 class="mt-3 mb-5">Kemampuan total = {{detail.bicaraTotal + detail.sosialTotal + detail.sensorikTotal + detail.umumTotal }}</h4>
           <div class="row detail-form">
@@ -45,9 +48,6 @@
                   <span>{{valueDetail('umum', index)}}</span>
                 </li>
               </ul>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 text-center mt-5">
-              <router-link to="/atec/report" class="btn btn-secondary">Back to atec report</router-link>
             </div>
           </div>
         </template>
@@ -156,6 +156,12 @@
           align-items: center;
           font-size: 12px;
           border-bottom: 1px solid black;
+
+          span:nth-child(2) {
+            text-align: right;
+            white-space: nowrap;
+            padding-left: 10px;            
+          }
         }
       }
     }
