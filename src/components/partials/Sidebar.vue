@@ -121,6 +121,7 @@
       text-align: center;
       height: 30px;
       line-height: 0px;
+      border: none;
 
       &:focus {
         outline: none;
@@ -128,6 +129,11 @@
     }
     &:hover {
       .sidebar-toggle { opacity: 1; }
+    }
+  }
+  @media only screen and (max-width: 1021px) {
+    .sidebar {
+      display: none;
     }
   }
 </style>
