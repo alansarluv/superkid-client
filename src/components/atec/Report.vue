@@ -2,6 +2,11 @@
   <div class="container-fluid container-content">
     <atec-sidebar></atec-sidebar>
     <div class="right-content report-page">
+      <div class="row mx-0 mb-3 px-3">
+        <div class="col-md-12 px-0">
+          <h4>Nama anak : {{kidLists[0]['name']}} ({{ getAge(kidLists[0]['birthday'])}} tahun) </h4>
+        </div>
+      </div>
       <div class="row d-none d-md-flex mx-0 px-3">
         <div class="col-12 text-center mb-3 pb-2 px-0 is-border-bottom">
           <div class="row">
@@ -86,6 +91,7 @@
 <script>
   import axios from 'axios';
   import Sidebar from '../partials/Sidebar';
+  import { generalMixin } from '../../mixins/general'
 
   export default {
     components: {
@@ -97,6 +103,7 @@
         kidLists: this.$store.getters.userKids || []
       }
     },
+    mixins: [generalMixin],
     methods: {
       yearMonth(val) {
         const year = val.slice(0,4);

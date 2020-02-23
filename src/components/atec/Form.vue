@@ -173,6 +173,7 @@
   import Question from './Question'
   import axios from 'axios';
   import Sidebar from '../partials/Sidebar';
+  import { generalMixin } from '../../mixins/general';
 
   export default {
     data() {
@@ -279,6 +280,7 @@
         token: this.$store.getters.token
       }
     },
+    mixins: [generalMixin],
     computed: {
       activeQuestion: function() {
         const res = this.formQuestion.filter(el => el.formList === this.formActive);
@@ -530,17 +532,6 @@
           })
           .catch(error => console.log(error)) // eslint-disable-line no-console
 
-      },
-      getAge (birthDate) {
-        const today = new Date();
-        birthDate = new Date(birthDate);
-        let currentAge = today.getFullYear() - birthDate.getFullYear();
-        const month = today.getMonth() - birthDate.getMonth();
-        if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
-          currentAge--;
-        }
-        currentAge = currentAge > 0 ? currentAge : 0;
-        return currentAge;
       }
     },
     created() {
