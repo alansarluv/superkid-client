@@ -34,9 +34,32 @@
           </div>
         </div>
       </div>
-      <template v-if="reportData.length === 0">
+      <template v-if="reportData.length === 0 && loadingReport === false">
         <h3 class="text-center">Belum ada laporan atec</h3>
       </template>
+      <div class="mt-4" v-if="loadingReport">
+        <div v-html="spinner"></div>
+      </div>
+      <div class="spinner-custom" v-show="loadingDetail">
+        <div class="spinner-wrapper">
+          <div class="spinner-grow text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>        
+          <div class="spinner-grow text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>        
+          <div class="spinner-grow text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>        
+          <div class="spinner-grow text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>        
+          <div class="spinner-grow text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>        
+        </div>
+      </div>
+
       <div v-for="list in reportData" :key='list.id' class="row mb-2 mx-0 px-3">
         <div class="col-12 col-md-12 text-md-center px-0">
           <div class="row">
@@ -99,6 +122,8 @@
     },
     data() {
       return {
+        loadingReport: false,
+        loadingDetail: false,
         reportData : [],
         kidLists: this.$store.getters.userKids || []
       }
@@ -112,6 +137,7 @@
         return year + " - " + monthNames[monthNum-1];
       },
       goto(id){
+        this.loadingDetail = true;
         const config = {
           headers: this.$store.getters.configHeader
         };
@@ -121,6 +147,7 @@
           .then(res => {
             console.log("detail:", res) // eslint-disable-line no-console
             data = res.data.data;
+            this.loadingDetail = false;
             if (res.status === 200 && data._id) {
               this.$router.push({ 
                 name: 'atec-detail',
@@ -138,13 +165,15 @@
         params: {
           userId: user._id
         }
-      }      
+      }
+      this.loadingReport = true;
       axios
         .get('/atec/report', config)
         .then(res => {
           console.log("test:", res) // eslint-disable-line no-console
           const data = res.data;
           this.reportData = data.data;
+          this.loadingReport = false;
         })  
         .catch(error => console.log("error: ", error)) // eslint-disable-line no-console
     }
@@ -167,6 +196,32 @@
     .btn-danger {
       padding: 4px 18px;
     }
-
+    .spinner-custom {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-color: black;
+      opacity: .5;
+      z-index: 2;
+      margin-top: 0;
+      
+      .spinner-wrapper {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -moz-transform: translate(-50%, -50%);
+        width: 400px;
+        height: 100px;
+        text-align: center;
+        .spinner-border {
+          width: 100px;
+          height: 100px;
+        }
+      }
+    }
   }
 </style>
