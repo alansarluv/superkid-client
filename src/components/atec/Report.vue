@@ -3,7 +3,7 @@
     <atec-sidebar></atec-sidebar>
     <div class="right-content report-page">
       <div class="row mx-0 mb-3 px-3">
-        <div class="col-md-12 px-0">
+        <div v-if="reportData.length !== 0" class="col-md-12 px-0">
           <h4>Nama anak : {{kidLists[0]['name']}} ({{ getAge(kidLists[0]['birthday'])}} tahun) </h4>
         </div>
       </div>
