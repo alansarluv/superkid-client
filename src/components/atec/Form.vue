@@ -144,11 +144,15 @@
                   Form 4 - Kesehatan umum, fisik dan perilaku ( {{atec.umumTotalLength}} / 25)
                   <i v-if="atec.umumTotalLength === 25" class="fas fa-check"></i>
                 </p>
-                <button v-show="submitBtn" type="submit" class="form-control btn btn-info">  S  U  B  M  I  T  </button>           
+                <button v-show="submitBtn" type="submit" class="form-control btn btn-info" :class="{'disabled': loadingSubmit}">
+                  <template v-if="loadingSubmit">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading ...
+                  </template>
+                  <span v-if="!loadingSubmit">  S  U  B  M  I  T</span>  
+                </button>
               </div>
             </div>
           </div>
-
         </div>
         <div class="row justify-content-center sticky-100">
           <div class="col-lg-8 col-md-8 col-sm-12">
@@ -277,7 +281,8 @@
           umum24 : '',
           umum25 : ''          
         },
-        token: this.$store.getters.token
+        token: this.$store.getters.token,
+        loadingSubmit: false
       }
     },
     mixins: [generalMixin],
@@ -423,6 +428,7 @@
           .catch(error => console.log(error)) // eslint-disable-line no-console
       },
       onSubmitAtec () {
+        this.loadingSubmit = true;
         const configData = {
           data: {
             userId: this.user._id,
@@ -523,6 +529,7 @@
           .then(res => {
             console.log('res :' ,res); // eslint-disable-line no-console
             const data = res.data.data;
+            this.loadingSubmit = false;
             if (res.status === 200 && data._id) {
               this.$router.push({ 
                 name: 'atec-flash',
@@ -567,6 +574,9 @@
     &:hover {
       background-color: #212121;
       color: #ffbc41;
+    }
+    &.disabled {
+      pointer-events: none;
     }
   }
 
