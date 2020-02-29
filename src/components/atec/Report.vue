@@ -170,7 +170,6 @@
       axios
         .get('/atec/report', config)
         .then(res => {
-          console.log("test:", res) // eslint-disable-line no-console
           const data = res.data;
           this.reportData = data.data;
           this.loadingReport = false;

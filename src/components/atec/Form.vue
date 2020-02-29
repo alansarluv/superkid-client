@@ -57,11 +57,10 @@
                         {{kid.name}} - {{kid.gender}} ({{getAge(kid.birthday)}} Tahun)
                       </option>
                     </select>
-                    <input type="hidden" name="kidName" value="<%= kids[0].name %>">
                     <h5 class="mb-2 mt-4">Pilih Bulan dan Tahun laporan ATEC</h5>
                     <div class="row">
                       <div class="col-md-12 col-lg-6">
-                        <select v-model="atec.month" class="form-control">
+                        <select v-model="atec.month" class="form-control" :class="{'is-invalid': alreadyExistDate !== ''}">
                           <option disabled value="">Pilih satu</option>
                           <option value="01">Januari</option>
                           <option value="02">Februari</option>
@@ -78,7 +77,7 @@
                         </select>
                       </div>
                       <div class="col-md-12 col-lg-6">
-                        <select v-model="atec.year" class="form-control">
+                        <select v-model="atec.year" class="form-control" :class="{'is-invalid': alreadyExistDate !== ''}">
                           <option disabled value="">Pilih satu</option>
                           <option value="2021">2021</option>
                           <option value="2020">2020</option>
@@ -88,6 +87,7 @@
                           <option value="2016">2016</option>
                         </select>
                       </div>
+                      <small v-if="alreadyExistDate !== ''" class="invalid-feedback pl-3 d-block">{{ alreadyExistDate }}</small>
                     </div>                    
                   </div>
                 </div>
@@ -281,8 +281,8 @@
           umum24 : '',
           umum25 : ''          
         },
-        token: this.$store.getters.token,
-        loadingSubmit: false
+        loadingSubmit: false,
+        existingMonthYear: []
       }
     },
     mixins: [generalMixin],
@@ -297,6 +297,16 @@
       kidAge() {
         const currentAge = this.getAge(this.kids.birthday)
         return currentAge;
+      },
+      alreadyExistDate: function() {
+        const selectedMonthYear = this.atec.year+this.atec.month;
+        let returnText = '';
+        this.existingMonthYear.filter(i => {
+          if ( i === selectedMonthYear ) {
+            returnText = "Atec on this selected month and year already exist";
+          }
+        })
+        return returnText;
       }
     },
     components: {
@@ -399,7 +409,6 @@
         }
       },
       onSubmitKids () {
-        const token = this.$store.getters.token;
         const configData = {
           data: {
             id_user: this.user._id,
@@ -409,10 +418,7 @@
           }
         }
         const configHeader = {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json'
-          }
+          headers: this.$store.getters.configHeader
         }
         axios
           .post('/add-kid', configData.data, configHeader)
@@ -519,10 +525,7 @@
           }
         }
         const configHeader = {
-          headers: {
-            'Authorization': `Bearer ${this.token}`,
-            'Content-Type': 'application/json'
-          }
+          headers: this.$store.getters.configHeader
         }
         axios
           .post('/atec/create', configData.data, configHeader)
@@ -553,6 +556,25 @@
 
       if (this.kidLists.length === 1) {
         this.atec.selectedKid = this.kidLists[0].name;
+      }
+
+      if (this.kidLists.length > 0) {
+        const user = this.$store.getters.user;
+        const config = {
+          headers: this.$store.getters.configHeader,
+          params: {
+            userId: user._id
+          }
+        }
+        axios
+          .get('/atec/report', config)
+          .then(res => {
+            const data = res.data.data;
+            data.filter(d => {
+              this.existingMonthYear.push(d.monthYear);
+            })
+          })  
+          .catch(error => console.log("error: ", error)) // eslint-disable-line no-console
       }
     }
   }
