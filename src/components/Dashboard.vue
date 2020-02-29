@@ -39,13 +39,13 @@
         <div class="row mt-4">
           <div class="col-md-6 pl-0 box-section22">
             <img src="https://picsum.photos/500/250" alt="">
-            <h4 class="mt-4 mb-3">Chart &amp; Compare</h4>
-            <p>Gunakan fitur chart agar dengan mudah anda dapat menganalisa grafik kemampuan ananda dari waktu ke waktu. Serta fitur compare untuk membandingkan laporan atec bulan ini dengan bulan sebelumnya.</p>
+            <h4 class="mt-4 mb-3 px-lg-0 px-3">Chart &amp; Compare</h4>
+            <p class="pl-lg-0 pl-3">Gunakan fitur chart agar dengan mudah anda dapat menganalisa grafik kemampuan ananda dari waktu ke waktu. Serta fitur compare untuk membandingkan laporan atec bulan ini dengan bulan sebelumnya.</p>
           </div>
-          <div class="col-md-6 pr-0 box-section22">
+          <div class="col-md-6 pr-0 box-section22 pl-0 pl-lg-3">
             <img src="https://picsum.photos/500/250" alt="">
-            <h4 class="mt-4 mb-3">Weekly notes</h4>
-            <p>Catat kemajuan / kemunduran ananda di weekly notes ( yang akan di rangkum setiap minggu ) agar dapat mempermudah anda untuk melihat progress ananda secara lebih rinci</p>
+            <h4 class="mt-4 mb-3 pl-lg-0 px-3">Weekly notes</h4>
+            <p class="px-lg-0 px-3">Catat kemajuan / kemunduran ananda di weekly notes ( yang akan di rangkum setiap minggu ) agar dapat mempermudah anda untuk melihat progress ananda secara lebih rinci</p>
           </div>
         </div>
       </div>
@@ -68,7 +68,7 @@
       </div>
     </div>
     <div class="container-50 section-4 bg-white">
-      <div class="row">
+      <div class="row mx-0">
         <div class="col-md-12">
           <div class="box-section41">
             <blockquote class="blockquote text-center">
@@ -216,4 +216,27 @@
     height: 100px;
     background-color: #efefef;
   }
+
+  @media (max-width: 768px) {  
+    .welcome-box {
+      left: 0;
+      width: 100%;
+      transform: translateX(0);
+      -webkit-transform: translateX(0);
+      -moz-transform: translateX(0);
+    }
+    .section-2 {
+      .section-box {
+        left: 0 !important;
+        width: 100% !important;
+        transform: translateX(0) !important;
+        -webkit-transform: translateX(0) !important;
+        -moz-transform: translateX(0) !important;
+
+        .box-section21 {
+          position: relative !important;
+        }
+      }
+    }
+  }  
 </style>

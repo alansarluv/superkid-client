@@ -8,12 +8,12 @@
             Detail Atec for {{detail.kidName}},
             <span>( {{yearMonth(detail.monthYear)}} )</span>
             <span class="float-right">
-              <router-link to="/atec/report" class="btn btn-secondary">Back to atec report</router-link>
+              <router-link to="/atec/report" class="btn btn-secondary mt-3 mt-lg-0">Back to atec report</router-link>
             </span>
           </h3>
-          <h4 class="mt-3 mb-5">Kemampuan total = {{detail.bicaraTotal + detail.sosialTotal + detail.sensorikTotal + detail.umumTotal }}</h4>
+          <h4 class="mt-3 mb-2">Kemampuan total = {{detail.bicaraTotal + detail.sosialTotal + detail.sensorikTotal + detail.umumTotal }}</h4>
           <div class="row detail-form">
-            <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="col-lg-3 col-md-6 col-sm-12 mt-5">
               <h5>Kemampuan bicara = {{detail.bicaraTotal}}</h5>
               <ul>
                 <li v-for="index in 14" :key="index">
@@ -22,7 +22,7 @@
                 </li>
               </ul>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="col-lg-3 col-md-6 col-sm-12 mt-5">
               <h5>Kemampuan sosial = {{detail.sosialTotal}}</h5>
               <ul>
                 <li v-for="index in 20" :key="index">
@@ -31,7 +31,7 @@
                 </li>
               </ul>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="col-lg-3 col-md-6 col-sm-12 mt-5">
               <h5>Kemampuan sensorik = {{detail.sensorikTotal}}</h5>
               <ul>
                 <li v-for="index in 18" :key="index">
@@ -40,7 +40,7 @@
                 </li>
               </ul>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="col-lg-3 col-md-6 col-sm-12 mt-5">
               <h5>Kemampuan umum = {{detail.umumTotal}}</h5>
               <ul>
                 <li v-for="index in 25" :key="index">
@@ -164,6 +164,33 @@
           }
         }
       }
+
+      h3 {
+        span {
+          a { font-size: 14px; }
+        }
+      }
     }
   }
+
+  /* Medium devices (tablets, 768px and up) */
+  @media (max-width: 768px) {  
+    .card{
+      &.bg-seashell {
+        h3 {
+          font-size: 22px;
+        }
+        h4, h5 {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  /* Large devices (desktops, 992px and up) */
+  @media (min-width: 992px) { 
+  }
+  /* Extra large devices (large desktops, 1200px and up) */
+  @media (min-width: 1200px) {  
+  }  
 </style>

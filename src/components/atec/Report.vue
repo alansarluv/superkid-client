@@ -60,7 +60,7 @@
         </div>
       </div>
 
-      <div v-for="list in reportData" :key='list.id' class="row mb-2 mx-0 px-3">
+      <div v-for="list in reportData" :key='list.id' class="row mb-lg-2 mb-5 mx-0 px-3">
         <div class="col-12 col-md-12 text-md-center px-0">
           <div class="row">
             <div class="col-12 col-md-2 text-left mb-3 mb-md-0">
@@ -93,7 +93,7 @@
               </p>
             </div>
             <div class="col-12 col-md-1">
-              <p class="mb-0">
+              <p class="mb-lg-0 mb-2">
                 <span class="d-md-none font-weight-bold">Total skor: </span>
                 {{list.bicaraTotal + list.sosialTotal + list.sensorikTotal + list.umumTotal }}
               </p>
@@ -224,4 +224,13 @@
       }
     }
   }
+
+  @media (max-width: 768px) {  
+    .report-page {
+      h4 {
+        font-size: 18px;
+      }
+    }
+  }
+
 </style>
