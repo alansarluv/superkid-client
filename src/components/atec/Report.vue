@@ -114,7 +114,7 @@
 <script>
   import axios from 'axios';
   import Sidebar from '../partials/Sidebar';
-  import { generalMixin } from '../../mixins/general'
+  import { getAgeMixin, spinnerMixin } from '../../mixins/general';
 
   export default {
     components: {
@@ -128,7 +128,7 @@
         kidLists: this.$store.getters.userKids || []
       }
     },
-    mixins: [generalMixin],
+    mixins: [spinnerMixin, getAgeMixin],
     methods: {
       yearMonth(val) {
         const year = val.slice(0,4);

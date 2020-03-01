@@ -142,6 +142,7 @@
           overflow: hidden;
           img {
             border-bottom: 8px solid #ffc40c;
+            width: inherit;
           }
         }
       }

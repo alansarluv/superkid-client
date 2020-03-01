@@ -1,5 +1,8 @@
 <template>
   <div class="container-fluid container-content">
+    <div v-if="callAlert.visible" class="alert alert-animation" :class="`alert-${callAlert.type}`" role="alert">
+      {{callAlert.text}}
+    </div>
     <atec-sidebar></atec-sidebar>
     <div class="right-content">
       <div v-if="!kidLists.length" class="row justify-content-center">
@@ -144,7 +147,12 @@
                   Form 4 - Kesehatan umum, fisik dan perilaku ( {{atec.umumTotalLength}} / 25)
                   <i v-if="atec.umumTotalLength === 25" class="fas fa-check"></i>
                 </p>
-                <button v-show="submitBtn" type="submit" class="form-control btn btn-info" :class="{'disabled': loadingSubmit}">
+                <button 
+                  v-show="submitBtn" 
+                  type="submit" 
+                  class="form-control btn btn-info" 
+                  :class="{'disabled': loadingSubmit || alreadyExistDate !== ''}"
+                >
                   <template v-if="loadingSubmit">
                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading ...
                   </template>
@@ -177,7 +185,7 @@
   import Question from './Question'
   import axios from 'axios';
   import Sidebar from '../partials/Sidebar';
-  import { generalMixin } from '../../mixins/general';
+  import { getAgeMixin, spinnerMixin } from '../../mixins/general';
 
   export default {
     data() {
@@ -282,10 +290,15 @@
           umum25 : ''          
         },
         loadingSubmit: false,
-        existingMonthYear: []
+        existingMonthYear: [],
+        callAlert: {
+          text: '',
+          type: '',
+          visible: false
+        }
       }
     },
-    mixins: [generalMixin],
+    mixins: [spinnerMixin, getAgeMixin],
     computed: {
       activeQuestion: function() {
         const res = this.formQuestion.filter(el => el.formList === this.formActive);
@@ -303,7 +316,7 @@
         let returnText = '';
         this.existingMonthYear.filter(i => {
           if ( i === selectedMonthYear ) {
-            returnText = "Atec on this selected month and year already exist";
+            returnText = "Laporan ATEC pada bulan dan tahun ini telah di isi, silahkan memilih bulan lain";
           }
         })
         return returnText;
@@ -423,12 +436,16 @@
         axios
           .post('/add-kid', configData.data, configHeader)
           .then(res => {
-            if (res.data.status) {
+            if (res.data.status && res.data.data.kids) {
               this.kidLists = res.data.data.kids;
               let existingUser = localStorage.getItem('user');
               existingUser = existingUser ? JSON.parse(existingUser) : {};
               existingUser['kids'] = res.data.data.kids;
               localStorage.setItem('user', JSON.stringify(existingUser));
+            } else {
+              this.callAlert.text = "Terdapat kesalahan sistem, mohon hubungi kami agar kami dapat membantu anda.";
+              this.callAlert.type = "danger";
+              this.callAlert.visible = true;
             }
           })
           .catch(error => console.log(error)) // eslint-disable-line no-console
@@ -528,7 +545,7 @@
           headers: this.$store.getters.configHeader
         }
         axios
-          .post('/atec/create', configData.data, configHeader)
+          .post('/atec/create', configData.data, configHeader.headers)
           .then(res => {
             console.log('res :' ,res); // eslint-disable-line no-console
             const data = res.data.data;
@@ -538,9 +555,22 @@
                 name: 'atec-flash',
                 params: { response: data }
               });
+            } else {
+              this.callAlert.text = "Terdapat kesalahan sistem, mohon hubungi kami agar kami dapat membantu anda.";
+              this.callAlert.type = "danger";
+              this.callAlert.visible = true;
             }
           })
           .catch(error => console.log(error)) // eslint-disable-line no-console
+
+      }
+    },
+    watch: {
+      'callAlert.visible': function() {
+        var _this = this;
+        setTimeout(function() {
+          _this.callAlert.visible = false;
+        }, 3000)
 
       }
     },

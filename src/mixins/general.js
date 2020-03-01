@@ -1,4 +1,4 @@
-export const generalMixin = {
+export const spinnerMixin = {
   data() {
     return {
       spinner: `
@@ -9,7 +9,10 @@ export const generalMixin = {
         </div>      
       `
     }
-  },
+  }
+}
+
+export const getAgeMixin = {
   methods: {
     getAge (birthDate) {
       const today = new Date();

@@ -127,6 +127,17 @@
     pointer-events: none;    
   }
 
+  .alert-animation {
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    width: 70vw;
+    z-index: 3;
+  }
+
   hr.separator {border-top-width: 10px; border-style: dotted;}
   .tc { text-align : center; }
   .min100vh { min-height: 100vh; }
