@@ -22,7 +22,10 @@
             required>
           <div class="text-center">
             <input type="hidden" name="_csrf" value="">
-            <button class="btn btn-info btn-block" type="submit">L O G I N</button>
+            <button class="btn btn-info btn-block" v-if="!isSubmit" type="submit">L O G I N</button>
+            <button class="btn btn-info btn-block" v-if="isSubmit" type="button">
+              <loading-spinner :spinnerType="'sm'" :loadingText="'Loading...'"></loading-spinner>
+            </button>
             <router-link class="btn btn-link btn-block text-danger" to="/reset">Reset Password</router-link>
             <router-link class="btn btn-link btn-block" to="/signup">Have no account? Register your email</router-link>
           </div>
@@ -32,6 +35,7 @@
   </div>
 </template>
 <script>
+  import loadingSpinner from '../reusable/Spinner';
   export default {
     data (){
       return {
@@ -39,14 +43,23 @@
         password: ''
       }
     },
+    computed: {
+      isSubmit: function(){
+        return this.$store.getters.isSubmit || false
+      }
+    },
     methods: {
       onSubmit () {
+        this.$store.commit('isSubmit', true);
         const formData = {
           email: this.email,
           password: this.password
         }
         this.$store.dispatch('login', formData);
       }
+    },
+    components: {
+      loadingSpinner
     }
   }
 </script>

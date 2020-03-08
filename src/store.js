@@ -632,7 +632,8 @@ export default new Vuex.Store({
         val: ['tb', 'sb', 'cb', 'vb'],
         name: 'umum25'
       },
-    ]
+    ],
+    isSubmit: false
   },
   mutations: {
     authUser (state, userData) {
@@ -642,6 +643,9 @@ export default new Vuex.Store({
     },
     storeUser (state, user) {
       state.user = user
+    },
+    isSubmit (state, data) {
+      state.isSubmit = data
     }
   },
   actions: {
@@ -670,13 +674,17 @@ export default new Vuex.Store({
             userId: res.data.user._id,
             user: res.data.user
           })
+          commit('isSubmit', false)
           localStorage.setItem('access_token', res.data.token)
           localStorage.setItem('user', JSON.stringify(res.data.user))
           if (res.data.token !== null) {
             window.location = '/atec';
           }
         })
-        .catch(error => console.log(error)) // eslint-disable-line no-console
+        .catch(error => {
+          commit('isSubmit', false)
+          console.log(error); // eslint-disable-line no-console
+        }) 
     }
   },
   getters: {
@@ -712,6 +720,9 @@ export default new Vuex.Store({
     },
     getQuestion (state) {
       return state.listQuestion;
+    },
+    isSubmit (state) {
+      return state.isSubmit;
     }
   }
 })
