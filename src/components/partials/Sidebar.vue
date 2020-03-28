@@ -14,6 +14,12 @@
         </router-link>
       </li>
       <li>
+        <router-link to="/atec/chart" class="">
+          <i class="fas fa-chart-line"></i>
+          <span class="ml-2">Chart atec</span>
+        </router-link>
+      </li>
+      <li>
         <router-link to="/weekly-note/form" class="disabled">
           <i class="fas fa-calendar-week"></i>
           <span class="ml-2">Perkembangan mingguan</span>

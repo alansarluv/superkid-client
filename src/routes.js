@@ -8,6 +8,7 @@ import AtecForm from './components/atec/Form.vue';
 import AtecReport from './components/atec/Report.vue';
 import AtecFlash from './components/atec/Flash.vue';
 import AtecDetail from './components/atec/Detail.vue';
+import AtecChart from './components/atec/Chart.vue';
 import store from './store'
 
 export const routes = [
@@ -63,6 +64,19 @@ export const routes = [
     path: '/atec/report/detail', 
     name: 'atec-detail',
     component: AtecDetail, 
+    props: true,
+    beforeEnter (to, from, next) {
+      if (store.state.idToken) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  { 
+    path: '/atec/chart', 
+    name: 'atec-chart',
+    component: AtecChart, 
     props: true,
     beforeEnter (to, from, next) {
       if (store.state.idToken) {
