@@ -5,6 +5,49 @@
       <div class="row mx-0 mb-3 px-3">
         <div v-if="reportData.length !== 0" class="col-md-12 px-0">
           <h4>Nama anak : {{kidLists[0]['name']}} ({{ getAge(kidLists[0]['birthday'])}} tahun) </h4>
+          <p class="c-pointer text-primary" data-toggle="collapse" href="#collapseCompare" role="button" aria-expanded="false" aria-controls="collapseCompare">Klik disini untuk bandingkan 2 laporan atec</p>
+          <div class="collapse" id="collapseCompare">
+            <div class="card card-body">
+              <p>Pilih 2 laporan yang ingin dibandingkan {{atecCompare1}} - {{atecCompare2}}</p>
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="reportAtec1">First atec</label>
+                        <select v-model="atecCompare1" class="form-control" id="reportAtec1">
+                          <option 
+                            v-for="list in reportData" 
+                            :value="list._id"
+                            :key='list._id'>
+                            {{yearMonth(list.monthYear)}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="reportAtec2">Second atec</label>
+                        <select v-model="atecCompare2" class="form-control" id="reportAtec2">
+                          <option 
+                            v-for="list in reportData" 
+                            :value="list._id"
+                            :key='list._id'>
+                            {{yearMonth(list.monthYear)}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <button type="button" @click="compare()" class="btn btn-primary">Bandingkan</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>          
         </div>
       </div>
       <div class="row d-none d-md-flex mx-0 px-3">
@@ -125,7 +168,9 @@
         loadingReport: false,
         loadingDetail: false,
         reportData : [],
-        kidLists: this.$store.getters.userKids || []
+        kidLists: this.$store.getters.userKids || [],
+        atecCompare1: '',
+        atecCompare2: ''
       }
     },
     mixins: [spinnerMixin, getAgeMixin],
@@ -156,6 +201,30 @@
             }
           })
           .catch(error => console.log("error: ", error)) // eslint-disable-line no-console
+      },
+      compare() {
+        if (this.atecCompare1 === '' || this.atecCompare2 === '') {
+          alert("Pilih atec yang ingin dibandingkan");
+        } else if (this.atecCompare1 === this.atecCompare2 ) {
+          alert("Pilihan atec yang ingind dibandingkan harus berbeda")
+        } else {
+          this.loadingDetail = true;
+          const config = {
+            headers: this.$store.getters.configHeader
+          };
+          let data = null;
+          axios
+            .get('/atec/detail/'+this.atecCompare1, config)
+            .then(res => {
+              console.log("detail:", res) // eslint-disable-line no-console
+              data = res.data.data;
+              this.loadingDetail = false;
+              if (res.status === 200 && data._id) {
+                console.log(data); // eslint-disable-line no-console
+              }
+            })
+            .catch(error => console.log("error: ", error)) // eslint-disable-line no-console            
+        }
       }
     },
     created() { 

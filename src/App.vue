@@ -138,6 +138,7 @@
     z-index: 3;
   }
 
+  .c-pointer { cursor: pointer; }
   hr.separator {border-top-width: 10px; border-style: dotted;}
   .tc { text-align : center; }
   .min100vh { min-height: 100vh; }
