@@ -6,9 +6,14 @@
       </router-link>
     </div>
     <ul class="navbar-list-menu">
-      <li v-if="!isAuth">
-        <router-link to="/login">Login</router-link>
-      </li>
+      <template v-if="!isAuth">
+        <li >
+          <router-link to="/menu">Menu</router-link>
+        </li>
+        <li >
+          <router-link to="/login">Login</router-link>
+        </li>
+      </template>
       <template v-if="isAuth">
         <li>
           <router-link to="/atec">Atec</router-link>

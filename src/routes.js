@@ -3,6 +3,12 @@ import Login from './components/auth/Login.vue';
 import Reset from './components/auth/Reset.vue';
 import Signup from './components/auth/Signup.vue';
 import NewPassword from './components/auth/NewPassword.vue';
+
+// Free Menu
+import Menu from './components/menu/Index.vue';
+import SpeechHelper from './components/menu/SpeechHelper.vue';
+
+// Authenticated Menu
 import AtecIndex from './components/atec/Index.vue';
 import AtecForm from './components/atec/Form.vue';
 import AtecReport from './components/atec/Report.vue';
@@ -86,8 +92,14 @@ export const routes = [
       }
     }
   },
+  // Authentication login
   { path: '/login', component: Login },
   { path: '/reset', component: Reset },
   { path: '/signup', component: Signup },
-  { path: '/new-password', component: NewPassword }
+  { path: '/new-password', component: NewPassword },
+
+  // Free menu
+  { path: '/menu', component: Menu },
+  { path: '/speech-helper', component: SpeechHelper },
+
 ];
