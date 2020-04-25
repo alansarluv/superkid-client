@@ -7,6 +7,7 @@ import NewPassword from './components/auth/NewPassword.vue';
 // Free Menu
 import Menu from './components/menu/Index.vue';
 import SpeechHelper from './components/menu/SpeechHelper.vue';
+import ColorPlay from './components/menu/ColorPlay.vue';
 
 // Authenticated Menu
 import AtecIndex from './components/atec/Index.vue';
@@ -101,5 +102,6 @@ export const routes = [
   // Free menu
   { path: '/menu', component: Menu },
   { path: '/speech-helper', component: SpeechHelper },
+  { path: '/color-play', component: ColorPlay },
 
 ];

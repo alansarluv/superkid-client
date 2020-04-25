@@ -6,6 +6,9 @@
         <p class="text-center">
           <router-link to="/speech-helper">Speech-helper</router-link>
         </p>
+        <p class="text-center">
+          <router-link to="/color-play">Color play</router-link>
+        </p>
       </div>
     </div>
   </div>
