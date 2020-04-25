@@ -55,7 +55,9 @@
             <div @click="speakText(list.text)" class="card c-pointer">
               <div class="card-body">
                 <h5 class="card-title">{{list.text}}</h5>
-                <img :src="list.src" :alt="list.text">
+                <div class="box-img">
+                  <img :src="require(`../../assets/speech-activity/${list.src}.jpg`)" :alt="list.text">
+                </div>
               </div>
             </div>            
           </div>
@@ -70,53 +72,57 @@
       return {
         dataLIst: [
           {
-            src: '../../assets/speech-activity/minum.jpg',
+            src: 'minum',
             text: "Aku haus, aku mau minum"
           },
           {
-            src: '../../assets/speech-activity/makan.jpg',
+            src: 'makan',
             text: "Aku lapar, aku mau makan"
           },
           {
-            src: '../../assets/speech-activity/senang.jpg',
-            text: "Aku capek"
-          },
-          {
-            src: '../../assets/speech-activity/senang.jpg',
-            text: "Aku sakit"
-          },
-          {
-            src: '../../assets/speech-activity/senang.jpg',
-            text: "Aku senang"
-          },
-          {
-            src: '../../assets/speech-activity/marah.jpg',
-            text: "Aku marah"
-          },
-          {
-            src: '../../assets/speech-activity/sedih.jpg',
-            text: "Aku sedih"
-          },
-          {
-            src: '../../assets/speech-activity/takut.jpg',
-            text: "Aku takut"
-          },
-          {
-            src: '../../assets/speech-activity/berjalan.jpg',
-            text: 'Aku mau jalan jalan'
-          },
-          {
-            src: '../../assets/speech-activity/pulang.jpg',
-            text: 'Aku mau pulang'
-          },
-          {
-            src: '../../assets/speech-activity/sekolah.jpg',
-            text: 'Aku mau ke sekolah'
-          },
-          {
-            src: '../../assets/speech-activity/bermain.jpg',
+            src: 'bermain',
             text: 'Aku mau bermain'
-          }
+          },
+          {
+            src: 'tidur',
+            text: 'Aku capek, aku mau bobok'
+          },
+          {
+            src: 'senang',
+            text: "Aku senang, aku tertawa"
+          },
+          {
+            src: 'senyum',
+            text: "Aku senang, aku senyum"
+          },
+          {
+            src: 'marah',
+            text: "Aku kesal, aku marah"
+          },
+          {
+            src: 'sedih',
+            text: "Aku sedih, aku menangis"
+          },
+          {
+            src: 'berjalan',
+            text: 'Aku bosan, aku mau jalan jalan'
+          },
+          {
+            src: 'bersepeda',
+            text: 'Aku mau naik sepeda'
+          },
+          {
+            src: 'belajar',
+            text: 'Aku mau belajar'
+          },
+          {
+            src: 'menulis',
+            text: 'Aku mau menulis'
+          },
+          {
+            src: 'membaca',
+            text: 'Aku mau baca buku'
+          },
         ],
         voices: [],
         message: new SpeechSynthesisUtterance(),
@@ -161,6 +167,11 @@
       setVoice() {
         this.message.voice = this.voices.find(voice => voice.name === this.speech.selectedLang);
       },
+      // to get dynamic image
+      getImgUrl(pet) {
+        const images = require.context('../../assets/', false, /\.jpg$/);
+        return images('./' + pet + ".png");
+      }      
     },
     mounted() {
       // run spinner loading while waiting on option languages
@@ -186,6 +197,24 @@
       color: white;
       font-weight: 700;
       cursor: pointer;      
+    }
+  }
+  .card {
+    .card-body {
+      border: 3px;
+      transition: all .4s;
+      -webkit-transition: all .4s;
+      -moz-transition: all .4s;
+      &:hover {
+        background-color: black;
+        color: white;
+      }
+    }
+    .box-img {
+      img {
+        height: auto;
+        width: 100%;
+      }
     }
   }
 </style>
