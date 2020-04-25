@@ -1,13 +1,9 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid bgColorCustom">
     <div class="row justify-content-center">
       <div class="col-sm-12 my-3 text-center">
         <h3 class="text-center mb-3">Sebut Warna</h3>
-        <div
-          class="btn btn-primary c-pointer btnColor"
-        >
-          Warna putih
-        </div>
+        <div class="btn btn-primary c-pointer btnTrigger">Click disini untuk mulai</div>
         <div class="mt-5">
           <p class="hints"></p>
         </div>
@@ -32,15 +28,17 @@
   recognition.maxAlternatives = 1;
 
   var diagnostic = document.querySelector('.output');
-  var bg = document.querySelector('html');
   
-  document.body.onclick = function() {
-    recognition.start();
-    console.log('Ready to receive a color command.'); // eslint-disable-line no-console
-  }
+  document.addEventListener("DOMContentLoaded", function(){
+    const btnTrigger = document.querySelector('.btnTrigger');
+    btnTrigger.addEventListener('click', function(){
+      recognition.start();
+      console.log('Ready to receive a color command.'); // eslint-disable-line no-console
+    })
+  });
 
   recognition.onresult = function(event) {
-    var selectedColor = document.querySelector('.btnColor');
+    var selectedColor = document.querySelector('.output');
     var color = event.results[0][0].transcript;
     color = color.toLocaleLowerCase();
     
@@ -49,7 +47,7 @@
     if (listWarna.includes(color)){
       indexArr = listWarna.indexOf(color);
     }
-
+    const bg = document.querySelector('.bgColorCustom');
     bg.style.backgroundColor = colorList[indexArr];
     console.log('Confidence: ' + event.results[0][0].confidence); // eslint-disable-line no-console
   }
@@ -66,3 +64,8 @@
     diagnostic.textContent = 'Error occurred in recognition: ' + event.error;
   }
 </script>
+<style lang="scss">
+  .bgColorCustom {
+    min-height: 100vh;
+  }
+</style>
