@@ -16,8 +16,8 @@
         <div class="mt-5">
           <p class="hints"></p>
         </div>
-        <div class="mt-6">
-          <p v-if="transcript.length">Kamu menyebutkan warna {{transcript}}</p>
+        <div v-if="transcript.length" class="bottom-text-speech">
+          <p class="m-0">Kamu menyebut warna : <br> {{transcript}}</p>
         </div>
         <div class="mt-6">
           <p>{{hints}}</p>
@@ -34,13 +34,17 @@
       return {
         listWarna:
         [
-          'merah', 'hijau', 'biru', 'kuning', 'orange', 'ungu', 'pink',
-          'kelabu', 'coklat', 'abu-abu', 'putih', 'hitam', 'jingga'
+          'merah', 'merah muda', 'merah tua', 'hijau', 'hijau muda', 'hijau tua',
+          'biru', 'biru muda', 'biru tua', 'kuning', 'kuning muda', 'kuning tua',
+          'orange', 'pink', 'coklat', 'emas', 'kelabu', 'jingga', 'putih', 'hitam', 
+          'ungu', 'ungu muda', 'ungu tua', 'abu-abu', 'abu-abu muda', 'abu-abu tua',
         ],
         colorList:
         [
-          'red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink',
-          'grey', 'chocolate', 'grey', 'white', 'black', 'orange'
+          'red', 'pink', 'darkred', 'green', 'lightgreen', 'darkgreen',
+          'blue', 'lightblue', 'darkblue', 'yellow', 'lightyellow', 'yellow',
+          'orange', 'pink', 'chocolate', 'gold', 'grey', 'orange', 'white', 'black', 
+          'purple', 'mediumpurple' , 'rebeccapurple', 'grey', 'lightgrey', 'darkgrey'
         ],
 
         recognition: new SpeechRecognition(),
@@ -132,13 +136,26 @@
   .bgColorCustom {
     min-height: 100vh;
   }
+  .bottom-text-speech {
+    position: fixed;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    min-width: 350px;
+    text-align: center;
+    padding: 15px;
+    background-color: white;
+    border: 4px solid black;
+    border-radius: 6px;
+  }
   .circle-time {
     width: 250px;
     height: 250px;
     z-index: 2;
     border-radius: 50%;
     position: fixed;
-    top: 50%;
+    top: 40%;
     left: 50%;
     background-color: black;
     color: white;
@@ -162,7 +179,7 @@
     height: 270px;
     border-radius: 50%;
     position: fixed;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
