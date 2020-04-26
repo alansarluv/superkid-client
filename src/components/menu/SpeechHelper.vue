@@ -52,11 +52,11 @@
         </div>
         <div class="row mt-4 justify-content-center">
           <div v-for="(list, idx) in dataLIst" :key="idx" class="col-sm-3 mb-3">
-            <div @click="speakText(list.text)" class="card c-pointer">
+            <div @click="speakText(list.text.selected)" class="card c-pointer">
               <div class="card-body">
-                <h5 class="card-title">{{list.text}}</h5>
+                <h5 class="card-title">{{list.text.selected}}</h5>
                 <div class="box-img">
-                  <img :src="require(`../../assets/speech-activity/${list.src}.jpg`)" :alt="list.text">
+                  <img :src="require(`../../assets/speech-activity/${list.src}.jpg`)" :alt="list.text.selected">
                 </div>
               </div>
             </div>            
@@ -73,59 +73,112 @@
         dataLIst: [
           {
             src: 'minum',
-            text: "Aku haus, aku mau minum"
+            text: {
+              selected: "",
+              id: "Aku haus, aku mau minum",
+              en: "I'm thirsty, I want to drink"
+            }
           },
           {
             src: 'makan',
-            text: "Aku lapar, aku mau makan"
+            text: {
+              selected: "",
+              id: "Aku lapar, aku mau makan",
+              en: "I'm hungry, I want to eat"
+            }
           },
           {
             src: 'bermain',
-            text: 'Aku mau bermain'
+            text: {
+              selected: "",
+              id: 'Aku mau bermain',
+              en: "I want to play"
+            }
           },
           {
             src: 'tidur',
-            text: 'Aku capek, aku mau bobok'
+            text: {
+              selected: "",
+              id: 'Aku capek, aku mau bobok',
+              en: "I'm tired, I want to sleep"
+            }
           },
           {
             src: 'senang',
-            text: "Aku senang, aku tertawa"
+            text: {
+              selected: "",
+              id: "Aku senang, aku tertawa",
+              en: "I'm happy, I'm laughing"
+            }
           },
           {
             src: 'senyum',
-            text: "Aku senang, aku senyum"
+            text: {
+              selected: "",
+              id: "Aku senang, aku senyum",
+              en: "I'm happy, I'm smiling"
+            }
           },
           {
             src: 'marah',
-            text: "Aku kesal, aku marah"
+            text: {
+              selected: "",
+              id: "Aku kesal, aku marah",
+              en: "I'm upset, I'm angry"
+            }
           },
           {
             src: 'sedih',
-            text: "Aku sedih, aku menangis"
+            text: {
+              selected: "",
+              id: "Aku sedih, aku menangis",
+              en: "I'm sad, I'm crying"
+            }
           },
           {
             src: 'berjalan',
-            text: 'Aku bosan, aku mau jalan jalan'
+            text: {
+              selected: "",
+              id: 'Aku bosan, aku mau jalan jalan',
+              en: "I'm bored, I want to go out"
+            }
           },
           {
             src: 'bersepeda',
-            text: 'Aku mau naik sepeda'
+            text: {
+              selected: "",
+              id: 'Aku mau naik sepeda',
+              en: "I want to ride a bicycle"
+            }
           },
           {
             src: 'belajar',
-            text: 'Aku mau belajar'
+            text: {
+              selected: "",
+              id: 'Aku mau belajar',
+              en: "I want to learn"
+            }
           },
           {
             src: 'menulis',
-            text: 'Aku mau menulis'
+            text: {
+              selected: "",
+              id: 'Aku mau menulis',
+              en: "I want to write"
+            }
           },
           {
             src: 'membaca',
-            text: 'Aku mau baca buku'
+            text: {
+              selected: "",
+              id: 'Aku mau baca buku',
+              en: "I want to read a book"
+            }
           },
         ],
         voices: [],
         message: new SpeechSynthesisUtterance(),
+        iteration: 0,
         speech: {
           textarea: '',
           selectedLang: 'Google Bahasa Indonesia',
@@ -147,7 +200,15 @@
           })
         }
         this.message.voice = this.voices.find(voice => voice.name === this.speech.selectedLang);
+        this.changeLanguage('id')
       },
+      // change language option, en / id
+      changeLanguage(val) {
+        // change text to indonesian
+        this.dataLIst.forEach(x => {
+          x.text.selected = x.text[val]
+        });
+      },      
       // init default language as bahasa
       initDefaultVoices() {
         const runInterval = setInterval(() => {
@@ -155,6 +216,12 @@
           if (this.voices.length) {
             // stop spinner loading option languages
             clearInterval(runInterval);
+          } else if(this.iteration > 9) {
+            // stop spinner loading option languages
+            clearInterval(runInterval);
+            this.changeLanguage('en');
+          } else {
+            this.iteration++;
           }
         }, 3000);
       },
@@ -166,6 +233,12 @@
       // on change language options, run this function
       setVoice() {
         this.message.voice = this.voices.find(voice => voice.name === this.speech.selectedLang);
+        const idLang = ["Google Bahasa Indonesia", "Damayanti"]
+        if (idLang.includes(this.speech.selectedLang)) {
+          this.changeLanguage('id')
+        } else {
+          this.changeLanguage('en')
+        }
       },
       // to get dynamic image
       getImgUrl(pet) {
@@ -176,6 +249,7 @@
     mounted() {
       // run spinner loading while waiting on option languages
       this.initDefaultVoices();
+      this.changeLanguage('en');
     }
   }
 </script>
