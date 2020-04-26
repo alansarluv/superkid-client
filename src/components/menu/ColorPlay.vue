@@ -3,7 +3,16 @@
     <div class="row justify-content-center">
       <div class="col-sm-12 my-3 text-center">
         <h3 class="text-center mb-3">Sebut Warna</h3>
-        <div @click="startGame" class="btn btn-primary c-pointer btnTrigger">Click disini untuk mulai</div>
+        <div
+          @click="startGame"
+          class="circle-time c-pointer btnTrigger"
+        >
+          <span>{{circleText}}</span>
+        </div>
+        <div
+          class="layer-border"
+          :style="{background: `conic-gradient( #000 0%, #000 ${tic}%, #55b7a4 0%, #4ca493 40%, #336d62 60%, #2a5b52 100% )` }"
+        ></div>
         <div class="mt-5">
           <p class="hints"></p>
         </div>
@@ -38,7 +47,8 @@
         hints: '',
         transcript: '',
         confidence: 0,
-        selectedColor: 'white'
+        selectedColor: 'white',
+        tic: 0
       }
     },
     methods: {
@@ -49,21 +59,44 @@
         this.recognition.maxAlternatives = 1;
       },
       startGame(){
+        // start speech recognition service, this will 
         this.recognition.start();
         this.hints = "Sebutkan warna apa saja";
         this.transcript = "";
-
         const _this = this;
+
+        const timeInterval = setInterval(() => {
+          _this.tic += 12.5
+        }, 1000);
+
+        setTimeout(function(){ 
+          clearInterval(timeInterval);
+          _this.tic = 0
+        }, 8000);
+
+        // onresult will fired once a successful result is received
         this.recognition.onresult = function(event) {
           _this.result(event);
-        }
-        this.recognition.onspeechend = function() {
-          _this.hints = "";
-          _this.recognition.stop();
+          clearInterval(timeInterval);
+          _this.tic = 0
         }
 
+        // once a single word has been recognised and it has finished being spoken,
+        // this handler is fired to stop the speech recognition service from running.
+        this.recognition.onspeechend = function() {
+          _this.hints = "";
+          clearInterval(timeInterval);
+          _this.tic = 0
+          _this.recognition.stop();
+        }
+        // supposed to handle cases where speech was recognised an error occured
+        // after 8s in silence, this function would be trigered
         this.recognition.onerror = function(event) {
-          this.hints = 'Error occurred in recognition: ' + event.error;
+          clearInterval(timeInterval);
+          _this.tic = 0
+          let errorText = event.error;
+          if (event.error === "no-speech") errorText = "Tidak ada suara"
+          _this.hints = 'Terjadi kesalahan : ' + errorText;
         }
       },
       result(event){
@@ -81,6 +114,15 @@
         }
       }
     },
+    computed: {
+      circleText: function(){
+        if (this.tic) {
+          return ((100 - this.tic) / 12.5)
+        } else {
+          return "Klik disini untuk mulai"
+        }
+      }
+    },
     mounted(){
       this.configSetup();
     }
@@ -90,4 +132,44 @@
   .bgColorCustom {
     min-height: 100vh;
   }
+  .circle-time {
+    width: 250px;
+    height: 250px;
+    z-index: 2;
+    border-radius: 50%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    background-color: black;
+    color: white;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    
+    span {
+      position: absolute;
+      width: 100%;
+      text-align: center;      
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+    }
+  }
+  .layer-border {
+    width: 270px;
+    height: 270px;
+    border-radius: 50%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    transition: all .4s;
+    -webkit-transition: all .4s;
+    -moz-transition: all .4s;
+
+  }  
 </style>
