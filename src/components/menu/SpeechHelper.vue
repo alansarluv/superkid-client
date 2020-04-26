@@ -189,7 +189,6 @@
       // get option language to speech
       getVoices() {
         const allVoices = speechSynthesis.getVoices();
-
         if (allVoices.length) {
           // sort option language for only 4 languages
           const _this = this;
@@ -199,8 +198,6 @@
             }
           })
         }
-        this.message.voice = this.voices.find(voice => voice.name === this.speech.selectedLang);
-        this.changeLanguage('id')
       },
       // change language option, en / id
       changeLanguage(val) {
@@ -216,6 +213,8 @@
           if (this.voices.length) {
             // stop spinner loading option languages
             clearInterval(runInterval);
+            this.message.voice = this.voices.find(voice => voice.name === this.speech.selectedLang);
+            this.changeLanguage('id')
           } else if(this.iteration > 9) {
             // stop spinner loading option languages
             clearInterval(runInterval);
