@@ -38,12 +38,12 @@
         </div>
         <div class="row mt-4">
           <div class="col-md-6 pl-0 box-section22">
-            <img src="https://picsum.photos/500/250" alt="">
+            <img :src="require(`./../assets/general/chart.png`)" alt="chart compare">
             <h4 class="mt-4 mb-3 px-lg-0 px-3">Chart &amp; Compare</h4>
             <p class="pl-lg-0 pl-3">Gunakan fitur chart agar dengan mudah anda dapat menganalisa grafik kemampuan ananda dari waktu ke waktu. Serta fitur compare untuk membandingkan laporan atec bulan ini dengan bulan sebelumnya.</p>
           </div>
           <div class="col-md-6 pr-0 box-section22 pl-0 pl-lg-3">
-            <img src="https://picsum.photos/500/250" alt="">
+            <img :src="require(`./../assets/general/docter_kid.jpg`)" alt="weekly notes">
             <h4 class="mt-4 mb-3 pl-lg-0 px-3">Weekly notes</h4>
             <p class="px-lg-0 px-3">Catat kemajuan / kemunduran ananda di weekly notes ( yang akan di rangkum setiap minggu ) agar dapat mempermudah anda untuk melihat progress ananda secara lebih rinci</p>
           </div>
@@ -118,7 +118,13 @@
         max-width: 830px;
         border-radius: 3px;
         .bg-section21 {
-          background-image: url('https://picsum.photos/1000/400');
+          background-image: url('./../assets/general/desk.png');
+          background-repeat: no-repeat;
+          background-size: cover;
+          background-position: center;
+          background-color: #fff;
+          min-height: 260px;
+
           position: relative;
           &::before {
             content: "";
@@ -166,7 +172,11 @@
         }
       }
       .box-section32 {
-        background-image: url('https://picsum.photos/1200/600');
+        background-image: url('./../assets/general/superparent.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        background-color: #ffc40d;
         width: 100%;
         height: 50vh;
       }
@@ -233,10 +243,6 @@
         transform: translateX(0) !important;
         -webkit-transform: translateX(0) !important;
         -moz-transform: translateX(0) !important;
-
-        .box-section21 {
-          position: relative !important;
-        }
       }
     }
   }  
