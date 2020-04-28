@@ -9,6 +9,9 @@
         <p class="text-center">
           <router-link to="/color-play">Color play</router-link>
         </p>
+        <p class="text-center">
+          <router-link to="/breakout-game">Breakout ball game</router-link>
+        </p>
       </div>
     </div>
   </div>
