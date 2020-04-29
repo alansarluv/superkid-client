@@ -33,6 +33,19 @@
             speed: 8,
             dx: 0,    // direction move only in x line & cant move in y line
           },
+          brickConfig : {
+            rowCount: 9,
+            columnCount: 5,
+            bricks: []
+          },
+          brick: {
+            w: 70,
+            h: 20,
+            padding: 10,
+            offsetX: 45,
+            offsetY: 60,
+            visible: true
+          },
           score: 0
         }
       }
@@ -52,6 +65,17 @@
         // Paddle config
         this.element.paddle.x = this.vueCanvas.width / 2 - 40;
         this.element.paddle.y = this.vueCanvas.height - 20;
+
+        // Brick config
+        for(let i = 0; i < this.element.brickConfig.rowCount; i++) {
+          this.element.brickConfig.bricks[i] = [];
+          for(let j = 0; j < this.element.brickConfig.columnCount; j++) {
+            // x & y position
+            const x = i * (this.element.brick.w + this.element.brick.padding) + this.element.brick.offsetX;
+            const y = j * (this.element.brick.h + this.element.brick.padding) + this.element.brick.offsetY;
+            this.element.brickConfig.bricks[i][j] = { x, y, ...this.element.brick }
+          }
+        }        
 
         this.drawCanvas();
       },
@@ -80,11 +104,31 @@
         this.vueCanvas.font = '20px Arial';
         this.vueCanvas.fillText(`Score: ${this.element.score}`, this.vueCanvas.width - 100, 30);
       },
+      drawBricks() {
+        this.element.brickConfig.bricks.forEach(column => {
+          column.forEach(brick => {
+            this.vueCanvas.beginPath();
+            this.vueCanvas.rect(
+              brick.x,
+              brick.y,
+              brick.w,
+              brick.h
+            );
+            this.vueCanvas.fillStyle = brick.visible ? '#0095dd' : 'transparent';
+            this.vueCanvas.fill();
+            this.vueCanvas.closePath();
+          })
+        })
+      },
+
+
       drawCanvas() {
         this.drawBall();
         this.drawPaddle();
         this.drawScore();
+        this.drawBricks();
       },
+
 
       startGame() {
       },
