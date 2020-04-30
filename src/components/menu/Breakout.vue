@@ -6,12 +6,48 @@
         <canvas id="breakoutcanvas" width="800" height="600"></canvas>
         <div class="d-flex justify-content-center">
           <div @click="startGame()" class="btn btn-link c-pointer mt-3">start game</div>
+          <div @click="endgame()" class="btn btn-link c-pointer mt-3">end game</div>
         </div>
       </div>
     </div>
   </div>
 </template>
 <script>
+// ======================= =========================== ==========================
+// =======================      How The Code Work      ==========================
+// ======================= =========================== ==========================
+/*
+  1.  Start from mounted : run initElement function.
+      In this function, we define axis config for 
+      the canvas, and all element (ball, paddle, bricks)
+      then we call function called updateCanvas
+
+  2.  updateCanvas has only 3 function but this 3 function is the main function
+      - movePaddle
+      - drawCanvas
+      - requestAnimationFrame (callback to updateCanvas again)
+      * movePaddle is a function to update position of paddle in x Axis line
+        paddle in x will change as much as dx is change
+        paddle in x can't move outside the left & right wall
+      * drawCanvas is for draw each element on canvas
+        each time we call this function, the canvas will be cleaned first
+        then redraw based on latest changes on the config
+      * requestAnimationFrame this is function for telling the browser that
+        you wish to perform an animation and request the browser callback before the repaint
+        the callback will call the updateCanvas function itself.
+
+  3.  startGame & endGame click handler
+      these function for activate and deactivate event listener to your arrow keydown and keyup
+      when arrow left or arrow right is pressed, 
+      the config of paddle.dx will be added as much as the speed we define
+      arrowright for move paddle on plus coordinate of x
+      arrowleft for move paddle on negative coordinate of x
+      when keyup of arrow is detected, the dx will be set back to 0,
+      means the movement is stop
+
+*/
+
+
   export default {
     data() {
       return {
@@ -26,7 +62,7 @@
             dy: -4    // direction move in y line
           },
           paddle: {
-            x: 0,
+            x: 90,
             y: 0,
             w: 80,
             h: 10,
@@ -51,6 +87,9 @@
       }
     },
     methods: {
+      // ======================= =========================== ==========================
+      // ======================= Draw element & init config  ==========================
+      // ======================= =========================== ==========================
       initElement() {
         // Canvas
         const c = document.getElementById("breakoutcanvas");
@@ -77,8 +116,9 @@
           }
         }        
 
-        this.drawCanvas();
+        this.updateCanvas();
       },
+
       drawBall() {
         // Draw ball
         this.vueCanvas.beginPath();
@@ -121,17 +161,73 @@
         })
       },
 
-
       drawCanvas() {
+        // always clear canvas everytime we start draw / update
+        this.vueCanvas.clearRect(0,0, this.vueCanvas.width, this.vueCanvas.height)
+
+        // start draw element
         this.drawBall();
         this.drawPaddle();
         this.drawScore();
         this.drawBricks();
       },
 
+      // ======================= =========================== ==========================
+      // ============ Method for update (moving element) and animation ================
+      // ======================= =========================== ==========================
+      movePaddle() {
+        this.element.paddle.x += this.element.paddle.dx;
+
+        // wall detection
+        // cant move outside the wall (maximum on right side of the wall)
+        if (this.element.paddle.x + this.element.paddle.w > this.vueCanvas.width) {
+          this.element.paddle.x = this.vueCanvas.width - this.element.paddle.w;
+        }
+        // can't move to minus X (maximum on the left side of the wall)
+        if (this.element.paddle.x < 0) {
+          this.element.paddle.x = 0;
+        }
+
+      },
+
+      updateCanvas() {
+        this.movePaddle();
+
+        // draw everything
+        this.drawCanvas();
+
+        window.requestAnimationFrame(this.updateCanvas);
+      },
+
+      // ======================= =========================== ==========================
+      // =======================  game start & stop listener ==========================
+      // ======================= =========================== ==========================
+      keyDownListener() {
+        if (event.key === "Right" || event.key === "ArrowRight") {
+          this.element.paddle.dx = this.element.paddle.speed;
+        } else if (event.key === "Left" || event.key === "ArrowLeft") {
+          this.element.paddle.dx = -this.element.paddle.speed;
+        }
+      },
+      keyUpListener() {
+        if (
+          event.key === "Right" ||
+          event.key === "ArrowRight" ||
+          event.key === "Left" ||
+          event.key === "ArrowLeft"
+        ) {
+            this.element.paddle.dx = 0;
+          }
+      },
 
       startGame() {
+        window.addEventListener('keydown', this.keyDownListener);
+        window.addEventListener('keyup', this.keyUpListener);
       },
+      endgame() {
+        window.removeEventListener('keydown', this.keyDownListener);
+        window.removeEventListener('keyup', this.keyUpListener);
+      }
     },
     computed: {
     },
