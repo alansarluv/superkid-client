@@ -45,6 +45,9 @@
       when keyup of arrow is detected, the dx will be set back to 0,
       means the movement is stop
 
+  4.  add moveBall function inside updateCanvas.
+      setup condition for only trigger this moveball only if flag isStart is true
+      and if flag isStart is false then stop calling this moveBall function
 */
 
 
@@ -52,6 +55,7 @@
     data() {
       return {
         vueCanvas: null,
+        isStart: false,
         element: {
           ball: {
             x: 0,
@@ -196,7 +200,35 @@
         // draw everything
         this.drawCanvas();
 
+        // move the ball if start game is triggered
+        if (this.isStart) {
+          this.moveBall();
+        }
+
         window.requestAnimationFrame(this.updateCanvas);
+      },
+
+      moveBall() {
+        this.element.ball.x += this.element.ball.dx;
+        this.element.ball.y += this.element.ball.dy;
+
+        // wall reverse ball (right / left)
+        if
+          (
+            this.element.ball.x + this.element.ball.size > this.vueCanvas.width ||
+            this.element.ball.x + this.element.ball.size < 0
+          ) {
+            this.element.ball.dx *= -1 // means ball.dx = ball.dx * -1 (to make the ball direction reverse we need to * negative)
+          }
+
+        // wall reverse ball (top / bottom)
+        if
+          (
+            this.element.ball.y + this.element.ball.size > this.vueCanvas.height ||
+            this.element.ball.y + this.element.ball.size < 0
+          ) {
+            this.element.ball.dy *= -1 // means ball.dx = ball.dx * -1 (to make the ball direction reverse we need to * negative)
+          }
       },
 
       // ======================= =========================== ==========================
@@ -223,10 +255,13 @@
       startGame() {
         window.addEventListener('keydown', this.keyDownListener);
         window.addEventListener('keyup', this.keyUpListener);
+        this.isStart = true;
+        debugger  // eslint-disable-line no-debugger
       },
       endgame() {
         window.removeEventListener('keydown', this.keyDownListener);
         window.removeEventListener('keyup', this.keyUpListener);
+        this.isStart = false;
       }
     },
     computed: {
