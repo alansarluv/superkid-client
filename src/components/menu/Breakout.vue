@@ -130,7 +130,7 @@
         // Draw ball
         this.vueCanvas.beginPath();
         this.vueCanvas.arc(this.element.ball.x, this.element.ball.y, this.element.ball.size, 0, Math.PI * 2);
-        this.vueCanvas.fillStyle = '#0095dd';
+        this.vueCanvas.fillStyle = 'navy';
         this.vueCanvas.fill();
         this.vueCanvas.closePath();
       },
@@ -142,7 +142,7 @@
           this.element.paddle.y,
           this.element.paddle.w,
           this.element.paddle.h
-          );
+        );
         this.vueCanvas.fillStyle = '#0095dd';
         this.vueCanvas.fill();
         this.vueCanvas.closePath();
@@ -214,12 +214,12 @@
       moveBall() {
         this.element.ball.x += this.element.ball.dx;
         this.element.ball.y += this.element.ball.dy;
-
+        console.log(this.element.ball.x, this.element.ball.y); // eslint-disable-line no-console
         // wall reverse ball (right / left)
         if
           (
-            this.element.ball.x + this.element.ball.size > this.vueCanvas.width ||
-            this.element.ball.x + this.element.ball.size < 0
+            ( this.element.ball.dx > 0 && this.element.ball.x + this.element.ball.size > this.vueCanvas.width ) ||
+            ( this.element.ball.dx < 0 && this.element.ball.x - this.element.ball.size < 0)
           ) {
             this.element.ball.dx *= -1 // means ball.dx = ball.dx * -1 (to make the ball direction reverse we need to * negative)
         }
@@ -228,8 +228,9 @@
         if
           (
             this.element.ball.y + this.element.ball.size > this.vueCanvas.height ||
-            this.element.ball.y + this.element.ball.size < 0
+            this.element.ball.y - this.element.ball.size < 0
           ) {
+            debugger // eslint-disable-line no-debugger
             this.element.ball.dy *= -1 
             // means ball.dx = ball.dx * -1 (to make the ball direction reverse we need to * negative)
         }
