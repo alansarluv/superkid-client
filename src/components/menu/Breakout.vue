@@ -48,6 +48,9 @@
   4.  add moveBall function inside updateCanvas.
       setup condition for only trigger this moveball only if flag isStart is true
       and if flag isStart is false then stop calling this moveBall function
+
+  5.  on moveBall function, add role for reverse the ball direction when it hit the wall
+      and then add role for reverse the ball direction when it hit the paddle as well
 */
 
 
@@ -219,7 +222,7 @@
             this.element.ball.x + this.element.ball.size < 0
           ) {
             this.element.ball.dx *= -1 // means ball.dx = ball.dx * -1 (to make the ball direction reverse we need to * negative)
-          }
+        }
 
         // wall reverse ball (top / bottom)
         if
@@ -227,8 +230,37 @@
             this.element.ball.y + this.element.ball.size > this.vueCanvas.height ||
             this.element.ball.y + this.element.ball.size < 0
           ) {
-            this.element.ball.dy *= -1 // means ball.dx = ball.dx * -1 (to make the ball direction reverse we need to * negative)
-          }
+            this.element.ball.dy *= -1 
+            // means ball.dx = ball.dx * -1 (to make the ball direction reverse we need to * negative)
+        }
+
+        // reverse ball when touch the paddle
+        if
+          (
+            this.element.ball.x - this.element.ball.size > this.element.paddle.x &&
+            this.element.ball.x + this.element.ball.size < this.element.paddle.x + this.element.paddle.w &&
+            this.element.ball.y + this.element.ball.size > this.element.paddle.y
+          ) {
+            this.element.ball.dy = -this.element.ball.speed;
+        }
+
+        // Brick role
+        this.element.brickConfig.bricks.forEach(column => {
+          column.forEach(brick => {
+            if (brick.visible) {
+              if (
+                this.element.ball.x - this.element.ball.size > brick.x && // left brick side
+                this.element.ball.x + this.element.ball.size < brick.x + brick.w && // right brick side
+                this.element.ball.y + this.element.ball.size > brick.y && // top brick side
+                this.element.ball.y - this.element.ball.size < brick.y + brick.h // bottom brick side
+              ) {
+                this.element.ball.dy *= -1;
+                brick.visible = false;
+                // console.log(brick); // eslint-disable-line no-console
+              }
+            }
+          })
+        })
       },
 
       // ======================= =========================== ==========================
@@ -256,7 +288,6 @@
         window.addEventListener('keydown', this.keyDownListener);
         window.addEventListener('keyup', this.keyUpListener);
         this.isStart = true;
-        debugger  // eslint-disable-line no-debugger
       },
       endgame() {
         window.removeEventListener('keydown', this.keyDownListener);
