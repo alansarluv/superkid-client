@@ -214,7 +214,6 @@
       moveBall() {
         this.element.ball.x += this.element.ball.dx;
         this.element.ball.y += this.element.ball.dy;
-        console.log(this.element.ball.x, this.element.ball.y); // eslint-disable-line no-console
         // wall reverse ball (right / left)
         if
           (
@@ -250,14 +249,13 @@
           column.forEach(brick => {
             if (brick.visible) {
               if (
-                this.element.ball.x - this.element.ball.size > brick.x && // left brick side
-                this.element.ball.x + this.element.ball.size < brick.x + brick.w && // right brick side
+                this.element.ball.x + this.element.ball.size > brick.x && // left brick side
+                this.element.ball.x - this.element.ball.size < brick.x + brick.w && // right brick side
                 this.element.ball.y + this.element.ball.size > brick.y && // top brick side
                 this.element.ball.y - this.element.ball.size < brick.y + brick.h // bottom brick side
               ) {
                 this.element.ball.dy *= -1;
                 brick.visible = false;
-                // console.log(brick); // eslint-disable-line no-console
               }
             }
           })
