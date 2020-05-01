@@ -218,8 +218,8 @@
         // wall reverse ball (right / left)
         if
           (
-            ( this.element.ball.dx > 0 && this.element.ball.x + this.element.ball.size > this.vueCanvas.width ) ||
-            ( this.element.ball.dx < 0 && this.element.ball.x - this.element.ball.size < 0)
+            ( this.element.ball.dx > 0 && this.element.ball.x + this.element.ball.size > this.vueCanvas.width ) ||  // right wall
+            ( this.element.ball.dx < 0 && this.element.ball.x - this.element.ball.size < 0) // left wall
           ) {
             this.element.ball.dx *= -1 // means ball.dx = ball.dx * -1 (to make the ball direction reverse we need to * negative)
         }
@@ -227,10 +227,9 @@
         // wall reverse ball (top / bottom)
         if
           (
-            this.element.ball.y + this.element.ball.size > this.vueCanvas.height ||
-            this.element.ball.y - this.element.ball.size < 0
+            this.element.ball.y + this.element.ball.size > this.vueCanvas.height || // bottom wall
+            this.element.ball.y - this.element.ball.size < 0  // top wall
           ) {
-            debugger // eslint-disable-line no-debugger
             this.element.ball.dy *= -1 
             // means ball.dx = ball.dx * -1 (to make the ball direction reverse we need to * negative)
         }
@@ -238,9 +237,10 @@
         // reverse ball when touch the paddle
         if
           (
-            this.element.ball.x - this.element.ball.size > this.element.paddle.x &&
-            this.element.ball.x + this.element.ball.size < this.element.paddle.x + this.element.paddle.w &&
-            this.element.ball.y + this.element.ball.size > this.element.paddle.y
+            this.element.ball.x + this.element.ball.size > this.element.paddle.x &&   // bottom right corner of ball x position more than top left corner of paddle
+            this.element.ball.x - this.element.ball.size < this.element.paddle.x + this.element.paddle.w &&  // center of ball x position less than right corner of paddle
+            this.element.ball.y + this.element.ball.size >= this.element.paddle.y &&  // bottom of the ball touch the top paddle
+            this.element.ball.y + this.element.ball.size <= this.element.paddle.y + this.element.paddle.h / 2 // bottom of the ball can't be too far in a bottom
           ) {
             this.element.ball.dy = -this.element.ball.speed;
         }
