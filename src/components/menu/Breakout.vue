@@ -3,7 +3,7 @@
     <div class="row justify-content-center">
       <div class="col-sm-12 my-3 text-center">
         <h3 class="text-center mb-3">Brick breaker!</h3>
-        <canvas id="breakoutcanvas" width="800" height="600"></canvas>
+        <canvas id="breakoutcanvas"></canvas>
         <div class="d-flex justify-content-center">
           <div v-if="!isStart" @click="startGame()" class="btn btn-link c-pointer mt-3">Start game</div>
           <template v-else>
@@ -61,6 +61,7 @@
       return {
         vueCanvas: null,
         isStart: false,
+        browserWidth: 0,
         element: {
           ball: {
             x: 0,
@@ -103,8 +104,15 @@
         // Canvas
         const c = document.getElementById("breakoutcanvas");
         this.vueCanvas = c.getContext("2d");
-        this.vueCanvas.width = 800;
-        this.vueCanvas.height = 600;
+        this.browserWidth = window.innerWidth;
+
+        if (this.browserWidth >= 820) {
+          this.vueCanvas.canvas.width = 800;
+          this.vueCanvas.canvas.height = 600;
+        } else {
+          this.vueCanvas.canvas.width = this.browserWidth - 20;
+          this.vueCanvas.canvas.height = this.browserWidth + (this.browserWidth/5);
+        }
 
         this.elementSetup();
         this.updateCanvas();
@@ -112,15 +120,22 @@
 
       elementSetup() {
         // Ball config
-        this.element.ball.x = this.vueCanvas.width / 2;
-        this.element.ball.y = this.vueCanvas.height / 2;
+        this.element.ball.x = this.vueCanvas.canvas.width / 2;
+        this.element.ball.y = this.vueCanvas.canvas.height -40;
 
         // Paddle config
-        this.element.paddle.x = this.vueCanvas.width / 2 - 40;
-        this.element.paddle.y = this.vueCanvas.height - 20;
+        this.element.paddle.x = this.vueCanvas.canvas.width / 2 - 40;
+        this.element.paddle.y = this.vueCanvas.canvas.height - 20;
 
         // Brick config
         this.element.brickConfig.bricks = [];
+        // if mobile size, adjust row column
+        if (this.browserWidth < 800) {
+          const maxBrickColumn = parseInt(this.vueCanvas.canvas.width / 80);
+          const formula = (this.element.brick.w * (maxBrickColumn - 1)) + ( this.element.brick.padding * (maxBrickColumn-2));
+          this.element.brickConfig.offsetX = parseInt((this.vueCanvas.canvas.width - formula) / 2);
+          this.element.brickConfig.rowCount = maxBrickColumn - 1;
+        }
         for(let i = 0; i < this.element.brickConfig.rowCount; i++) {
           this.element.brickConfig.bricks[i] = [];
           for(let j = 0; j < this.element.brickConfig.columnCount; j++) {
@@ -155,7 +170,7 @@
       },
       drawScore() {
         this.vueCanvas.font = '20px Arial';
-        this.vueCanvas.fillText(`Score: ${this.element.score}`, this.vueCanvas.width - 100, 30);
+        this.vueCanvas.fillText(`Score: ${this.element.score}`, this.vueCanvas.canvas.width - 100, 30);
       },
       drawBricks() {
         this.element.brickConfig.bricks.forEach(column => {
@@ -176,7 +191,7 @@
 
       drawCanvas() {
         // always clear canvas everytime we start draw / update
-        this.vueCanvas.clearRect(0,0, this.vueCanvas.width, this.vueCanvas.height)
+        this.vueCanvas.clearRect(0,0, this.vueCanvas.canvas.width, this.vueCanvas.canvas.height)
 
         // start draw element
         this.drawBall();
@@ -193,8 +208,8 @@
 
         // wall detection
         // cant move outside the wall (maximum on right side of the wall)
-        if (this.element.paddle.x + this.element.paddle.w > this.vueCanvas.width) {
-          this.element.paddle.x = this.vueCanvas.width - this.element.paddle.w;
+        if (this.element.paddle.x + this.element.paddle.w > this.vueCanvas.canvas.width) {
+          this.element.paddle.x = this.vueCanvas.canvas.width - this.element.paddle.w;
         }
         // can't move to minus X (maximum on the left side of the wall)
         if (this.element.paddle.x < 0) {
@@ -223,7 +238,7 @@
         // wall reverse ball (right / left)
         if
           (
-            ( this.element.ball.dx > 0 && this.element.ball.x + this.element.ball.size > this.vueCanvas.width ) ||  // right wall
+            ( this.element.ball.dx > 0 && this.element.ball.x + this.element.ball.size > this.vueCanvas.canvas.width ) ||  // right wall
             ( this.element.ball.dx < 0 && this.element.ball.x - this.element.ball.size < 0) // left wall
           ) {
             this.element.ball.dx *= -1 // means ball.dx = ball.dx * -1 (to make the ball direction reverse we need to * negative)
@@ -232,7 +247,7 @@
         // wall reverse ball (top / bottom)
         if
           (
-            this.element.ball.y + this.element.ball.size > this.vueCanvas.height || // bottom wall
+            this.element.ball.y + this.element.ball.size > this.vueCanvas.canvas.height || // bottom wall
             this.element.ball.y - this.element.ball.size < 0  // top wall
           ) {
             this.element.ball.dy *= -1 
@@ -269,7 +284,7 @@
         })
 
         // Score role
-        if (this.element.ball.y + this.element.ball.size >= this.vueCanvas.height - 5) {
+        if (this.element.ball.y + this.element.ball.size >= this.vueCanvas.canvas.height - 5) {
           this.resetGame();
         }
       },
@@ -314,7 +329,7 @@
         this.element.score = 0;
 
         // always clear canvas everytime we start draw / update
-        this.vueCanvas.clearRect(0,0, this.vueCanvas.width, this.vueCanvas.height)
+        this.vueCanvas.clearRect(0,0, this.vueCanvas.canvas.width, this.vueCanvas.canvas.height)
         this.elementSetup();
         this.element.ball.dx = 4;
         this.element.ball.dy = -4;
