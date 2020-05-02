@@ -5,8 +5,11 @@
         <h3 class="text-center mb-3">Brick breaker!</h3>
         <canvas id="breakoutcanvas" width="800" height="600"></canvas>
         <div class="d-flex justify-content-center">
-          <div @click="startGame()" class="btn btn-link c-pointer mt-3">start game</div>
-          <div @click="resetGame()" class="btn btn-link c-pointer mt-3">end game</div>
+          <div v-if="!isStart" @click="startGame()" class="btn btn-link c-pointer mt-3">Start game</div>
+          <template v-else>
+            <div @click="resetGame()" class="btn btn-link c-pointer mt-3">End game</div>
+            <div @click="pauseGame()" class="btn btn-link c-pointer mt-3">Pause</div>
+          </template>
         </div>
       </div>
     </div>
@@ -52,7 +55,6 @@
   5.  on moveBall function, add role for reverse the ball direction when it hit the wall
       and then add role for reverse the ball direction when it hit the paddle as well
 */
-
 
   export default {
     data() {
@@ -297,6 +299,12 @@
         window.addEventListener('keydown', this.keyDownListener);
         window.addEventListener('keyup', this.keyUpListener);
         this.isStart = true;
+      },
+
+      pauseGame() {
+        window.removeEventListener('keydown', this.keyDownListener);
+        window.removeEventListener('keyup', this.keyUpListener);
+        this.isStart = false;
       },
 
       resetGame() {
