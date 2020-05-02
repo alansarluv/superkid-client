@@ -2,11 +2,11 @@
   <div class="container-fluid bgColorCustom">
     <div class="row justify-content-center">
       <div class="col-sm-12 my-3 text-center">
-        <h3 class="text-center mb-3">Breakout!</h3>
+        <h3 class="text-center mb-3">Brick breaker!</h3>
         <canvas id="breakoutcanvas" width="800" height="600"></canvas>
         <div class="d-flex justify-content-center">
           <div @click="startGame()" class="btn btn-link c-pointer mt-3">start game</div>
-          <div @click="endgame()" class="btn btn-link c-pointer mt-3">end game</div>
+          <div @click="resetGame()" class="btn btn-link c-pointer mt-3">end game</div>
         </div>
       </div>
     </div>
@@ -36,7 +36,7 @@
         you wish to perform an animation and request the browser callback before the repaint
         the callback will call the updateCanvas function itself.
 
-  3.  startGame & endGame click handler
+  3.  startGame & resetGame click handler
       these function for activate and deactivate event listener to your arrow keydown and keyup
       when arrow left or arrow right is pressed, 
       the config of paddle.dx will be added as much as the speed we define
@@ -104,6 +104,11 @@
         this.vueCanvas.width = 800;
         this.vueCanvas.height = 600;
 
+        this.elementSetup();
+        this.updateCanvas();
+      },
+
+      elementSetup() {
         // Ball config
         this.element.ball.x = this.vueCanvas.width / 2;
         this.element.ball.y = this.vueCanvas.height / 2;
@@ -113,6 +118,7 @@
         this.element.paddle.y = this.vueCanvas.height - 20;
 
         // Brick config
+        this.element.brickConfig.bricks = [];
         for(let i = 0; i < this.element.brickConfig.rowCount; i++) {
           this.element.brickConfig.bricks[i] = [];
           for(let j = 0; j < this.element.brickConfig.columnCount; j++) {
@@ -121,9 +127,7 @@
             const y = j * (this.element.brick.h + this.element.brick.padding) + this.element.brick.offsetY;
             this.element.brickConfig.bricks[i][j] = { x, y, ...this.element.brick }
           }
-        }        
-
-        this.updateCanvas();
+        }
       },
 
       drawBall() {
@@ -256,10 +260,16 @@
               ) {
                 this.element.ball.dy *= -1;
                 brick.visible = false;
+                this.element.score += 10;
               }
             }
           })
         })
+
+        // Score role
+        if (this.element.ball.y + this.element.ball.size >= this.vueCanvas.height - 5) {
+          this.resetGame();
+        }
       },
 
       // ======================= =========================== ==========================
@@ -288,10 +298,19 @@
         window.addEventListener('keyup', this.keyUpListener);
         this.isStart = true;
       },
-      endgame() {
+
+      resetGame() {
         window.removeEventListener('keydown', this.keyDownListener);
         window.removeEventListener('keyup', this.keyUpListener);
         this.isStart = false;
+        this.element.score = 0;
+
+        // always clear canvas everytime we start draw / update
+        this.vueCanvas.clearRect(0,0, this.vueCanvas.width, this.vueCanvas.height)
+        this.elementSetup();
+        this.element.ball.dx = 4;
+        this.element.ball.dy = -4;
+        this.element.ball.speed = 4;
       }
     },
     computed: {
