@@ -27,3 +27,30 @@ export const getAgeMixin = {
     }    
   }
 }
+
+export const alertToastMixin = {
+  methods: {
+    alertToast($text, $type, $duration){
+      let $icon = $type;
+      const $dur = ($duration || 3000) + 1000;
+      if ($type === 'danger') {
+        $icon = 'error';
+      } else if ($type === 'warning') {
+        $icon = 'warning-line'
+      }
+      const $elm = `
+        <div class="alert alert-slide-top alert-${$type} hidden alert-dismissible fade show" role="alert">
+          <span class="ic ic-${$icon}"></span>
+          <span class="text-dark">${$text}</span>
+          <button type="button" class="close d-none" data-dismiss="alert" aria-label="Close"></button>    
+        </div>`
+      document.body.insertAdjacentHTML("beforeend", $elm);
+      setTimeout(function(){
+        document.body.querySelector('.alert-slide-top.hidden').classList.remove('hidden');
+      }, 1000);
+      setTimeout(function(){
+        document.body.querySelector('.alert-slide-top').remove();
+      }, $dur);
+    }
+  }
+}

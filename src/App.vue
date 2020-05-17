@@ -138,6 +138,19 @@
     z-index: 3;
   }
 
+  .alert-slide-top {
+    position: fixed;
+    top: 50px;
+    width: 100%;
+    max-width: 500px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    .hidden {
+      display: none;
+    }
+  }
+
   .c-pointer { cursor: pointer; }
   hr.separator {border-top-width: 10px; border-style: dotted;}
   .tc { text-align : center; }
