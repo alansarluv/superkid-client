@@ -4,6 +4,9 @@
       <div class="col-sm-12">
         <h3 class="text-center">Menu menu</h3>
         <p class="text-center">
+          <router-link to="/atec-quick">Atec quick (without login)</router-link>
+        </p>
+        <p class="text-center">
           <router-link to="/speech-helper">Speech-helper</router-link>
         </p>
         <p class="text-center">

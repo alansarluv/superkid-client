@@ -9,6 +9,7 @@ import Menu from './components/menu/Index.vue';
 import SpeechHelper from './components/menu/SpeechHelper.vue';
 import ColorPlay from './components/menu/ColorPlay.vue';
 import BreakoutGame from './components/menu/Breakout.vue';
+import AtecQuick from './components/menu/AtecQuick.vue';
 
 // Authenticated Menu
 import AtecIndex from './components/atec/Index.vue';
@@ -105,5 +106,6 @@ export const routes = [
   { path: '/speech-helper', component: SpeechHelper },
   { path: '/color-play', component: ColorPlay },
   { path: '/breakout-game', component: BreakoutGame },
+  { path: '/atec-quick', component: AtecQuick },
 
 ];
