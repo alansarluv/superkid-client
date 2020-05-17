@@ -23,7 +23,7 @@
               <p>
                 Online tools gratis yang dirancang oleh Autism Research Institute.
               </p>
-              <button type="button" class="btn btn-outline-dark btn-md px-3">Coba ATEC</button>
+              <router-link class="btn btn-outline-dark btn-md px-3" to="/atec-quick">Coba ATEC</router-link>
             </div>
           </div>
           <div class="col-md-8 pr-0 bg-section21">
