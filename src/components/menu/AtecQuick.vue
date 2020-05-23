@@ -66,7 +66,7 @@
             </div>
           </div>
         </div>
-        <div class="row justify-content-center sticky-100">
+        <div v-if="!showResult" class="row justify-content-center sticky-100">
           <div class="col-lg-8 col-md-8 col-sm-12">
             <div class="scrollable-box">
               <div class="single-question question-form-1 mt-2">
@@ -77,6 +77,19 @@
                   :formActive='formActive'
                   @selectedRadio='valSelectedRadio'>
                 </question-list>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-if="showResult" class="row justify-content-center sticky-100">
+          <div class="col-lg-6 col-md-8 col-sm-12">
+            <div class="card">
+              <div class="card-body">
+                <p>Kemampuan bicara = {{dataRes.bicaraTotal}}</p>
+                <p>Kemampuan sosial = {{dataRes.sosialTotal}}</p>
+                <p>Kemampuan sensorik = {{dataRes.sensorikTotal}}</p>
+                <p>Kemampuan umum = {{dataRes.umumTotal}}</p>
+                <p>Kemampuan total = {{dataRes.bicaraTotal + dataRes.sosialTotal + dataRes.sensorikTotal + dataRes.umumTotal }}</p>
               </div>
             </div>
           </div>
@@ -96,6 +109,8 @@
         formActive: 1,
         submitBtn: false,
         loadingSubmit: false,
+        showResult: false,
+        dataRes: {},
         atec: {
           selectedKid: '',
           month: '',
@@ -294,8 +309,14 @@
         return arr.reduce((a, b) => a + b, 0);
       },
       onSubmitAtec () {
-        this.loadingSubmit = true;
-        console.log("meh");   // eslint-disable-line no-console
+        this.showResult = true;
+        this.dataRes = {
+          bicaraTotal: this.atec.totalBicara,
+          sosialTotal: this.atec.totalSosial,
+          sensorikTotal: this.atec.totalSensorik,
+          umumTotal: this.atec.totalUmum,
+        }
+        console.log(this.dataRes);   // eslint-disable-line no-console
       }      
     }
   }
