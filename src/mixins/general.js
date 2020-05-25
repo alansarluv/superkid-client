@@ -28,6 +28,23 @@ export const getAgeMixin = {
   }
 }
 
+export const monthYearMixin = {
+  methods: {
+    yearMonth(val) {
+      const year = val.slice(0,4);
+      const monthNum = parseInt(val.substring(4));
+      const monthNames = this.$store.getters.monthNames;
+      return year + " - " + monthNames[monthNum-1];
+    },
+    monthYear(val) {
+      const year = val.slice(0,4);
+      const monthNum = parseInt(val.substring(4));
+      const monthNames = this.$store.getters.monthNames;
+      return monthNames[monthNum-1] + " - " + year;
+    } 
+  }
+}
+
 export const alertToastMixin = {
   methods: {
     alertToast($text, $type, $duration){
