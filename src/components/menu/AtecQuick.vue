@@ -1,6 +1,12 @@
 <template>
   <div class="container-fluid container-content">
     <div class="right-content">
+      
+      <div v-if="false">
+        <atec-form></atec-form>
+      </div>
+      
+    <div v-if="true">
       <form @submit.prevent="onSubmitAtec">
         <div class="row justify-content-center sticky-100 mb-3">
           <div class="col-lg-6 col-md-8 col-sm-12">
@@ -68,7 +74,7 @@
         </div>
         <div v-if="!showResult" class="row justify-content-center sticky-100">
           <div class="col-lg-8 col-md-8 col-sm-12">
-            <div class="scrollable-box">
+            <div class="scrollable-box bg-white">
               <div class="single-question question-form-1 mt-2">
                 <question-list 
                   v-for="(question, idx) in formQuestion" 
@@ -96,10 +102,15 @@
         </div>
       </form>
     </div>
+
+
+
+    </div>
   </div>
 </template>
 <script>
   import Question from '../atec/Question';
+  import atecForm from '../partials/AtecForm';
   import { spinnerMixin } from '../../mixins/general';
 
   export default {
@@ -212,6 +223,7 @@
     },    
     components: {
       questionList: Question,
+      atecForm
     },
     methods: {
       selectAllFirst() {

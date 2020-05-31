@@ -1,6 +1,10 @@
 <template>
-  <div class="container-fluid container-content">
-    <atec-sidebar></atec-sidebar>
+  <div class="container-fluid container-content position-relative">
+    <div v-if="!isMobileSidebar" @click="isMobileSidebar = true" class="mobile-menu btn"><i class="fas fa-bars"></i></div>
+    <atec-sidebar
+      :isMobileSidebar='isMobileSidebar'
+      @closeSidebar='isMobileSidebar = false'
+    ></atec-sidebar>
     <div class="right-content">
       <div class="row justify-content-center sticky-100">
         <div class="col-12">
@@ -55,6 +59,7 @@
       return {
         chartData: {},
         loadingChart: false,
+        isMobileSidebar: false,
         options: {
           elements: {
             line: {
@@ -227,4 +232,17 @@
     max-height: 500px;
     max-width: 500px;
   }
+  .mobile-menu {
+    display: none;    
+  }
+
+  @media only screen and (max-width: 768px) {
+    .mobile-menu {
+      position: absolute;
+      display: block;
+      top: -18px;
+      right: -18px;
+      z-index: 3;
+    }
+  }  
 </style>

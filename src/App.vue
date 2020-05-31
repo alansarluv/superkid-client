@@ -21,6 +21,7 @@
   }
 
   main {
+    overflow: hidden;
     min-height: calc(100vh - 170px);
     .container-100vh {
       min-height: calc(100vh - 120px);
@@ -37,13 +38,9 @@
       padding: 0;      
       min-height: calc(100vh - 120px);
       max-height: calc(100vh - 120px);
-      background-color: #efefef;
       margin: 20px;
       width: auto;
       max-width: unset;
-      box-shadow: 0 3px 8px -5px #555;
-      -webkit-box-shadow: 0 3px 8px -5px #555;
-      -moz-box-shadow: 0 3px 8px -5px #555;
       .sidebar {
         padding: 20px 25px;
         min-width: 280px;

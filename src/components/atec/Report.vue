@@ -1,6 +1,10 @@
 <template>
-  <div class="container-fluid container-content">
-    <atec-sidebar></atec-sidebar>
+  <div class="container-fluid container-content position-relative">
+    <div v-if="!isMobileSidebar" @click="isMobileSidebar = true" class="mobile-menu btn"><i class="fas fa-bars"></i></div>    
+    <atec-sidebar
+      :isMobileSidebar='isMobileSidebar'
+      @closeSidebar='isMobileSidebar = false'
+    ></atec-sidebar>
     <div class="right-content report-page">
       <div class="row mx-0 mb-3 px-3">
         <div v-if="reportData.length !== 0" class="col-md-12 px-0">
@@ -170,7 +174,8 @@
         reportData : [],
         kidLists: this.$store.getters.userKids || [],
         atecCompare1: '',
-        atecCompare2: ''
+        atecCompare2: '',
+        isMobileSidebar: false
       }
     },
     mixins: [spinnerMixin, getAgeMixin],
@@ -292,12 +297,22 @@
       }
     }
   }
+  .mobile-menu {
+    display: none;    
+  }
 
   @media (max-width: 768px) {  
     .report-page {
       h4 {
         font-size: 18px;
       }
+    }
+    .mobile-menu {
+      position: absolute;
+      display: block;
+      top: -18px;
+      right: -18px;
+      z-index: 3;
     }
   }
 

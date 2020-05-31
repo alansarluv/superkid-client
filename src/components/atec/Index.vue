@@ -1,6 +1,10 @@
 <template>
-  <div class="container-fluid container-content">
-    <atec-sidebar></atec-sidebar>
+  <div class="container-fluid container-content position-relative">
+    <div v-if="!isMobileSidebar" @click="isMobileSidebar = true" class="mobile-menu btn"><i class="fas fa-bars"></i></div>
+    <atec-sidebar
+      :isMobileSidebar='isMobileSidebar'
+      @closeSidebar='isMobileSidebar = false'
+    ></atec-sidebar>
     <div class="right-content">
       <h2>Sekilas ATEC (Autism Treatment Evaluation Checklist)</h2>
       <p>Hambatan utama dalam penelitian autisme adalah kurangnya sarana yang valid untuk mengukur efektivitas berbagai perawatan. Selama bertahun-tahun, para peneliti telah menerbitkan ratusan penelitian yang mencoba untuk mengevaluasi berbagai intervensi biomedis dan psiko-pendidikan yang dimaksudkan untuk memberi manfaat bagi anak-anak autis. Banyak dari penelitian ini menghasilkan hasil yang tidak meyakinkan atau, lebih buruk, menyesatkan, karena tidak ada tes atau skala berguna yang dirancang untuk mengukur efektivitas pengobatan. Karena tidak memiliki skala seperti itu, para peneliti terpaksa menggunakan skala seperti Childhood Autism Rating Scale (CARS), Gilliam Autism Rating Scale (GARS), atau Autism Behavior Checklist (ABC), yang semuanya dirancang untuk mendiagnosis autisme - untuk memberi tahu apakah seorang anak autis - dan tidak untuk mengukur efektivitas pengobatan.</p>
@@ -93,8 +97,29 @@
   import Sidebar from '../partials/Sidebar';
 
   export default {
+    data() {
+      return {
+        isMobileSidebar: false
+      }
+    },
+
     components: {
       atecSidebar: Sidebar
     }
   }
 </script>
+<style lang="scss" scoped>
+  .mobile-menu {
+    display: none;    
+  }
+
+  @media only screen and (max-width: 768px) {
+    .mobile-menu {
+      position: absolute;
+      display: block;
+      top: -18px;
+      right: -18px;
+      z-index: 3;
+    }
+  }  
+</style>

@@ -1,6 +1,10 @@
 <template>
-  <div class="container-fluid container-content">
-    <atec-sidebar></atec-sidebar>
+  <div class="container-fluid container-content position-relative">
+    <div v-if="!isMobileSidebar" @click="isMobileSidebar = true" class="mobile-menu btn"><i class="fas fa-bars"></i></div>
+    <atec-sidebar
+      :isMobileSidebar='isMobileSidebar'
+      @closeSidebar='isMobileSidebar = false'
+    ></atec-sidebar>
     <div class="right-content">
       <div class="card bg-seashell">
         <template v-if="detail">
@@ -65,6 +69,7 @@
     data() {
       return {
         listQuestions: this.$store.getters.getQuestion || [],
+        isMobileSidebar: false,
       }
     },
     components: {
@@ -172,6 +177,9 @@
       }
     }
   }
+  .mobile-menu {
+    display: none;    
+  }
 
   /* Medium devices (tablets, 768px and up) */
   @media (max-width: 768px) {  
@@ -184,6 +192,13 @@
           font-size: 18px;
         }
       }
+    }
+    .mobile-menu {
+      position: absolute;
+      display: block;
+      top: -18px;
+      right: -18px;
+      z-index: 3;
     }
   }
 

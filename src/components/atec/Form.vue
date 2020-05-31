@@ -1,9 +1,13 @@
 <template>
-  <div class="container-fluid container-content">
+  <div class="container-fluid container-content position-relative">
+    <div v-if="!isMobileSidebar" @click="isMobileSidebar = true" class="mobile-menu btn"><i class="fas fa-bars"></i></div>
     <div v-if="callAlert.visible" class="alert alert-animation" :class="`alert-${callAlert.type}`" role="alert">
       {{callAlert.text}}
     </div>
-    <atec-sidebar></atec-sidebar>
+    <atec-sidebar
+      :isMobileSidebar='isMobileSidebar'
+      @closeSidebar='isMobileSidebar = false'
+    ></atec-sidebar>
     <div class="right-content">
       <div v-if="!kidLists.length" class="row justify-content-center">
         <div class="col-lg-6 col-md-8 col-sm-12 mb-4">
@@ -164,7 +168,7 @@
         </div>
         <div class="row justify-content-center sticky-100">
           <div class="col-lg-8 col-md-8 col-sm-12">
-            <div class="scrollable-box">
+            <div class="scrollable-box bg-white">
               <div class="single-question question-form-1 mt-2">
                 <question-list 
                   v-for="(question, idx) in formQuestion" 
@@ -290,6 +294,7 @@
           umum25 : ''          
         },
         loadingSubmit: false,
+        isMobileSidebar: false,
         existingMonthYear: [],
         callAlert: {
           text: '',
@@ -614,7 +619,7 @@
   .sticky-100 { position: sticky; top: 0;}
   .scrollable-box {
     max-height: none;
-    margin-bottom: 100px;
+    padding-bottom: 100px;
   }
   .btn.btn-info {
     background-color: #ffc40c;
@@ -643,6 +648,20 @@
     &.active {
       cursor: pointer;
       color: mediumblue;
+    }
+  }
+
+  .mobile-menu {
+    display: none;    
+  }
+
+  @media only screen and (max-width: 768px) {
+    .mobile-menu {
+      position: absolute;
+      display: block;
+      top: -18px;
+      right: -18px;
+      z-index: 3;
     }
   }
 </style>

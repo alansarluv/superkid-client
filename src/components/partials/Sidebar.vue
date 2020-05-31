@@ -1,5 +1,10 @@
 <template>
-  <div class="sidebar" :class="{'collapsed': (collapseSidebar)}">
+  <div
+    class="sidebar"
+    :class="{
+      'collapsed': (collapseSidebar),
+      'active': isMobileSidebar
+    }">
     <ul>
       <li>
         <router-link to="/atec/form" class="">
@@ -49,13 +54,22 @@
       <!-- review terapi -->
     </ul>
     <button class="sidebar-toggle" @click="collapseSidebar = !collapseSidebar">&lt;</button>
+    <button class="sidebar-toggle-mobile btn" @click="onCloseSidebar">
+      <i class="fas fa-times"></i>
+    </button>
   </div>  
 </template>
 <script>
   export default {
+    props: ['isMobileSidebar'],
     data() {
       return {
         collapseSidebar : false
+      }
+    },
+    methods: {
+      onCloseSidebar() {
+        this.$emit('closeSidebar');
       }
     }
   }
@@ -136,10 +150,37 @@
     &:hover {
       .sidebar-toggle { opacity: 1; }
     }
+    .sidebar-toggle-mobile {
+      display: none;
+    }
+
   }
   @media only screen and (max-width: 1021px) {
     .sidebar {
-      display: none;
+      position: absolute;
+      top: 0;
+      left: auto;
+      right: -120%;
+      z-index: 3;
+      background-color: #ffc40d;
+      height: 100%;
+      transition: all .5s;
+      -webkit-transition: all .5s;
+      -moz-transition: all .5s;
+
+      &.active {
+        right: 0;
+      }
+      .sidebar-toggle { display: none; }
+      .sidebar-toggle-mobile {
+        display: block;
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 24px;        
+      }
     }
   }
 </style>
