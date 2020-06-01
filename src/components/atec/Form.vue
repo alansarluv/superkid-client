@@ -44,12 +44,12 @@
       <form @submit.prevent="onSubmitAtec" v-if="kidLists.length">
         <div class="row justify-content-center sticky-100 mb-3">
           <div class="col-lg-6 col-md-8 col-sm-12">
-            <div class="card">
+            <div class="card header-atec-form">
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-12">
                     <h5 class="mb-2">
-                      Nama anak : 
+                      Nama : 
                       <span v-if="kidLists.length === 1">
                         {{kidLists[0].name}} - {{kidLists[0].gender}} ({{getAge(kidLists[0].birthday)}} Tahun)
                       </span>
@@ -66,7 +66,7 @@
                     </select>
                     <h5 class="mb-2 mt-4">Pilih Bulan dan Tahun laporan ATEC</h5>
                     <div class="row">
-                      <div class="col-md-12 col-lg-6">
+                      <div class="col-md-12 col-lg-6 pb-2">
                         <select v-model="atec.month" class="form-control" :class="{'is-invalid': alreadyExistDate !== ''}">
                           <option disabled value="">Pilih satu</option>
                           <option value="01">Januari</option>
@@ -115,7 +115,7 @@
                   @click="formActive = 1"
                 >
                   <!-- class active only if formActive = 1 -->
-                  Form 1 - Kemampuan Bicara/Berbahasa ( {{atec.bicaraTotalLength}} / 14) 
+                  Kemampuan Bicara/Berbahasa ( {{atec.bicaraTotalLength}} / 14) 
                   <i v-if="atec.bicaraTotalLength === 14" class="fas fa-check"></i>
                 </p>
                 <p 
@@ -126,7 +126,7 @@
                   }"
                   @click="formActive = 2"
                 >
-                  Form 2 - Kemampuan Bersosialisasi ( {{atec.sosialTotalLength}} / 20)
+                  Kemampuan Bersosialisasi ( {{atec.sosialTotalLength}} / 20)
                   <i v-if="atec.sosialTotalLength === 20" class="fas fa-check"></i>
                 </p>
                 <p 
@@ -137,7 +137,7 @@
                   }"
                   @click="formActive = 3"
                 >
-                  Form 3 - Kesadaran sensorik / kognitif ( {{atec.sensorikTotalLength}} / 18)
+                  Kesadaran sensorik / kognitif ( {{atec.sensorikTotalLength}} / 18)
                   <i v-if="atec.sensorikTotalLength === 18" class="fas fa-check"></i>
                 </p>
                 <p 
@@ -148,7 +148,7 @@
                   }"
                   @click="formActive = 4"
                 >
-                  Form 4 - Kesehatan umum, fisik dan perilaku ( {{atec.umumTotalLength}} / 25)
+                  Kesehatan umum, fisik &amp; perilaku ( {{atec.umumTotalLength}} / 25)
                   <i v-if="atec.umumTotalLength === 25" class="fas fa-check"></i>
                 </p>
                 <button 
@@ -656,6 +656,34 @@
   }
 
   @media only screen and (max-width: 768px) {
+    .right-content {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      .card {
+        border: none;
+        .card-body {
+          padding-left: 0;
+          padding-right: 0;
+        }
+        &.header-atec-form {
+          .card-body {
+            padding-top: 0 !important;
+          }
+          h5 {
+            margin-top: 0 !important;
+            font-size: 14px;
+          }
+        }
+        p.header-question {
+          font-size: 14px;
+          margin-bottom: 8px !important;
+        }
+      }
+      .scrollable-box {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+    }
     .mobile-menu {
       position: absolute;
       display: block;
