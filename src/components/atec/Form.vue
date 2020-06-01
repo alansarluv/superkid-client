@@ -683,6 +683,12 @@
         padding-left: 0 !important;
         padding-right: 0 !important;
       }
+      .custom-button {
+        &:hover {
+          background-color: inherit;
+          color: inherit;
+        }
+      }
     }
     .mobile-menu {
       position: absolute;

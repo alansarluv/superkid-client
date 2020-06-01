@@ -50,5 +50,20 @@
       color: #ffbc41;
     }
   }
-
+  @media only screen and (max-width: 768px) {
+    .card {
+      border: none !important;
+      .card-body {
+        padding: 0 !important;
+        h4 {
+          font-size: 18px !important;
+        }
+        .text-center {
+          .btn-primary {
+            margin-top: 16px;
+          }
+        }
+      }
+    }
+  }
 </style>

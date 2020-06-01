@@ -10,7 +10,7 @@
         <template v-if="detail">
           <h3 class="mb-2">
             Detail Atec for {{detail.kidName}},
-            <span>( {{yearMonth(detail.monthYear)}} )</span>
+            <span class="date-time-atec">( {{yearMonth(detail.monthYear)}} )</span>
             <span class="float-right">
               <router-link to="/atec/report" class="btn btn-secondary mt-3 mt-lg-0">Back to atec report</router-link>
             </span>
@@ -183,13 +183,31 @@
 
   /* Medium devices (tablets, 768px and up) */
   @media (max-width: 768px) {  
+    .right-content {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
     .card{
       &.bg-seashell {
+        background-color: transparent;
+        padding: 0 !important ;
+        border: none !important;
         h3 {
-          font-size: 22px;
+          font-size: 18px;
+          span.date-time-atec {
+            display: block;
+            font-size: 14px;            
+          }
+          span.float-right {
+            float: left !important;
+            a.mt-3 {
+              margin-top: 8px !important;
+            }
+          }
         }
         h4, h5 {
-          font-size: 18px;
+          font-size: 16px;
         }
       }
     }

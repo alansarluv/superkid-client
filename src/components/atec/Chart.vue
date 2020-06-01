@@ -237,6 +237,15 @@
   }
 
   @media only screen and (max-width: 768px) {
+    .right-content {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      padding-top: 0 !important;
+      h2 {
+        font-size: 16px;
+      }
+    }
+
     .mobile-menu {
       position: absolute;
       display: block;

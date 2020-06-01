@@ -162,24 +162,40 @@
       left: auto;
       right: -120%;
       z-index: 3;
-      background-color: #ffc40d;
+      background-color: #2f2810;
       height: 100%;
       transition: all .5s;
       -webkit-transition: all .5s;
       -moz-transition: all .5s;
 
       &.active {
-        right: 0;
+        right: -20px;
+        top: -20px;
+        max-width: none !important;
+        width: calc(100% + 40px) !important;
+        height: calc(100% + 40px);
+
       }
       .sidebar-toggle { display: none; }
       .sidebar-toggle-mobile {
         display: block;
+        color: white;
         position: absolute;
         top: -2px;
         right: -2px;
         font-size: 24px;
         font-weight: 700;
         line-height: 24px;        
+      }
+      ul {
+        li {
+          a {
+            color: #ffc40d;
+            &.router-link-active {
+              text-decoration: underline;
+            }
+          }
+        }
       }
     }
   }

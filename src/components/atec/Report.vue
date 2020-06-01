@@ -303,8 +303,14 @@
 
   @media (max-width: 768px) {  
     .report-page {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
       h4 {
         font-size: 18px;
+      }
+      .px-3 {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
       }
     }
     .mobile-menu {
