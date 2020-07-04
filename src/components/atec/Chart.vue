@@ -9,32 +9,54 @@
       <div class="row justify-content-center sticky-100">
         <div class="col-12">
           <h2 class="mb-4">Chart Atec (last 12 months)</h2>
-          <div class="row mb-5 text-center">
-            <div class="col-sm-6">
-              <div class="h-500">
-                <line-chart :chart-data="chartData" :options="options"></line-chart>
-              </div>
-            </div>
+          <div v-if="!dataReport.length">
+            <h2 class="text-center">Belum ada laporan ATEC</h2>
           </div>
-          <div class="row text-center">
-            <div class="col-sm-6 mb-5">
-              <div class="h-500">
-                <line-chart :chart-data="chartDataBicara" :options="options"></line-chart>
+          <div v-else class="row">
+            <div class="col-12">
+              <div class="row mb-5 text-center justify-content-center">
+                <div class="col-sm-3">
+                  <h3 class="text-left mb-4">Total keseluruhan</h3>
+                  <line-chart
+                    :chart-data="chartData"
+                    :options="options"
+                    :styles="customStyles"
+                  ></line-chart>
+                </div>
               </div>
-            </div>
-            <div class="col-sm-6 mb-5">
-              <div class="h-500">
-                <line-chart :chart-data="chartDataSensorik" :options="options"></line-chart>
-              </div>
-            </div>
-            <div class="col-sm-6 mb-5">
-              <div class="h-500">
-                <line-chart :chart-data="chartDataSosial" :options="options"></line-chart>
-              </div>
-            </div>
-            <div class="col-sm-6 mb-5">
-              <div class="h-500">
-                <line-chart :chart-data="chartDataUmum" :options="options"></line-chart>
+              <div class="row text-center">
+                <div class="col-sm-3 mb-5">
+                  <h3 class="text-left mb-4">Bicara</h3>
+                  <line-chart
+                    :chart-data="chartDataBicara"
+                    :options="options"
+                    :styles="customStyles"
+                  ></line-chart>
+                </div>
+                <div class="col-sm-3 mb-5">
+                  <h3 class="text-left mb-4">Sensorik</h3>
+                  <line-chart
+                    :chart-data="chartDataSensorik"
+                    :options="options"
+                    :styles="customStyles"
+                  ></line-chart>
+                </div>
+                <div class="col-sm-3 mb-5">
+                  <h3 class="text-left mb-4">Sosial</h3>
+                  <line-chart
+                    :chart-data="chartDataSosial"
+                    :options="options"
+                    :styles="customStyles"
+                  ></line-chart>
+                </div>
+                <div class="col-sm-3 mb-5">
+                  <h3 class="text-left mb-4">Umum</h3>
+                  <line-chart
+                    :chart-data="chartDataUmum"
+                    :options="options"
+                    :styles="customStyles"
+                  ></line-chart>
+                </div>
               </div>
             </div>
           </div>
@@ -57,7 +79,18 @@
     },
     data() {
       return {
+        customStyles: {
+          height: "auto",
+          width: "auto",
+          margin: "0 auto",
+          position: "relative",
+        },
         chartData: {},
+        chartDataBicara: {},
+        chartDataSensorik: {},
+        chartDataSosial: {},
+        chartDataUmum: {},
+        dataReport: [],
         loadingChart: false,
         isMobileSidebar: false,
         options: {
@@ -67,7 +100,7 @@
             }
           },
           legend: {
-            display: true,
+            display: false,
             position: "bottom",
           },
           responsive: true,
@@ -84,17 +117,19 @@
               }
             }],
             yAxes: [{
+              gridLines: {
+                drawBorder: false,
+              },
               ticks: {
                 fontFamily: "Roboto,Oxygen,Ubuntu,'Fira Sans','Droid Sans','Helvetica Neue',sans-serif",
                 fontSize: 10,
                 padding: 15,
                 min: 0,
-                stepSize: 5
+                maxTicksLimit: 5,
               }
             }]
           },
         }
-
       }
     },
     mixins: [monthYearMixin],
@@ -112,7 +147,8 @@
           .then( res => {
             this.loadingChart = false;
             if (res.status === 200) {
-              this.generateData(res.data.data);
+              this.dataReport = res.data.data;
+              this.generateData(this.dataReport);
             }
           })
           .catch(error => {
@@ -138,12 +174,15 @@
           listTotalVal.push(parseInt(f.bicaraTotal + f.sensorikTotal + f.sosialTotal + f.umumTotal));
         });
 
-        console.log("list bulan : "+ listMonth);  // eslint-disable-line no-console 
+
+        const filteredListMonth = listMonth.map(el => el.split(" -")[0]);
+        console.log("list bulan : "+ filteredListMonth);  // eslint-disable-line no-console 
         console.log("list jumlah : "+ listTotalVal);  // eslint-disable-line no-console 
 
         console.log("month : "+ this.monthYear(val[0].monthYear));  // eslint-disable-line no-console 
+        
         this.chartData = {
-          labels: listMonth,
+          labels: filteredListMonth,
           datasets: [{
             label: 'Total score',
             data: listTotalVal,
@@ -158,7 +197,7 @@
         };
 
         this.chartDataBicara = {
-          labels: listMonth,
+          labels: filteredListMonth,
           datasets: [{
             label: 'Kemampuan bicara',
             data: listBicaraVal,
@@ -173,7 +212,7 @@
         };
 
         this.chartDataSensorik = {
-          labels: listMonth,
+          labels: filteredListMonth,
           datasets: [{
             label: 'Kemampuan sensorik',
             data: listSensorikVal,
@@ -188,7 +227,7 @@
         };
 
         this.chartDataSosial = {
-          labels: listMonth,
+          labels: filteredListMonth,
           datasets: [{
             label: 'Kemampuan sosial',
             data: listSosialVal,
@@ -203,7 +242,7 @@
         };
 
         this.chartDataUmum = {
-          labels: listMonth,
+          labels: filteredListMonth,
           datasets: [{
             label: 'Kemampuan umum',
             data: listUmumVal,
@@ -216,9 +255,6 @@
             pointBorderWidth: 2,
           }]
         };
-
-
-
       }
     },    
     created() {
