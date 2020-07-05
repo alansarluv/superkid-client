@@ -552,7 +552,6 @@
         axios
           .post('/atec/create', configData.data, configHeader.headers)
           .then(res => {
-            console.log('res :' ,res); // eslint-disable-line no-console
             const data = res.data.data;
             this.loadingSubmit = false;
             if (res.status === 200 && data._id) {

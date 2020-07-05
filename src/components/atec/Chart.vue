@@ -175,12 +175,7 @@
         });
 
 
-        const filteredListMonth = listMonth.map(el => el.split(" -")[0]);
-        console.log("list bulan : "+ filteredListMonth);  // eslint-disable-line no-console 
-        console.log("list jumlah : "+ listTotalVal);  // eslint-disable-line no-console 
-
-        console.log("month : "+ this.monthYear(val[0].monthYear));  // eslint-disable-line no-console 
-        
+        const filteredListMonth = listMonth.map(el => el.split(" -")[0]);        
         this.chartData = {
           labels: filteredListMonth,
           datasets: [{
