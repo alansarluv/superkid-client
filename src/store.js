@@ -9,8 +9,8 @@ export default new Vuex.Store({
     idToken: localStorage.getItem('access_token') || null,
     configHeader: {
       'Authorization': `Bearer ${localStorage.getItem('access_token') || null}`,
-      'Accept': 'application/x-www-form-urlencoded',
-      'Content-Type': 'application/x-www-form-urlencoded',
+      // 'Accept': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
     },
     userId: null,
     user: JSON.parse(localStorage.getItem('user')) || null,

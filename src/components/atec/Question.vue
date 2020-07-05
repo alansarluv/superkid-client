@@ -80,6 +80,12 @@
       isShow: function() {
         return (this.question.formList === this.formActive) ? true : false;
       }
+    },
+    watch: {
+      formActive: function() {
+        const elmRight = document.querySelector(".right-content")
+        elmRight.scrollTo(0, 270);
+      }
     }
   }
 </script>
