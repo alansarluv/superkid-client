@@ -148,12 +148,44 @@
             <div class="col-12 col-md-2">
               <p class="action-button my-0 mr-md-5 text-left">
                 <button class="btn btn-primary btn-sm" type="button" @click="goto(list._id)">Detail</button>
-                <button class="btn btn-danger btn-sm ml-3" type="button" :data-id="list._id">Hapus</button>
+                <button
+                  class="btn btn-danger btn-sm ml-3"
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#modalDelete"
+                  @click="dataDelete=list._id"
+                >Hapus</button>
               </p>
             </div>  
           </div>
         </div>
       </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalDeleteLabel">Hapus laporan</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Anda yakin ingin menghapus laporan pada bulan tersebut ?</p>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-ghost"
+                data-dismiss="modal"
+                ref="cancelmodalDelete"
+              >Batalkan</button>
+              <button type="button" @click="deleteList()" class="btn btn-danger">Hapus</button>
+            </div>
+          </div>
+        </div>
+      </div>      
     </div>
   </div>
 </template>
@@ -172,6 +204,7 @@
         loadingReport: false,
         loadingDetail: false,
         reportData : [],
+        dataDelete: "",
         kidLists: this.$store.getters.userKids || [],
         atecCompare1: '',
         atecCompare2: '',
@@ -195,7 +228,6 @@
         axios
           .get('/atec/detail/'+id, config)
           .then(res => {
-            console.log("detail:", res) // eslint-disable-line no-console
             data = res.data.data;
             this.loadingDetail = false;
             if (res.status === 200 && data._id) {
@@ -206,6 +238,29 @@
             }
           })
           .catch(error => console.log("error: ", error)) // eslint-disable-line no-console
+      },
+      deleteList(){
+        const id = this.dataDelete;
+        this.loadingDetail = true;
+        const config = {
+          headers: this.$store.getters.configHeader
+        };
+        axios
+          .delete('/atec/delete/'+id, config)
+          .then(res => {
+            this.loadingDetail = false;
+            if (res.status === 200) {
+              this.reportData = this.reportData.filter(list => list._id !== id);
+            }
+            const cancelmodalDelete = this.$refs.cancelmodalDelete;
+            cancelmodalDelete.click();
+          })
+          .catch(
+            error => {
+              console.log("error: ", error) // eslint-disable-line no-console
+              const cancelmodalDelete = this.$refs.cancelmodalDelete;
+              cancelmodalDelete.click();
+            })
       },
       compare() {
         if (this.atecCompare1 === '' || this.atecCompare2 === '') {
