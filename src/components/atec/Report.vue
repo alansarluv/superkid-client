@@ -12,14 +12,14 @@
           <p class="c-pointer text-primary" data-toggle="collapse" href="#collapseCompare" role="button" aria-expanded="false" aria-controls="collapseCompare">Klik disini untuk bandingkan 2 laporan atec</p>
           <div class="collapse" id="collapseCompare">
             <div class="card card-body">
-              <p>Pilih 2 laporan yang ingin dibandingkan {{atecCompare1}} - {{atecCompare2}}</p>
+              <p>Pilih 2 laporan yang ingin dibandingkan {{atecCompare.atecCompare1}} - {{atecCompare.atecCompare2}}</p>
               <div class="row">
                 <div class="col-sm-6">
                   <div class="row">
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="reportAtec1">First atec</label>
-                        <select v-model="atecCompare1" class="form-control" id="reportAtec1">
+                        <select v-model="atecCompare.atecCompare1" class="form-control" id="reportAtec1">
                           <option 
                             v-for="list in reportData" 
                             :value="list._id"
@@ -32,7 +32,7 @@
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="reportAtec2">Second atec</label>
-                        <select v-model="atecCompare2" class="form-control" id="reportAtec2">
+                        <select v-model="atecCompare.atecCompare2" class="form-control" id="reportAtec2">
                           <option 
                             v-for="list in reportData" 
                             :value="list._id"
@@ -206,12 +206,22 @@
         reportData : [],
         dataDelete: "",
         kidLists: this.$store.getters.userKids || [],
-        atecCompare1: '',
-        atecCompare2: '',
+        atecCompare: {
+          atecCompare1: '',
+          atecCompare2: '',
+          atecCompareRes: [],
+        },
         isMobileSidebar: false
       }
     },
     mixins: [spinnerMixin, getAgeMixin],
+    watch: {
+      "atecCompare.atecCompareRes": function() {
+        if (this.atecCompare.atecCompareRes.length > 1) {
+          console.log("compare disini");  // eslint-disable-line no-console
+        }
+      },
+    },    
     methods: {
       yearMonth(val) {
         const year = val.slice(0,4);
@@ -263,27 +273,40 @@
             })
       },
       compare() {
-        if (this.atecCompare1 === '' || this.atecCompare2 === '') {
+        if (this.atecCompare.atecCompare1 === '' || this.atecCompare.atecCompare2 === '') {
           alert("Pilih atec yang ingin dibandingkan");
-        } else if (this.atecCompare1 === this.atecCompare2 ) {
-          alert("Pilihan atec yang ingind dibandingkan harus berbeda")
+        } else if (this.atecCompare.atecCompare1 === this.atecCompare.atecCompare2 ) {
+          alert("Pilihan atec yang ingin dibandingkan harus berbeda")
         } else {
           this.loadingDetail = true;
           const config = {
             headers: this.$store.getters.configHeader
           };
           let data = null;
+          this.atecCompare.atecCompareRes = [];
           axios
-            .get('/atec/detail/'+this.atecCompare1, config)
+            .get('/atec/detail/'+this.atecCompare.atecCompare1, config)
             .then(res => {
               console.log("detail:", res) // eslint-disable-line no-console
               data = res.data.data;
               this.loadingDetail = false;
               if (res.status === 200 && data._id) {
-                console.log(data); // eslint-disable-line no-console
+                this.atecCompare.atecCompareRes.push(res.data);
               }
             })
-            .catch(error => console.log("error: ", error)) // eslint-disable-line no-console            
+            .catch(error => console.log("error: ", error)) // eslint-disable-line no-console
+
+          axios
+            .get('/atec/detail/'+this.atecCompare.atecCompare2, config)
+            .then(res => {
+              console.log("detail:", res) // eslint-disable-line no-console
+              data = res.data.data;
+              this.loadingDetail = false;
+              if (res.status === 200 && data._id) {
+                this.atecCompare.atecCompareRes.push(res.data);
+              }
+            })
+            .catch(error => console.log("error: ", error)) // eslint-disable-line no-console
         }
       }
     },
