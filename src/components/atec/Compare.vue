@@ -9,12 +9,83 @@
       <div class="card bg-seashell">
         <template v-if="compare">
           <h3 class="mb-2">
-            Compare Atec for {{compare.kidName}},
+            Compare Atec for {{compare[0]['data']['kidName']}}.
             <span class="float-right">
               <router-link to="/atec/report" class="btn btn-secondary mt-3 mt-lg-0">Back to atec report</router-link>
             </span>
           </h3>
-          <h4 class="mt-3 mb-2">Kemampuan total = xxx</h4>
+          <div class="row compare-form">
+            <div class="col-12 mt-3">
+              <h5>Kemajuan</h5>
+              <div class="row detail-form">
+                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                  <p>Kemajuan Bicara</p>
+                  <ul>
+                    <li>
+                      <p>Mengetahui namanya sendiri</p>
+                      <p>Sebelum :</p>
+                      <p>Sesudah :</p>
+                    </li>
+                  </ul>
+
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                  <p>Kemajuan Sosial</p>
+
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                  <p>Kemajuan Sensorik</p>
+
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                  <p>Kemajuan Umum</p>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-12 mt-3">
+              <h5>Kemunduran</h5>
+              <div class="row detail-form">
+                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                  <p>Kemunduran Bicara</p>
+
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                  <p>Kemunduran Sosial</p>
+
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                  <p>Kemunduran Sensorik</p>
+
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                  <p>Kemunduran Umum</p>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-12 mt-3">
+              <h5>Tidak berubah</h5>
+              <div class="row detail-form">
+                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                  <p>Kemampuan Bicara</p>
+
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                  <p>Kemampuan Sosial</p>
+
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                  <p>Kemampuan Sensorik</p>
+
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                  <p>Kemampuan Umum</p>
+
+                </div>     
+              </div>         
+            </div>
+          </div>
           <div class="row detail-form">
             <div class="col-lg-3 col-md-6 col-sm-12 mt-5">
               <h5>Kemampuan bicara = </h5>
@@ -23,6 +94,12 @@
                   <span>dummy</span>
                 </li>
               </ul>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 mt-5">
+              {{compare[0]}}
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12 mt-5">
+              {{compare[1]}}
             </div>
           </div>
         </template>
@@ -34,20 +111,34 @@
 <script>
   // import axios from 'axios';
   import Sidebar from '../partials/Sidebar';
+  import { atecDataMixin } from '../../mixins/general';
 
   export default {
     props: ['compare'],
+    mixins: [atecDataMixin],
     data() {
       return {
         isMobileSidebar: false,
+        listData: {
+          atec1: [],
+          atec2: [],
+          kemajuan: [],
+          kemunduran: [],
+          tidakBerubah: [],
+        }
       }
     },
     components: {
       atecSidebar: Sidebar
     },
     methods: {
-    }
-    
+    },
+    created() {
+      this.listData.atec1 = this.splitData(this.compare[0]['data']);
+      this.listData.atec2 = this.splitData(this.compare[1]['data']);
+      // compare between 2 value (atec1 & atec2)
+      // if bigger = bad = kemunduran
+    }    
   }
 </script>
 <style lang="scss" scoped>
@@ -63,19 +154,12 @@
         li {
           list-style-type: none;
           margin-bottom: 5px;
-          display: flex;
-          flex-direction: row;
-          flex-wrap: nowrap;
-          justify-content: space-between;
-          align-content: stretch;
-          align-items: center;
+          display: block;
           font-size: 12px;
           border-bottom: 1px solid black;
 
-          span:nth-child(2) {
-            text-align: right;
-            white-space: nowrap;
-            padding-left: 10px;            
+          p {
+            margin-bottom: 4px;
           }
         }
       }

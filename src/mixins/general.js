@@ -71,3 +71,70 @@ export const alertToastMixin = {
     }
   }
 }
+
+export const atecDataMixin = {
+  methods: {
+    getPoint( section, valRes){
+      let res = null;
+      if (section === 'bicara') {
+        if (valRes === 'sb'){
+          res = 0;
+        } else if (valRes === 'ab'){
+          res = 1;
+        } else {
+          res = 2;
+        }
+      } else if (section === 'sosial') {
+        if (valRes === 'sc'){
+          res = 2;
+        } else if (valRes === 'ac'){
+          res = 1;
+        } else {
+          res = 0;
+        }
+      } else if (section === 'sensorik') {
+        if (valRes === 'sc'){
+          res = 0;
+        } else if (valRes === 'ac'){
+          res = 1;
+        } else {
+          res = 2;
+        }          
+      } else if (section === 'umum') {
+        if (valRes === 'sb'){
+          res = 1;
+        } else if (valRes === 'cb'){
+          res = 2;
+        } else if (valRes === 'vb'){
+          res = 3;
+        } else {
+          res = 0;
+        }          
+      }
+      return res;
+    },
+    splitData(atecData) {      
+      let newData = {
+        bicara: [],
+        sensorik: [],
+        sosial: [],
+        umum: [],
+        general: {}
+      };
+      Object.keys(atecData).forEach(key => {
+        if (key.includes('bicara') && key !== 'bicaraTotal') {
+          newData.bicara.push(atecData[key]);
+        } else if (key.includes('sensorik') && key !== 'sensorikTotal') {
+          newData.sensorik.push(atecData[key]);
+        } else if (key.includes('sosial') && key !== 'sosialTotal') {
+          newData.sosial.push(atecData[key]);
+        } else if (key.includes('umum') && key !== 'umumTotal') {
+          newData.umum.push(atecData[key]);
+        } else {
+          newData.general[key] = atecData[key];
+        }
+      });
+      return newData;
+    }
+  }
+}

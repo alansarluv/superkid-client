@@ -218,7 +218,6 @@
     watch: {
       "atecCompare.atecCompareRes": function() {
         if (this.atecCompare.atecCompareRes.length > 1) {
-          console.log("compare disini");  // eslint-disable-line no-console
           this.$router.push({ 
             name: 'atec-compare',
             params: { compare: this.atecCompare.atecCompareRes }
@@ -291,7 +290,6 @@
           axios
             .get('/atec/detail/'+this.atecCompare.atecCompare1, config)
             .then(res => {
-              console.log("detail:", res) // eslint-disable-line no-console
               data = res.data.data;
               this.loadingDetail = false;
               if (res.status === 200 && data._id) {
@@ -303,7 +301,6 @@
           axios
             .get('/atec/detail/'+this.atecCompare.atecCompare2, config)
             .then(res => {
-              console.log("detail:", res) // eslint-disable-line no-console
               data = res.data.data;
               this.loadingDetail = false;
               if (res.status === 200 && data._id) {
