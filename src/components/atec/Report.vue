@@ -219,6 +219,10 @@
       "atecCompare.atecCompareRes": function() {
         if (this.atecCompare.atecCompareRes.length > 1) {
           console.log("compare disini");  // eslint-disable-line no-console
+          this.$router.push({ 
+            name: 'atec-compare',
+            params: { compare: this.atecCompare.atecCompareRes }
+          });
         }
       },
     },    

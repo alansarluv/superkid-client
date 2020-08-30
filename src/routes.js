@@ -17,6 +17,7 @@ import AtecForm from './components/atec/Form.vue';
 import AtecReport from './components/atec/Report.vue';
 import AtecFlash from './components/atec/Flash.vue';
 import AtecDetail from './components/atec/Detail.vue';
+import AtecCompare from './components/atec/Compare.vue';
 import AtecChart from './components/atec/Chart.vue';
 import store from './store'
 
@@ -82,6 +83,19 @@ export const routes = [
       }
     }
   },
+  { 
+    path: '/atec/report/compare', 
+    name: 'atec-compare',
+    component: AtecCompare, 
+    props: true,
+    beforeEnter (to, from, next) {
+      if (store.state.idToken) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },  
   { 
     path: '/atec/chart', 
     name: 'atec-chart',
