@@ -18,88 +18,66 @@
             <div class="col-12 mt-3">
               <h5>Kemajuan</h5>
               <div class="row detail-form">
-                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
-                  <p>Kemajuan Bicara</p>
+                <div
+                  v-for="(element, idx) in ability"
+                  :key="idx"
+                  class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                  <p>Kemajuan {{element}}</p>
                   <ul>
-                    <li>
-                      <p>Mengetahui namanya sendiri</p>
-                      <p>Sebelum :</p>
-                      <p>Sesudah :</p>
+                    <li
+                      v-for="(elm, index) in listData.kemajuan[element]"
+                      :key="index"
+                    >
+                      <p>{{listQuestions[elm.list -1]['theQuestion']}}</p>
+                      <p>Sebelum : {{getQuestionAnswer(element, elm.before)}}</p>
+                      <p>Sesudah : {{getQuestionAnswer(element, elm.after)}}</p>
                     </li>
                   </ul>
-
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
-                  <p>Kemajuan Sosial</p>
-
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
-                  <p>Kemajuan Sensorik</p>
-
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
-                  <p>Kemajuan Umum</p>
-
+                  <p v-if="!listData.kemajuan[element].length">-</p>
                 </div>
               </div>
             </div>
             <div class="col-12 mt-3">
               <h5>Kemunduran</h5>
               <div class="row detail-form">
-                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
-                  <p>Kemunduran Bicara</p>
-
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
-                  <p>Kemunduran Sosial</p>
-
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
-                  <p>Kemunduran Sensorik</p>
-
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
-                  <p>Kemunduran Umum</p>
-
+                <div
+                  v-for="(element, idx) in ability"
+                  :key="idx"
+                  class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                  <p>Kemunduran {{element}}</p>
+                  <ul>
+                    <li
+                      v-for="(elm, index) in listData.kemunduran[element]"
+                      :key="index"
+                    >
+                      <p>{{listQuestions[elm.list -1]['theQuestion']}}</p>
+                      <p>Sebelum : {{elm.before}}</p>
+                      <p>Sesudah : {{elm.after}}</p>
+                    </li>
+                  </ul>
+                  <p v-if="!listData.kemunduran[element].length">-</p>
                 </div>
               </div>
             </div>
             <div class="col-12 mt-3">
               <h5>Tidak berubah</h5>
               <div class="row detail-form">
-                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
-                  <p>Kemampuan Bicara</p>
-
+                <div
+                  v-for="(element, idx) in ability"
+                  :key="idx"
+                  class="col-lg-3 col-md-6 col-sm-12 mt-2">
+                  <p>Kemampuan {{element}}</p>
+                  <ul>
+                    <li
+                      v-for="(elm, index) in listData.tetap[element]"
+                      :key="index"
+                    >
+                      <p>{{listQuestions[elm.list -1]['theQuestion']}}</p>
+                    </li>
+                  </ul>
+                  <p v-if="!listData.tetap[element].length">-</p>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
-                  <p>Kemampuan Sosial</p>
-
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
-                  <p>Kemampuan Sensorik</p>
-
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-12 mt-2">
-                  <p>Kemampuan Umum</p>
-
-                </div>     
               </div>         
-            </div>
-          </div>
-          <div class="row detail-form">
-            <div class="col-lg-3 col-md-6 col-sm-12 mt-5">
-              <h5>Kemampuan bicara = </h5>
-              <ul>
-                <li v-for="index in 14" :key="index">
-                  <span>dummy</span>
-                </li>
-              </ul>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 mt-5">
-              {{compare[0]}}
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-12 mt-5">
-              {{compare[1]}}
             </div>
           </div>
         </template>
@@ -118,13 +96,16 @@
     mixins: [atecDataMixin],
     data() {
       return {
+        ability : ["bicara", "sosial", "sensorik", "umum"],
+        indexQuestion : 0,
+        listQuestions: this.$store.getters.getQuestion || [],
         isMobileSidebar: false,
         listData: {
           atec1: [],
           atec2: [],
-          kemajuan: [],
-          kemunduran: [],
-          tidakBerubah: [],
+          kemajuan: {},
+          kemunduran: {},
+          tetap: {},
         }
       }
     },
@@ -132,12 +113,39 @@
       atecSidebar: Sidebar
     },
     methods: {
+      compareVal(){
+        // if bigger = bad = kemunduran 
+        this.ability.forEach(element => {
+          this.listData.kemajuan[element] = [];
+          this.listData.kemunduran[element] = [];
+          this.listData.tetap[element] = [];
+          this.listData.atec1[element].forEach((elm, idx) => {
+            this.indexQuestion += 1;
+            const val1 = this.getPoint(element, elm);
+            const val2 = this.getPoint(element, this.listData.atec2[element][idx]);
+            let buffer = {};
+            buffer.val = idx;
+            buffer.list = this.indexQuestion;
+            buffer.before = elm;
+            buffer.after = this.listData.atec2[element][idx];
+            if (val1 > val2) {
+              this.listData.kemajuan[element].push(buffer);
+            } else if (val2 > val1) {
+              this.listData.kemunduran[element].push(buffer);
+            } else {
+              this.listData.tetap[element].push(buffer);              
+            }
+          });
+
+        });
+      },
     },
     created() {
+      // split data from plain data to value only 
       this.listData.atec1 = this.splitData(this.compare[0]['data']);
       this.listData.atec2 = this.splitData(this.compare[1]['data']);
       // compare between 2 value (atec1 & atec2)
-      // if bigger = bad = kemunduran
+      this.compareVal();
     }    
   }
 </script>

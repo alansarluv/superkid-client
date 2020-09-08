@@ -113,6 +113,45 @@ export const atecDataMixin = {
       }
       return res;
     },
+    getQuestionAnswer(section, valRes) {
+      let res = null;
+      if (section === 'bicara') {
+        if (valRes === 'sb'){
+          res = "sangat benar";
+        } else if (valRes === 'ab'){
+          res = "agak benar";
+        } else {
+          res = "tidak benar";
+        }
+      } else if (section === 'sosial') {
+        if (valRes === 'sc'){
+          res = "sangat cocok";
+        } else if (valRes === 'ac'){
+          res = "agak cocok";
+        } else {
+          res = "tidak cocok";
+        }
+      } else if (section === 'sensorik') {
+        if (valRes === 'sc'){
+          res = "sangat cocok";
+        } else if (valRes === 'ac'){
+          res = "agak cocok";
+        } else {
+          res = "tidak cocok";
+        }          
+      } else if (section === 'umum') {
+        if (valRes === 'sb'){
+          res = "sedikit bermasalah";
+        } else if (valRes === 'cb'){
+          res = "cukup bermasalah";
+        } else if (valRes === 'vb'){
+          res = "sangat bermasalah";
+        } else {
+          res = "tidak bermasalah";
+        }          
+      }
+      return res;
+    },
     splitData(atecData) {      
       let newData = {
         bicara: [],
