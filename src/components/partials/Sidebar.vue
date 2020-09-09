@@ -48,6 +48,9 @@
           <span class="ml-2">Referensi dokter</span>
         </router-link>
       </li>
+      <li class="d-md-none">
+        <a href="#" @click="onLogout()">Logout</a>
+      </li>
       <!-- review suplemen -->
       <!-- review obat -->
       <!-- review cemilan -->
@@ -70,7 +73,12 @@
     methods: {
       onCloseSidebar() {
         this.$emit('closeSidebar');
-      }
+      },
+      onLogout() {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('user');
+        window.location = '/login';
+      }      
     }
   }
 </script>
