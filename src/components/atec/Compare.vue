@@ -10,6 +10,9 @@
         <template v-if="compare">
           <h3 class="mb-2">
             Compare Atec for {{compare[0]['data']['kidName']}}.
+            <span class="date-time-atec">
+              ( {{yearMonth(month1)}} ) vs ( {{yearMonth(month2)}} )
+            </span>
             <span class="float-right">
               <router-link to="/atec/report" class="btn btn-secondary mt-3 mt-lg-0">Back to atec report</router-link>
             </span>
@@ -89,17 +92,19 @@
 <script>
   // import axios from 'axios';
   import Sidebar from '../partials/Sidebar';
-  import { atecDataMixin } from '../../mixins/general';
+  import { atecDataMixin, monthYearMixin } from '../../mixins/general';
 
   export default {
     props: ['compare'],
-    mixins: [atecDataMixin],
+    mixins: [atecDataMixin, monthYearMixin],
     data() {
       return {
         ability : ["bicara", "sosial", "sensorik", "umum"],
         indexQuestion : 0,
         listQuestions: this.$store.getters.getQuestion || [],
         isMobileSidebar: false,
+        month1: "",
+        month2: "",
         listData: {
           atec1: [],
           atec2: [],
@@ -142,8 +147,17 @@
     },
     created() {
       // split data from plain data to value only 
-      this.listData.atec1 = this.splitData(this.compare[0]['data']);
-      this.listData.atec2 = this.splitData(this.compare[1]['data']);
+      if (this.compare[0]['data']['monthYear'] < this.compare[1]['data']['monthYear']) {
+        this.month1 = this.compare[0]['data']['monthYear'];
+        this.month2 = this.compare[1]['data']['monthYear'];
+        this.listData.atec1 = this.splitData(this.compare[0]['data']);
+        this.listData.atec2 = this.splitData(this.compare[1]['data']);
+      } else {
+        this.month1 = this.compare[1]['data']['monthYear'];
+        this.month2 = this.compare[0]['data']['monthYear'];
+        this.listData.atec1 = this.splitData(this.compare[1]['data']);
+        this.listData.atec2 = this.splitData(this.compare[0]['data']);
+      }
       // compare between 2 value (atec1 & atec2)
       this.compareVal();
     }    

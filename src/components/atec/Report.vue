@@ -12,7 +12,7 @@
           <p class="c-pointer text-primary" data-toggle="collapse" href="#collapseCompare" role="button" aria-expanded="false" aria-controls="collapseCompare">Klik disini untuk bandingkan 2 laporan atec</p>
           <div class="collapse" id="collapseCompare">
             <div class="card card-body">
-              <p>Pilih 2 laporan yang ingin dibandingkan {{atecCompare.atecCompare1}} - {{atecCompare.atecCompare2}}</p>
+              <p>Pilih 2 laporan yang ingin dibandingkan</p>
               <div class="row">
                 <div class="col-sm-6">
                   <div class="row">
@@ -193,7 +193,7 @@
 <script>
   import axios from 'axios';
   import Sidebar from '../partials/Sidebar';
-  import { getAgeMixin, spinnerMixin } from '../../mixins/general';
+  import { getAgeMixin, spinnerMixin, monthYearMixin } from '../../mixins/general';
 
   export default {
     components: {
@@ -214,7 +214,7 @@
         isMobileSidebar: false
       }
     },
-    mixins: [spinnerMixin, getAgeMixin],
+    mixins: [spinnerMixin, getAgeMixin, monthYearMixin],
     watch: {
       "atecCompare.atecCompareRes": function() {
         if (this.atecCompare.atecCompareRes.length > 1) {
@@ -226,12 +226,6 @@
       },
     },    
     methods: {
-      yearMonth(val) {
-        const year = val.slice(0,4);
-        const monthNum = parseInt(val.substring(4));
-        const monthNames = this.$store.getters.monthNames;
-        return year + " - " + monthNames[monthNum-1];
-      },
       goto(id){
         this.loadingDetail = true;
         const config = {
