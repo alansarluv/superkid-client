@@ -54,8 +54,8 @@
                       :key="index"
                     >
                       <p>{{listQuestions[elm.list -1]['theQuestion']}}</p>
-                      <p>Sebelum : {{elm.before}}</p>
-                      <p>Sesudah : {{elm.after}}</p>
+                      <p>Sebelum : {{getQuestionAnswer(element, elm.before)}}</p>
+                      <p>Sesudah : {{getQuestionAnswer(element, elm.after)}}</p>
                     </li>
                   </ul>
                   <p v-if="!listData.kemunduran[element].length">-</p>
